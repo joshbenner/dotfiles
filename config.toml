@@ -31,7 +31,8 @@
 [tasks.common]
 	deps = ["fish", "xmonad"]
 	links = [
-		[".config/terminator/config"]
+		[".config/terminator/config"],
+		[".config/synapse/config.json"]
 	]
 
 [tasks.corvus]
