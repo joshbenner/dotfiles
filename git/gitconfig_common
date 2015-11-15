@@ -1,0 +1,4 @@
+[core]
+	excludesfile = ~/.global_gitignore
+[push]
+	default = simple

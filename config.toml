@@ -1,16 +1,41 @@
-[tasks.common]
+[tasks.fish]
 	links = [
 		[".config/fish/config.fish"],
 		[".config/omf"],
-		[".oh-my-fish"],
+		[".oh-my-fish"]
+	]
+
+[tasks.xmonad]
+	links = [
 		[".xmonad/xmonad.hs", "xmonad.hs"]
 	]
 
+[tasks.git]
+	links = [
+		[".global_gitignore", "git/global_gitignore"],
+		[".gitconfig.common", "git/gitconfig_common"]
+	]
+
+[tasks.git_personal]
+	deps = ["git"]
+	links = [
+		[".gitconfig", "git/gitconfig_personal"]
+	]
+
+[tasks.git_work]
+	deps = ["git"]
+	links = [
+		[".gitconfig", "git/gitconfig_work"]
+	]
+
+[tasks.common]
+	deps = ["fish", "xmonad"]
+
 [tasks.corvus]
-	deps = ["common"]
+	deps = ["common", "git_personal"]
 
 [tasks.miranda]
-	deps = ["common"]
+	deps = ["common", "git_personal"]
 
 [tasks.work]
-	deps = ["common"]
+	deps = ["common", "git_work"]

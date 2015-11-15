@@ -1,0 +1,5 @@
+[user]
+	name = Josh Benner
+	email = josh@bennerweb.com
+[include]
+	path = .gitconfig.common
