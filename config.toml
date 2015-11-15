@@ -30,6 +30,9 @@
 
 [tasks.common]
 	deps = ["fish", "xmonad"]
+	links = [
+		[".config/terminator/config"]
+	]
 
 [tasks.corvus]
 	deps = ["common", "git_personal"]
