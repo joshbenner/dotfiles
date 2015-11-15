@@ -1,17 +1,8 @@
 # Path to your oh-my-fish.
-set fish_path $HOME/.oh-my-fish
+set -gx OMF_PATH $HOME/.oh-my-fish
 
-# Path to your custom folder (default path is ~/.oh-my-fish/custom)
-set fish_custom $HOME/.config/fish/oh-my-fish
+# Custom Oh My Fish configure path.
+# set -gx OM_CONFIG $HOME/.config/omf
 
 # Load oh-my-fish configuration.
-. $fish_path/oh-my-fish.fish
-
-# Custom plugins and themes may be added to ~/.oh-my-fish/custom
-# Plugins and themes can be found at https://github.com/oh-my-fish/
-Theme 'scorphish'
-
-Plugin 'theme'
-Plugin 'sublime'
-Plugin 'grc'
-Plugin 'tmux'
+source $OMF_PATH/init.fish

@@ -1,0 +1,15 @@
+[tasks.common]
+	links = [
+		[".config/fish/config.fish"],
+		[".config/omf"],
+		[".oh-my-fish"]
+	]
+
+[tasks.corvus]
+	deps = ["common"]
+
+[tasks.miranda]
+	deps = ["common"]
+
+[tasks.work]
+	deps = ["common"]
