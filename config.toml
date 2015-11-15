@@ -2,7 +2,8 @@
 	links = [
 		[".config/fish/config.fish"],
 		[".config/omf"],
-		[".oh-my-fish"]
+		[".oh-my-fish"],
+		[".xmonad/xmonad.hs", "xmonad.hs"]
 	]
 
 [tasks.corvus]
