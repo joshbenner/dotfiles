@@ -12,5 +12,5 @@ Dotfiles managed with [homemaker](https://github.com/FooSoft/homemaker).
 ```sh
 $ git clone git@github.com:joshbenner/dotfiles.git
 $ cd dotfiles
-$ homemaker -task <machine> config.toml
+$ homemaker -task <machine> config.toml .
 ```
