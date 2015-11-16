@@ -10,7 +10,7 @@ Dotfiles managed with [homemaker](https://github.com/FooSoft/homemaker).
 ## Initial Install
 
 ```sh
-$ git clone git@github.com:joshbenner/dotfiles.git
+$ git clone --recursive git@github.com:joshbenner/dotfiles.git
 $ cd dotfiles
 $ homemaker -variant ubuntu -task install_base config.toml .
 $ homemaker -variant ubuntu -task <machine> config.toml .
