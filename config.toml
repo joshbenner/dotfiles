@@ -1,3 +1,72 @@
+# Macros
+
+[macros.install__ubuntu]
+	prefix = ["sudo", "apt-get", "install", "-y"]
+
+[macros.addrepo__ubuntu]
+	prefix = ["sudo", "apt-add-repository", "-y"]
+
+# Installers
+
+[tasks.install_base__ubuntu]
+	deps = [
+		"install_python", "install_git", "install_fish",
+		"install_sublime3", "install_atom", "install_synapse",
+		"install_chrome"
+	]
+	cmds = [
+		["@install", "xmonad", "vim", "htop", "httpie", "aptitude", 
+		"gnome-session-flashback", "terminator"]
+	]
+
+[tasks.install_python__ubuntu]
+	cmds = [
+		["@install", "python-pip"]
+	]
+
+[tasks.install_sublime3__ubuntu]
+	cmds = [
+		["sudo", "${HM_SRC}/sublime-installer/st3install"]
+	]
+
+[tasks.install_atom__ubuntu]
+	cmds = [
+		["@addrepo", "ppa:webupd8team/atom"],
+		["sudo", "apt-get", "update"],
+		["@install", "atom"]
+	]
+
+[tasks.install_fish__ubuntu]
+	deps = ["fish"]
+	cmds = [
+		["sudo", "pip", "install", "virtualfish"],
+		["@addrepo", "ppa:fish-shell/release-2"],
+		["sudo", "apt-get", "update"],
+		["@install", "fish", "grc"],
+		["fish", "-c", "omf install"]
+	]
+
+[tasks.install_git]
+	deps = ["git"]
+	cmds = [["@install", "git"]]
+
+[tasks.install_synapse__ubuntu]
+	cmds = [
+		["@addrepo", "ppa:synapse-core/ppa"],
+		["sudo", "apt-get", "update"],
+		["@install", "synapse"]
+	]
+
+[tasks.install_chrome__ubuntu]
+	cmds = [
+		["wget", "-q", "-O", "-", "https://dl-ssl.google.com/linux/linux_signing_key.pub", "|", "sudo", "apt-key", "add", "-"],
+		["sudo", "sh", "-c", 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main"', ">>", "/etc/apt/sources.list.d/google-chrome.list"],
+		["sudo", "apt-get", "update"],
+		["@install", "google-chrome-stable"]
+	]
+
+# Configurations
+
 [tasks.fish]
 	links = [
 		[".config/fish/config.fish"],
@@ -6,7 +75,7 @@
 		[".grc", "grc"]
 	]
 
-[tasks.xmonad]
+[tasks.xmonad__ubuntu]
 	links = [
 		[".xmonad/xmonad.hs", "xmonad.hs"]
 	]
@@ -28,6 +97,8 @@
 	links = [
 		[".gitconfig", "git/gitconfig_work"]
 	]
+
+# Config Profiles
 
 [tasks.common]
 	deps = ["fish", "xmonad"]
