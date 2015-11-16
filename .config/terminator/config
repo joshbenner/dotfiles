@@ -1,6 +1,15 @@
 [global_config]
   enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
 [keybindings]
+[profiles]
+  [[default]]
+    scrollbar_position = hidden
+    use_system_font = False
+    audible_bell = True
+    background_image = None
+    foreground_color = "#ffffff"
+    font = DejaVu Sans Mono 10
+    scrollback_infinite = True
 [layouts]
   [[default]]
     [[[child1]]]
@@ -10,10 +19,3 @@
       parent = ""
       type = Window
 [plugins]
-[profiles]
-  [[default]]
-    audible_bell = True
-    background_image = None
-    font = DejaVu Sans Mono 10
-    foreground_color = "#ffffff"
-    use_system_font = False
