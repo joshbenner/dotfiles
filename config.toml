@@ -3,7 +3,13 @@
 [macros.install__ubuntu]
 	prefix = ["sudo", "apt-get", "install", "-y"]
 
+[macros.install__wily]
+	prefix = ["sudo", "apt-get", "install", "-y"]
+
 [macros.addrepo__ubuntu]
+	prefix = ["sudo", "apt-add-repository", "-y"]
+
+[macros.addrepo__wily]
 	prefix = ["sudo", "apt-add-repository", "-y"]
 
 # Installers
@@ -65,6 +71,13 @@
 		["@install", "google-chrome-stable"]
 	]
 
+[tasks.install_xmonad__wily]
+	cmds = [
+		["@addrepo", "ppa:gekkio/xmonad"],
+		["sudo", "apt-get", "update"],
+		["@install", "gnome-session-xmonad"]
+	]
+
 # Configurations
 
 [tasks.fish]
@@ -112,6 +125,9 @@
 
 [tasks.miranda]
 	deps = ["common", "git_personal"]
+
+[tasks.luna]
+	deps = ["common", "git_personal", "install_xmonad__wily"]
 
 [tasks.work]
 	deps = ["common", "git_work"]
