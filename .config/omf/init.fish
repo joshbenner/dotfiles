@@ -13,10 +13,13 @@ set -e found_user_paths
 
 set -gx GOPATH ~/go
 
-set -gx GREP_OPTIONS '--color=auto --exclude-dir=\.svn --exclude-dir=\.git'
 set -gx LSCOLORS dxgxcxdxcxegedabagacad
 
 #set -gx DOCKER_HOST "tcp://localhost:2375"
+
+function grep
+  command grep --color=auto --exclude-dir=\.svn --exclude-dir=\.git $argv
+end
 
 function ll
   ls -lha $argv
