@@ -111,6 +111,11 @@
 		[".gitconfig", "git/gitconfig_work"]
 	]
 
+[tasks.emacs]
+	links = [
+		[".emacs.d/init.el", "emacs/init.el"]
+	]
+
 # Config Profiles
 
 [tasks.common]
