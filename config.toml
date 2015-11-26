@@ -22,7 +22,7 @@
 	]
 	cmds = [
 		["@install", "xmonad", "vim", "htop", "httpie", "aptitude", 
-		"gnome-session-flashback", "terminator"]
+		"gnome-session-flashback", "terminator", "emacs"]
 	]
 
 [tasks.install_python__ubuntu]
@@ -119,7 +119,7 @@
 # Config Profiles
 
 [tasks.common]
-	deps = ["fish", "xmonad"]
+	deps = ["fish", "xmonad", "emacs"]
 	links = [
 		[".config/terminator/config"],
 		[".config/synapse/config.json"]
