@@ -1,0 +1,26 @@
+* Emacs configuration
+ 
+** General App Config
+*** Disable ctrl-z
+    #+BEGIN_SRC emacs-lisp
+    (global-unset-key (kbd "C-z"))
+    #+END_SRC
+*** Hide tool bar in X interface
+    #+BEGIN_SRC emacs-lisp
+    (tool-bar-mode -1)
+    #+END_SRC
+*** Font
+    #+BEGIN_SRC emacs-lisp
+    (push '(font . "DejaVu Sans Mono-10") default-frame-alist)
+    #+END_SRC
+*** Stop the backup file madness
+    #+BEGIN_SRC emacs-lisp
+    (setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
+    (setq backup-by-copying t)
+    #+END_SRC
+
+** Org mode config
+*** Dates when todo is done
+    #+BEGIN_SRC emacs-lisp
+    (setq org-log-done t)
+    #+END_SRC

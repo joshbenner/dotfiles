@@ -28,11 +28,6 @@
 (use-package org
              :ensure org-plus-contrib)
 
-;; Hide the menu in X.
-(tool-bar-mode -1)
-
-;; Set my font.
-(push '(font . "DejaVu Sans Mono-10") default-frame-alist)
-
-;; Configure org-mode
-(setq org-log-done t)
+;; Load emacs config from org file via babel.
+(require 'org)
+(org-babel-load-file "~/.emacs.d/emacs.org")

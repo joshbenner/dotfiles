@@ -113,7 +113,8 @@
 
 [tasks.emacs]
 	links = [
-		[".emacs.d/init.el", "emacs/init.el"]
+		[".emacs.d/init.el", "emacs/init.el"],
+		[".emacs.d/emacs.org", "emacs/emacs.org"]
 	]
 
 # Config Profiles
