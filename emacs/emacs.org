@@ -1,26 +1,96 @@
+#+STARTUP: indent
+
 * Emacs configuration
  
 ** General App Config
 *** Disable ctrl-z
-    #+BEGIN_SRC emacs-lisp
-    (global-unset-key (kbd "C-z"))
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (global-unset-key (kbd "C-z"))
+#+END_SRC
 *** Hide tool bar in X interface
-    #+BEGIN_SRC emacs-lisp
-    (tool-bar-mode -1)
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+#+END_SRC
 *** Font
-    #+BEGIN_SRC emacs-lisp
-    (push '(font . "DejaVu Sans Mono-10") default-frame-alist)
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (push '(font . "DejaVu Sans Mono-10") default-frame-alist)
+#+END_SRC
 *** Stop the backup file madness
-    #+BEGIN_SRC emacs-lisp
-    (setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
-    (setq backup-by-copying t)
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
+  (setq backup-by-copying t)
+#+END_SRC
+
+** Display Tweaks
+*** Show curly arrows when wrapping a line
+From: http://www.emacswiki.org/emacs/VisualLineMode
+#+BEGIN_SRC emacs-lisp
+  (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+#+END_SRC
+*** When using visual line mode, use better indenting too
+#+BEGIN_SRC emacs-lisp
+  (use-package adaptive-wrap)
+  (setq adaptive-wrap-extra-indent 2)
+
+  (add-hook 'visual-line-mode-hook
+    (lambda ()
+      (adaptive-wrap-prefix-mode +1)
+      (diminish 'visual-line-mode)))
+#+END_SRC
+*** Use Visual Line Mode for text modes
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+#+END_SRC
 
 ** Org mode config
+*** Use Visual Line Mode for org mode
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
+#+END_SRC
 *** Dates when todo is done
-    #+BEGIN_SRC emacs-lisp
-    (setq org-log-done t)
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (setq org-log-done t)
+#+END_SRC
+*** Use indented mode
+This only shows one star on each heading line, and handles the indentation for you. Little cleaner.
+#+BEGIN_SRC emacs-lisp
+  (setq org-startup-indented t)
+#+END_SRC
+
+** Languages
+*** PHP
+#+BEGIN_SRC emacs-lisp
+  (use-package web-mode
+    :ensure t
+    :mode "\\.html?$")
+
+  (use-package php-mode
+    :ensure t
+    :mode (("\\.php$" . php-mode)
+           ("\\.inc$" . php-mode))
+    :config (add-hook 'php-mode-hook (lambda ()
+                                       "Customize PHP indentation"
+                                       (c-set-offset 'arglist-cont-nonempty 'c-lineup-arglist)
+                                       (c-set-offset 'substatement-open 0)
+                                       (c-set-offset 'case-label '+))))
+#+END_SRC
+*** Python
+#+BEGIN_SRC emacs-lisp
+  (use-package python-mode
+    :ensure t
+    :mode "\.py$")
+#+END_SRC
+*** YAML
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode
+    :ensure t
+    :mode "\.yml$")
+#+END_SRC
+** Publish
+*** HTMLize
+#+BEGIN_SRC emacs-lisp
+  (use-package htmlize
+    :ensure t
+    :defer t
+    :commands (htmlize-region htmlize-buffer htmlize-file))
+#+END_SRC
