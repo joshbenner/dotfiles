@@ -86,6 +86,12 @@ This only shows one star on each heading line, and handles the indentation for y
     :ensure t
     :mode "\.yml$")
 #+END_SRC
+*** Fish Shell
+#+BEGIN_SRC emacs-lisp
+  (use-package fish-mode
+    :ensure t
+    :mode "\.fish$")
+#+END_SRC
 ** Publish
 *** HTMLize
 #+BEGIN_SRC emacs-lisp
