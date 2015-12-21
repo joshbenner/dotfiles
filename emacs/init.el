@@ -35,3 +35,4 @@
 ;; Load emacs config from org file via babel.
 (require 'org)
 (org-babel-load-file "~/.emacs.d/emacs.org")
+

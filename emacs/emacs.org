@@ -1,64 +1,122 @@
 #+STARTUP: indent
 
-* Emacs configuration
- 
-** General App Config
-*** Disable ctrl-z
+* General App Config
+** Disable startup screen
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-screen +1)
+#+END_SRC
+** Disable ctrl-z
 #+BEGIN_SRC emacs-lisp
   (global-unset-key (kbd "C-z"))
 #+END_SRC
-*** Hide tool bar in X interface
+** Hide tool bar in X interface
 #+BEGIN_SRC emacs-lisp
   (tool-bar-mode -1)
 #+END_SRC
-*** Font
+** Font
 #+BEGIN_SRC emacs-lisp
   (push '(font . "DejaVu Sans Mono-10") default-frame-alist)
 #+END_SRC
-*** Stop the backup file madness
+** Stop the backup file madness
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
   (setq backup-by-copying t)
 #+END_SRC
+** Powerline
+Pretty mode line.
+#+BEGIN_SRC emacs-lisp
+  (use-package powerline
+    :ensure t
+    :init (powerline-default-theme))
+  #+END_SRC
+** Helm
+Completion framework used when looking for stuff in a lot of places in Emacs.
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :ensure t
+    :diminish helm-mode
+    :bind (("M-x" . helm-M-x)
+           ("M-y" . helm-show-kill-ring)
+           ("C-x b" . helm-mini)
+           ("C-x C-b" . helm-buffers-list)
+           ("C-x C-f" . helm-find-files)
+           ("C-x C-r" . helm-recentf)
+           ("C-x c o" . helm-occur)
+           ("C-x c s" . helm-swoop))
+    :config (progn
+              (require 'helm-config)
+              (helm-mode 1)
+              (add-hook 'eshell-mode-hook
+                        (lambda ()
+                          (define-key eshell-mode-map (kbd "TAB") 'helm-esh-pcomplete)
+                          (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history)))))
+#+END_SRC
+** Projectile
+Project management.
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-projectile
+    :ensure t
+    :defer t)
 
-** Display Tweaks
-*** Show curly arrows when wrapping a line
+  (use-package projectile
+    :ensure t
+    :config (progn (setq projectile-mode-line
+                         '(:eval (format " [%s]" (projectile-project-name))))
+                   (require 'helm-projectile)
+                   (helm-projectile-on)
+                   (projectile-global-mode)))
+#+END_SRC
+** Workgroups
+Save sessions so you don't have to reopen files.
+#+BEGIN_SRC emacs-lisp
+  (use-package workgroups2
+    :ensure t
+    :init (workgroups-mode 1))
+#+END_SRC
+* Display Tweaks
+** Show curly arrows when wrapping a line
 From: http://www.emacswiki.org/emacs/VisualLineMode
 #+BEGIN_SRC emacs-lisp
   (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 #+END_SRC
-*** When using visual line mode, use better indenting too
+** When using visual line mode, use better indenting too
 #+BEGIN_SRC emacs-lisp
-  (use-package adaptive-wrap)
+  (use-package adaptive-wrap
+    :ensure t)
   (setq adaptive-wrap-extra-indent 2)
 
   (add-hook 'visual-line-mode-hook
     (lambda ()
-      (adaptive-wrap-prefix-mode +1)
+      (adaptive-wrap-prefix-mode (if visual-line-mode 1 -1))
       (diminish 'visual-line-mode)))
 #+END_SRC
-*** Use Visual Line Mode for text modes
+** Use Visual Line Mode for text modes
 #+BEGIN_SRC emacs-lisp
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 #+END_SRC
 
-** Org mode config
-*** Use Visual Line Mode for org mode
+* Org mode config
+** Use Visual Line Mode for org mode
 #+BEGIN_SRC emacs-lisp
   (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
 #+END_SRC
-*** Dates when todo is done
+** Dates when todo is done
 #+BEGIN_SRC emacs-lisp
   (setq org-log-done t)
 #+END_SRC
-*** Use indented mode
+** Use indented mode
 This only shows one star on each heading line, and handles the indentation for you. Little cleaner.
 #+BEGIN_SRC emacs-lisp
   (setq org-startup-indented t)
 #+END_SRC
-
-** Languages
-*** PHP
+* Editing
+** Parens
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :ensure t)
+#+END_SRC
+* Languages
+** PHP
 #+BEGIN_SRC emacs-lisp
   (use-package web-mode
     :ensure t
@@ -74,26 +132,36 @@ This only shows one star on each heading line, and handles the indentation for y
                                        (c-set-offset 'substatement-open 0)
                                        (c-set-offset 'case-label '+))))
 #+END_SRC
-*** Python
+** Python
 #+BEGIN_SRC emacs-lisp
   (use-package python-mode
     :ensure t
     :mode "\.py$")
 #+END_SRC
-*** YAML
+** YAML
 #+BEGIN_SRC emacs-lisp
   (use-package yaml-mode
     :ensure t
     :mode "\.yml$")
 #+END_SRC
-*** Fish Shell
+** Fish Shell
 #+BEGIN_SRC emacs-lisp
   (use-package fish-mode
     :ensure t
     :mode "\.fish$")
 #+END_SRC
-** Publish
-*** HTMLize
+** Erlang
+#+BEGIN_SRC emacs-lisp
+  (use-package erlang
+    :ensure t
+    :mode ("\.[eh]rl$" . erlang-mode)
+    :config (add-hook 'erlang-mode-hook
+                      (lambda ()
+                        (setq inferior-erlang-machine-options '("-sname" "emacs"
+                                                                "-hidden")))))
+#+END_SRC
+* Publish
+** HTMLize
 #+BEGIN_SRC emacs-lisp
   (use-package htmlize
     :ensure t
