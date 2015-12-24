@@ -112,6 +112,8 @@ This only shows one star on each heading line, and handles the indentation for y
 * Editing
 ** Parens
 #+BEGIN_SRC emacs-lisp
+  (show-paren-mode 1)
+  (setq show-paren-delay 0)
   (use-package smartparens
     :ensure t)
 #+END_SRC
@@ -160,6 +162,15 @@ This only shows one star on each heading line, and handles the indentation for y
                         (setq inferior-erlang-machine-options '("-sname" "emacs"
                                                                 "-hidden")))))
 #+END_SRC
+** JSON
+#+BEGIN_SRC emacs-lisp
+  (use-package json-mode
+    :ensure t
+    :mode ("\.json$" . json-mode))
+#+END_SRC
+
+#+RESULTS:
+
 * Publish
 ** HTMLize
 #+BEGIN_SRC emacs-lisp

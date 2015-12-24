@@ -19,12 +19,39 @@
   (defvar use-package-verbose t)
   (require 'use-package))
 
-;; Ample Themes
-(use-package ample-theme
-	     :init (progn (load-theme 'ample t t)
-			  (enable-theme 'ample))
-	     :ensure t
-	     :defer t)
+;; (defun set-my-theme (package)
+;;   (setq theme (make-symbol (substring (symbol-name package) 0 -6)))
+;;   (use-package package
+;;     :init (progn (load-theme theme t t)
+;; 		 (enable-theme theme))
+;;     :ensure t
+;;     :defer t)
+;; )
+
+;; (set-my-theme 'material-theme)
+
+(use-package material-theme
+  :init (progn (load-theme 'material t t)
+	       (enable-theme 'material))
+  :ensure t
+  :defer t)
+
+; Ample Themes
+;(use-package ample-theme
+;	     :init (progn (load-theme 'ample t t)
+;			  (enable-theme 'ample))
+;	     :ensure t
+;	     :defer t)
+
+;(use-package base16-theme
+;  :init (progn (load-theme 'base16-twilight-dark t))
+;  :ensure t)
+
+;; (use-package tangotango-theme
+;;   :init (progn (load-theme 'tangotango t)
+;; 	       (enable-theme 'tangotango))
+;;   :ensure t
+;;   :defer t)
 
 (use-package org
              :ensure org-plus-contrib)
@@ -35,4 +62,3 @@
 ;; Load emacs config from org file via babel.
 (require 'org)
 (org-babel-load-file "~/.emacs.d/emacs.org")
-
