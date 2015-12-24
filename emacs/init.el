@@ -30,18 +30,22 @@
 
 ;; (set-my-theme 'material-theme)
 
-(use-package material-theme
-  :init (progn (load-theme 'material t t)
-	       (enable-theme 'material))
-  :ensure t
-  :defer t)
+;; (use-package material-theme
+;;   :init (progn (load-theme 'material t t)
+;; 	       (enable-theme 'material))
+;;   :ensure t
+;;   :defer t)
 
 ; Ample Themes
-;(use-package ample-theme
-;	     :init (progn (load-theme 'ample t t)
-;			  (enable-theme 'ample))
-;	     :ensure t
-;	     :defer t)
+;; (use-package ample-theme
+;; 	     :init (progn (load-theme 'ample t t)
+;; 			  (enable-theme 'ample))
+;; 	     :ensure t
+;; 	     :defer t)
+
+(use-package monokai-theme
+  :init (load-theme 'monokai t)
+  :ensure t)
 
 ;(use-package base16-theme
 ;  :init (progn (load-theme 'base16-twilight-dark t))
