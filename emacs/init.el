@@ -31,10 +31,8 @@
 ;; (set-my-theme 'material-theme)
 
 ;; (use-package material-theme
-;;   :init (progn (load-theme 'material t t)
-;; 	       (enable-theme 'material))
-;;   :ensure t
-;;   :defer t)
+;;   :init (load-theme 'material t)
+;;   :ensure t)
 
 ; Ample Themes
 ;; (use-package ample-theme
