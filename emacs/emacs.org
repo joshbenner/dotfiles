@@ -9,6 +9,10 @@
 #+BEGIN_SRC emacs-lisp
   (global-unset-key (kbd "C-z"))
 #+END_SRC
+** Bar cursor
+#+BEGIN_SRC emacs-lisp
+  (setq-default cursor-type 'bar)
+#+END_SRC
 ** Hide tool bar in X interface
 #+BEGIN_SRC emacs-lisp
   (tool-bar-mode -1)
