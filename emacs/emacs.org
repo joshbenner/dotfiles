@@ -22,9 +22,19 @@
   (push '(font . "DejaVu Sans Mono-10") default-frame-alist)
 #+END_SRC
 ** Stop the backup file madness
+Backups to .emacs.d subfolder.
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
   (setq backup-by-copying t)
+#+END_SRC
+
+Put autosave files in temporary directory.
+#+BEGIN_SRC emacs-lisp
+  (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+#+END_SRC
+** No scrollbar
+#+BEGIN_SRC emacs-lisp
+  (scroll-bar-mode -1)
 #+END_SRC
 ** Powerline
 Pretty mode line.
@@ -113,6 +123,10 @@ This only shows one star on each heading line, and handles the indentation for y
 #+BEGIN_SRC emacs-lisp
   (setq org-startup-indented t)
 #+END_SRC
+** Stop inserting blank lines around headings
+#+BEGIN_SRC emacs-lisp
+  (setq org-blank-before-new-entry nil)
+#+END_SRC
 * Editing
 ** Parens
 #+BEGIN_SRC emacs-lisp
@@ -120,6 +134,10 @@ This only shows one star on each heading line, and handles the indentation for y
   (setq show-paren-delay 0)
   (use-package smartparens
     :ensure t)
+#+END_SRC
+** Replace selected text on typing
+#+BEGIN_SRC emacs-lisp
+  (delete-selection-mode 1)
 #+END_SRC
 * Languages
 ** PHP
