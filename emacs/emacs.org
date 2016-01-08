@@ -1,3 +1,4 @@
+#+TITLE: Emacs Configuration
 #+STARTUP: indent
 
 * General App Config
@@ -86,6 +87,43 @@ Save sessions so you don't have to reopen files.
   (use-package workgroups2
     :ensure t
     :init (workgroups-mode 1))
+#+END_SRC
+** Window moving
+Global keys.
+#+BEGIN_SRC emacs-lisp
+  (use-package buffer-move
+    :ensure t)
+  (global-set-key (kbd "<C-S-up>")     'buf-move-up)
+  (global-set-key (kbd "<C-S-down>")   'buf-move-down)
+  (global-set-key (kbd "<C-S-left>")   'buf-move-left)
+  (global-set-key (kbd "<C-S-right>")  'buf-move-right)
+#+END_SRC
+
+Org-mode keys (hides C-S-<arrow> default bindings)
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook '(lambda ()
+     (local-set-key [C-S-up]    'buf-move-up)
+     (local-set-key [C-S-down]  'buf-move-down)
+     (local-set-key [C-S-left]  'buf-move-left)
+     (local-set-key [C-S-right] 'buf-move-right)))
+#+END_SRC
+** Window switching
+#+BEGIN_SRC emacs-lisp
+  (use-package switch-window
+    :ensure t
+    :init (global-set-key (kbd "C-x o") 'switch-window))
+#+END_SRC
+** Auto-load elisp files
+Any elisp files in =~/.emacs.local.d/= will be auto-loaded.
+#+BEGIN_SRC emacs-lisp
+  (defun my/load-elisp-directory (path)
+    (let ((file-pattern "\\.elc?$"))
+      (when (file-directory-p path)
+        (mapcar (lambda (lisp-file)
+                  (load-file lisp-file))
+                (directory-files (expand-file-name path) t file-pattern)))))
+
+  (my/load-elisp-directory "~/.emacs.local.d")
 #+END_SRC
 * Display Tweaks
 ** Show curly arrows when wrapping a line
