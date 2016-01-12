@@ -165,6 +165,26 @@ This only shows one star on each heading line, and handles the indentation for y
 #+BEGIN_SRC emacs-lisp
   (setq org-blank-before-new-entry nil)
 #+END_SRC
+** Download images dragged over buffer
+#+BEGIN_SRC emacs-lisp
+  (use-package org-download :ensure t)
+#+END_SRC
+** Capture
+*** Default Directory
+Set a default org directory because we need one... but local environment should set in its .emacs.local.d.
+#+BEGIN_SRC emacs-lisp
+  (setq org-directory "~/Dropbox/org")
+#+END_SRC
+*** Templates
+#+BEGIN_SRC emacs-lisp
+  (setq org-capture-templates
+      `(("t" "Task" entry (file+headline "" "Tasks")
+         "* TODO %?\n  %u\n  %a")
+        ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org"))
+         "* %?\nEntered on %U\n  %i\n  %a")
+        )
+      )
+#+END_SRC
 * Editing
 ** Parens
 #+BEGIN_SRC emacs-lisp
