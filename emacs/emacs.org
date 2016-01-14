@@ -185,6 +185,10 @@ Set a default org directory because we need one... but local environment should 
         )
       )
 #+END_SRC
+** Agenda Configuration
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-start-on-weekday 0)
+#+END_SRC
 * Editing
 ** Parens
 #+BEGIN_SRC emacs-lisp
