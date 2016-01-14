@@ -3,42 +3,51 @@
 
 * General App Config
 ** Disable startup screen
+#+name: startup
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-screen +1)
 #+END_SRC
 ** Disable ctrl-z
+#+name: startup
 #+BEGIN_SRC emacs-lisp
   (global-unset-key (kbd "C-z"))
 #+END_SRC
 ** Bar cursor
+#+name: startup
 #+BEGIN_SRC emacs-lisp
   (setq-default cursor-type 'bar)
 #+END_SRC
 ** Hide tool bar in X interface
+#+name: startup
 #+BEGIN_SRC emacs-lisp
   (tool-bar-mode -1)
 #+END_SRC
 ** Font
+#+name: startup
 #+BEGIN_SRC emacs-lisp
   (push '(font . "DejaVu Sans Mono-10") default-frame-alist)
 #+END_SRC
 ** Stop the backup file madness
 Backups to .emacs.d subfolder.
+#+name: startup
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
   (setq backup-by-copying t)
 #+END_SRC
 
 Put autosave files in temporary directory.
+#+name: startup
 #+BEGIN_SRC emacs-lisp
   (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 #+END_SRC
 ** No scrollbar
+#+name: startup
 #+BEGIN_SRC emacs-lisp
   (scroll-bar-mode -1)
 #+END_SRC
 ** Powerline
 Pretty mode line.
+#+name: look-and-feel
 #+BEGIN_SRC emacs-lisp
   (use-package powerline
     :ensure t
@@ -46,6 +55,7 @@ Pretty mode line.
   #+END_SRC
 ** Helm
 Completion framework used when looking for stuff in a lot of places in Emacs.
+#+name: interface
 #+BEGIN_SRC emacs-lisp
   (use-package helm
     :ensure t
@@ -68,6 +78,7 @@ Completion framework used when looking for stuff in a lot of places in Emacs.
 #+END_SRC
 ** Projectile
 Project management.
+#+name: interface
 #+BEGIN_SRC emacs-lisp
   (use-package helm-projectile
     :ensure t
@@ -83,6 +94,7 @@ Project management.
 #+END_SRC
 ** Workgroups
 Save sessions so you don't have to reopen files.
+#+name: session
 #+BEGIN_SRC emacs-lisp
   (use-package workgroups2
     :ensure t
@@ -90,6 +102,7 @@ Save sessions so you don't have to reopen files.
 #+END_SRC
 ** Window moving
 Global keys.
+#+name: interface
 #+BEGIN_SRC emacs-lisp
   (use-package buffer-move
     :ensure t)
@@ -100,6 +113,7 @@ Global keys.
 #+END_SRC
 
 Org-mode keys (hides C-S-<arrow> default bindings)
+#+name: interface
 #+BEGIN_SRC emacs-lisp
   (add-hook 'org-mode-hook '(lambda ()
      (local-set-key [C-S-up]    'buf-move-up)
@@ -108,6 +122,7 @@ Org-mode keys (hides C-S-<arrow> default bindings)
      (local-set-key [C-S-right] 'buf-move-right)))
 #+END_SRC
 ** Window switching
+#+name: interface
 #+BEGIN_SRC emacs-lisp
   (use-package switch-window
     :ensure t
@@ -115,6 +130,7 @@ Org-mode keys (hides C-S-<arrow> default bindings)
 #+END_SRC
 ** Auto-load elisp files
 Any elisp files in =~/.emacs.local.d/= will be auto-loaded.
+#+name: autoload
 #+BEGIN_SRC emacs-lisp
   (defun my/load-elisp-directory (path)
     (let ((file-pattern "\\.elc?$"))
@@ -128,10 +144,12 @@ Any elisp files in =~/.emacs.local.d/= will be auto-loaded.
 * Display Tweaks
 ** Show curly arrows when wrapping a line
 From: http://www.emacswiki.org/emacs/VisualLineMode
+#+name: look-and-feel
 #+BEGIN_SRC emacs-lisp
   (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 #+END_SRC
 ** When using visual line mode, use better indenting too
+#+name: look-and-feel
 #+BEGIN_SRC emacs-lisp
   (use-package adaptive-wrap
     :ensure t)
@@ -143,39 +161,47 @@ From: http://www.emacswiki.org/emacs/VisualLineMode
       (diminish 'visual-line-mode)))
 #+END_SRC
 ** Use Visual Line Mode for text modes
+#+name: look-and-feel
 #+BEGIN_SRC emacs-lisp
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 #+END_SRC
 
 * Org mode config
 ** Use Visual Line Mode for org mode
+#+name: look-and-feel
 #+BEGIN_SRC emacs-lisp
   (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
 #+END_SRC
 ** Dates when todo is done
+#+name: behavior
 #+BEGIN_SRC emacs-lisp
   (setq org-log-done t)
 #+END_SRC
 ** Use indented mode
 This only shows one star on each heading line, and handles the indentation for you. Little cleaner.
+#+name: look-and-feel
 #+BEGIN_SRC emacs-lisp
   (setq org-startup-indented t)
 #+END_SRC
 ** Stop inserting blank lines around headings
+#+name: behavior
 #+BEGIN_SRC emacs-lisp
   (setq org-blank-before-new-entry nil)
 #+END_SRC
 ** Download images dragged over buffer
+#+name: behavior
 #+BEGIN_SRC emacs-lisp
   (use-package org-download :ensure t)
 #+END_SRC
 ** Capture
 *** Default Directory
 Set a default org directory because we need one... but local environment should set in its .emacs.local.d.
+#+name: startup
 #+BEGIN_SRC emacs-lisp
   (setq org-directory "~/Dropbox/org")
 #+END_SRC
 *** Templates
+#+name: behavior
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
       `(("t" "Task" entry (file+headline "" "Tasks")
@@ -186,11 +212,13 @@ Set a default org directory because we need one... but local environment should 
       )
 #+END_SRC
 ** Agenda Configuration
+#+name: interface
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-start-on-weekday 0)
 #+END_SRC
 * Editing
 ** Parens
+#+name: behavior
 #+BEGIN_SRC emacs-lisp
   (show-paren-mode 1)
   (setq show-paren-delay 0)
@@ -198,11 +226,13 @@ Set a default org directory because we need one... but local environment should 
     :ensure t)
 #+END_SRC
 ** Replace selected text on typing
+#+name: behavior
 #+BEGIN_SRC emacs-lisp
   (delete-selection-mode 1)
 #+END_SRC
 * Languages
 ** PHP
+#+name: programming
 #+BEGIN_SRC emacs-lisp
   (use-package web-mode
     :ensure t
@@ -219,24 +249,41 @@ Set a default org directory because we need one... but local environment should 
                                        (c-set-offset 'case-label '+))))
 #+END_SRC
 ** Python
+#+name: programming
 #+BEGIN_SRC emacs-lisp
   (use-package python-mode
     :ensure t
     :mode "\.py$")
 #+END_SRC
 ** YAML
+#+name: programming
 #+BEGIN_SRC emacs-lisp
   (use-package yaml-mode
     :ensure t
     :mode "\.yml$")
 #+END_SRC
 ** Fish Shell
+#+name: programming
 #+BEGIN_SRC emacs-lisp
   (use-package fish-mode
     :ensure t
     :mode "\.fish$")
 #+END_SRC
+** Haskell
+Strongly typed, pure functional language.
+#+name: programming
+#+BEGIN_SRC emacs-lisp
+  (use-package haskell-mode
+    :ensure t
+    :mode "\.hs$")
+
+  (use-package hi2
+    :ensure t
+    :commands turn-on-hi2
+    :init (add-hook 'haskell-mode-hook 'turn-on-hi2))
+#+END_SRC
 ** Erlang
+#+name: programming
 #+BEGIN_SRC emacs-lisp
   (use-package erlang
     :ensure t
@@ -247,19 +294,36 @@ Set a default org directory because we need one... but local environment should 
                                                                 "-hidden")))))
 #+END_SRC
 ** JSON
+#+name: programming
 #+BEGIN_SRC emacs-lisp
   (use-package json-mode
     :ensure t
     :mode ("\.json$" . json-mode))
 #+END_SRC
 
-#+RESULTS:
-
 * Publish
 ** HTMLize
+#+name: programming
 #+BEGIN_SRC emacs-lisp
   (use-package htmlize
     :ensure t
     :defer t
     :commands (htmlize-region htmlize-buffer htmlize-file))
+#+END_SRC
+
+* Config Layout
+This imports code from the named blocks above. This is done so that some things happen in a specific order (such as defining hooks before reloading buffers).
+#+BEGIN_SRC emacs-lisp :tangle yes :noweb no-export :exports code
+  ;;;; Do not modify this file by hand.  It was automatically generated
+  ;;;; from `emacs.org` in the same directory. See that file for more
+  ;;;; information.
+  ;;;;
+
+  <<startup>>
+  <<look-and-feel>>
+  <<interface>>
+  <<behavior>>
+  <<programming>>
+  <<autoload>>
+  <<session>>
 #+END_SRC
