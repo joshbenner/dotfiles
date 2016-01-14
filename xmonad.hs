@@ -25,6 +25,7 @@ main = do
         , startupHook = do 
             startupHook gnomeConfig
             setWMName "LG3D"
+        , manageHook = manageDocks <+> myManageHook <+> manageHook gnomeConfig
         --, manageHook = manageDocks <+> manageHook gnomeConfig
         --, logHook = dynamicLogWithPP xmobarPP
         --    { ppOutput = hPutStrLn xmproc
@@ -58,3 +59,9 @@ myKeys =
              | (i, k) <- zip workSpaceNames [xK_1 .. xK_9]
              , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
         ]
+
+myManageHook = composeAll
+               [ className =? "Guake" --> doFloat
+               , className =? "Tilda" --> doFloat
+               , className =? "Tomboy"   --> doFloat
+               ]
