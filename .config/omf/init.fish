@@ -1,4 +1,4 @@
-set my_user_paths ~/bin ~/go/bin ~/.composer/vendor/bin /usr/local/sbin ~/.local/bin /usr/local/go/bin
+set my_user_paths ~/bin ~/go/bin ~/.composer/vendor/bin /usr/local/sbin ~/.local/bin /usr/local/go/bin ~/bin/google-cloud-sdk/bin
 
 for mypath in $my_user_paths
   if test -d $mypath
