@@ -230,6 +230,19 @@ Set a default org directory because we need one... but local environment should 
 #+BEGIN_SRC emacs-lisp
   (delete-selection-mode 1)
 #+END_SRC
+** Unfill paragraphs
+For the time when you want that paragraph in one line.
+From: http://www.emacswiki.org/emacs-test/UnfillParagraph
+#+BEGIN_SRC emacs-lisp
+  ;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph    
+  (defun unfill-paragraph (&optional region)
+    "Takes a multi-line paragraph and makes it into a single line of text."
+    (interactive (progn (barf-if-buffer-read-only) '(t)))
+    (let ((fill-column (point-max)))
+      (fill-paragraph nil region)))
+
+  (define-key global-map "\M-Q" 'unfill-paragraph)
+#+END_SRC
 * Languages
 ** PHP
 #+name: programming
@@ -302,15 +315,29 @@ Strongly typed, pure functional language.
 #+END_SRC
 
 * Publish
+#+BEGIN_SRC emacs-lisp
+  ;; Use HTML5 elements.
+  (setq org-html-html5-fancy t)
+
+  ;; Use some nice styles.
+  (setq org-html-head "
+  <link rel='stylesheet' type='text/css' href='http://www.pirilampo.org/styles/readtheorg/css/htmlize.css'/>
+  <link rel='stylesheet' type='text/css' href='http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css'/>
+
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+  <script type='text/javascript' src='http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.js'></script>
+  <script type='text/javascript' src='http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js'></script>
+  ")
+#+END_SRC
 ** HTMLize
-#+name: programming
+#+name: behavior
 #+BEGIN_SRC emacs-lisp
   (use-package htmlize
     :ensure t
     :defer t
     :commands (htmlize-region htmlize-buffer htmlize-file))
 #+END_SRC
-
 * Config Layout
 This imports code from the named blocks above. This is done so that some things happen in a specific order (such as defining hooks before reloading buffers).
 #+BEGIN_SRC emacs-lisp :tangle yes :noweb no-export :exports code
