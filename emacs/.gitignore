@@ -5,3 +5,4 @@ saves
 emacs.el
 auto-save-list
 .org-id-locations
+session.*
