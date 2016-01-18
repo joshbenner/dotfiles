@@ -233,6 +233,7 @@ Set a default org directory because we need one... but local environment should 
 ** Unfill paragraphs
 For the time when you want that paragraph in one line.
 From: http://www.emacswiki.org/emacs-test/UnfillParagraph
+#+name: behavior
 #+BEGIN_SRC emacs-lisp
   ;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph    
   (defun unfill-paragraph (&optional region)
