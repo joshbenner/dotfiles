@@ -215,6 +215,7 @@ Set a default org directory because we need one... but local environment should 
 #+name: interface
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-start-on-weekday 0)
+  (global-set-key "\C-ca" 'org-agenda)
 #+END_SRC
 * Editing
 ** Parens
@@ -316,6 +317,7 @@ Strongly typed, pure functional language.
 #+END_SRC
 
 * Publish
+#+name: behavior
 #+BEGIN_SRC emacs-lisp
   ;; Use HTML5 elements.
   (setq org-html-html5-fancy t)
