@@ -216,6 +216,8 @@ Set a default org directory because we need one... but local environment should 
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-start-on-weekday 0)
   (global-set-key "\C-ca" 'org-agenda)
+  (setq org-agenda-todo-ignore-scheduled t)
+  (setq org-agenda-todo-ignore-deadlines t)
 #+END_SRC
 * Editing
 ** Parens
@@ -321,6 +323,9 @@ Strongly typed, pure functional language.
 #+BEGIN_SRC emacs-lisp
   ;; Use HTML5 elements.
   (setq org-html-html5-fancy t)
+
+  ;; Ignore timestamps and publish when I say!
+  (setq org-publish-use-timestamps-flag nil)
 
   ;; Use some nice styles.
   (setq org-html-head "
