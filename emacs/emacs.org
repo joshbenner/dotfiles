@@ -186,7 +186,7 @@ This only shows one star on each heading line, and handles the indentation for y
 ** Stop inserting blank lines around headings
 #+name: behavior
 #+BEGIN_SRC emacs-lisp
-  (setq org-blank-before-new-entry nil)
+  ;(setq org-blank-before-new-entry nil)
 #+END_SRC
 ** Download images dragged over buffer
 #+name: behavior
