@@ -337,6 +337,13 @@ Strongly typed, pure functional language.
     :ensure t
     :mode ("\.json$" . json-mode))
 #+END_SRC
+** Markdown
+Human-compatible, plain-text markup language.
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :ensure t
+    :mode "\\.md$")
+#+END_SRC
 * Config Layout
 This imports code from the named blocks above. This is done so that some things happen in a specific order (such as defining hooks before reloading buffers).
 #+BEGIN_SRC emacs-lisp :tangle yes :noweb no-export :exports code
