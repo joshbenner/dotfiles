@@ -32,7 +32,6 @@ main = do
         --    , ppTitle = xmobarColor "green" "" . shorten 50
         --    }
         , workspaces = myWorkspaces nScreens
-        --, workspaces = workSpaceNames
         , terminal = "x-terminal-emulator"
         } `additionalKeys` myKeys
 
@@ -64,4 +63,5 @@ myManageHook = composeAll
                [ className =? "Guake" --> doFloat
                , className =? "Tilda" --> doFloat
                , className =? "Tomboy"   --> doFloat
+               , className =? "Update-manager" --> doFloat
                ]
