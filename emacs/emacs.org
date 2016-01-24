@@ -106,14 +106,14 @@ Global keys.
 #+BEGIN_SRC emacs-lisp
   (use-package buffer-move
     :ensure t)
-  (global-set-key (kbd "<C-S-up>")     'buf-move-up)
-  (global-set-key (kbd "<C-S-down>")   'buf-move-down)
-  (global-set-key (kbd "<C-S-left>")   'buf-move-left)
-  (global-set-key (kbd "<C-S-right>")  'buf-move-right)
+  (global-set-key (kbd "<C-M-S-up>")     'buf-move-up)
+  (global-set-key (kbd "<C-M-S-down>")   'buf-move-down)
+  (global-set-key (kbd "<C-M-S-left>")   'buf-move-left)
+  (global-set-key (kbd "<C-M-S-right>")  'buf-move-right)
 #+END_SRC
 
 Org-mode keys (hides C-S-<arrow> default bindings)
-#+name: interface
+#+name: interface-disabled
 #+BEGIN_SRC emacs-lisp
   (add-hook 'org-mode-hook '(lambda ()
      (local-set-key [C-S-up]    'buf-move-up)
@@ -167,6 +167,20 @@ From: http://www.emacswiki.org/emacs/VisualLineMode
 #+END_SRC
 
 * Org mode config
+** Enable shift-selection
+Org mode uses S-<arrow> to move things like TODO lines through
+states. This conflicts with Emacs' default of letting S-<arrow> start
+or expand marked regions. Turning on org support of shift select means
+that it will try to compromise and do selection when nothing else
+makes sense, and also allow it when a mark is already set.
+
+Unless we set it to 'always, in which case it doesn't compromise, and
+just gives up on S-<arrow>.
+
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (setq org-support-shift-select 'always)
+#+END_SRC
 ** Use Visual Line Mode for org mode
 #+name: look-and-feel
 #+BEGIN_SRC emacs-lisp
