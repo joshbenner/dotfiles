@@ -17,6 +17,11 @@
 #+BEGIN_SRC emacs-lisp
   (setq-default cursor-type 'bar)
 #+END_SRC
+** Hide menu bar
+#+name: startup
+#+BEGIN_SRC emacs-lisp
+  (menu-bar-mode -1)
+#+END_SRC
 ** Hide tool bar in X interface
 #+name: startup
 #+BEGIN_SRC emacs-lisp
@@ -281,6 +286,18 @@ From: http://www.emacswiki.org/emacs-test/UnfillParagraph
 
   (define-key global-map "\M-Q" 'unfill-paragraph)
 #+END_SRC
+** Autocomplete via Company
+Company mode is a complete-anything framework.
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :config (progn
+              (add-hook 'prog-mode-hook 'company-mode)
+
+              (bind-key "C-n" #'company-select-next company-active-map)
+              (bind-key "C-p" #'company-select-previous company-active-map)))
+#+END_SRC
 * Languages
 ** PHP
 #+name: programming
@@ -306,6 +323,34 @@ From: http://www.emacswiki.org/emacs-test/UnfillParagraph
     :ensure t
     :mode "\.py$")
 #+END_SRC
+
+Configure jedi and company-mode to provide auto-completion for python.
+#+name: programming
+#+begin_src emacs-lisp
+  (use-package jedi
+    :ensure t
+    :commands jedi:setup
+    :config (progn
+              (setq jedi:use-shortcuts t)
+              (jedi:install-server)))
+
+  (use-package pungi
+    :ensure t
+    :commands pungi:setup-jedi
+    :init (add-hook #'python-mode-hook
+                    (lambda ()
+                      (when buffer-file-name
+                        #'pungi:setup-jedi))))
+
+  (use-package company-jedi
+    :ensure t
+    :config (progn
+              (defun my/enable-company-jedi ()
+                (when buffer-file-name
+                  (add-to-list 'company-backends 'company-jedi)))
+              (add-hook #'python-mode-hook
+                        #'my/enable-company-jedi)))
+#+end_src
 ** YAML
 #+name: programming
 #+BEGIN_SRC emacs-lisp
