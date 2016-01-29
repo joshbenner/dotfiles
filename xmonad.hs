@@ -42,7 +42,7 @@ myLayouts = desktopLayoutModifiers (tiled ||| Mirror tiled ||| full)
         tiled = spacing 12 $ Tall 1 (3/100) (1/2)
         full = noBorders Full
 
-workSpaceNames = ["1", "2", "3", "4"]
+workSpaceNames = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 myWorkspaces nScreens = withScreens nScreens workSpaceNames
 
