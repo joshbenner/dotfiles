@@ -41,8 +41,12 @@
 ;; 	     :ensure t
 ;; 	     :defer t)
 
-(use-package monokai-theme
-  :init (load-theme 'monokai t)
+;; (use-package monokai-theme
+;;   :init (load-theme 'monokai t)
+;;   :ensure t)
+
+(use-package leuven-theme
+  :init (load-theme 'leuven t)
   :ensure t)
 
 ;(use-package base16-theme
