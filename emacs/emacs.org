@@ -118,13 +118,13 @@ Global keys.
 #+END_SRC
 
 Org-mode keys (hides C-S-<arrow> default bindings)
-#+name: interface-disabled
+#+name: interface
 #+BEGIN_SRC emacs-lisp
   (add-hook 'org-mode-hook '(lambda ()
-     (local-set-key [C-S-up]    'buf-move-up)
-     (local-set-key [C-S-down]  'buf-move-down)
-     (local-set-key [C-S-left]  'buf-move-left)
-     (local-set-key [C-S-right] 'buf-move-right)))
+     (local-set-key [C-M-S-up]    'buf-move-up)
+     (local-set-key [C-M-S-down]  'buf-move-down)
+     (local-set-key [C-M-S-left]  'buf-move-left)
+     (local-set-key [C-M-S-right] 'buf-move-right)))
 #+END_SRC
 ** Window switching
 #+name: interface
