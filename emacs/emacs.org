@@ -403,6 +403,21 @@ Human-compatible, plain-text markup language.
     :ensure t
     :mode "\\.md$")
 #+END_SRC
+* Misc Features
+** Calendar
+Basic calendar functionality.
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (use-package calfw
+    :ensure t
+    :init (require 'calfw-ical))
+#+END_SRC
+
+To use ical integration, you need to load an ical file:
+#+name: example
+#+BEGIN_SRC emacs-lisp
+  (cfw:open-ical-calendar "http://www.google.com/cal/.../basic.ics")
+#+END_SRC
 * Config Layout
 This imports code from the named blocks above. This is done so that some things happen in a specific order (such as defining hooks before reloading buffers).
 #+BEGIN_SRC emacs-lisp :tangle yes :noweb no-export :exports code
