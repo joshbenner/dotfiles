@@ -418,6 +418,20 @@ To use ical integration, you need to load an ical file:
 #+BEGIN_SRC emacs-lisp
   (cfw:open-ical-calendar "http://www.google.com/cal/.../basic.ics")
 #+END_SRC
+** Emacs Server
+#+name: session
+#+BEGIN_SRC emacs-lisp
+  (server-start)
+#+END_SRC
+** Kill emacs via signal
+Kill emacs with =kill <pid> -USR1=.
+#+name: session
+#+BEGIN_SRC emacs-lisp
+  (define-key special-event-map (kbd "<sigusr1>")
+                  (lambda ()
+                    (interactive)
+                    (save-buffers-kill-emacs t)))
+#+END_SRC
 * Config Layout
 This imports code from the named blocks above. This is done so that some things happen in a specific order (such as defining hooks before reloading buffers).
 #+BEGIN_SRC emacs-lisp :tangle yes :noweb no-export :exports code
