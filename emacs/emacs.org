@@ -258,6 +258,70 @@ Set a default org directory because we need one... but local environment should 
   ;  :defer t
   ;  :commands (htmlize-region htmlize-buffer htmlize-file))
 #+END_SRC
+** Babel
+*** Support HTTP requests via Babel
+#+name: programming
+#+BEGIN_SRC emacs-lisp
+  (use-package ob-http
+    :ensure t)
+#+END_SRC
+*** Babel Language Eval
+Org-babel evaluation will be turned on for the following
+languages. Setting ~Confirm Evaluation~ to ~No~ disables the [[http://orgmode.org/manual/Code-evaluation-security.html][security
+prompt]] for that language.
+
+#+name: org-babel-languages
+| Language     | Alias | Confirm Evaluation? | Description                     |
+|--------------+-------+---------------------+---------------------------------|
+| emacs-lisp   |       | Yes                 | Emacs Lisp                      |
+| graphviz-dot | dot   | No                  | Directed and undirected graphs  |
+| gnuplot      |       | No                  | Graphs                          |
+| ditaa        |       | No                  | Ascii diagrams                  |
+| plantuml     |       | No                  | Flow charts                     |
+| mscgen       |       | No                  | Message sequence charts         |
+| haskell      |       | Yes                 | A pure, functional language     |
+| python       |       | Yes                 | A dynamic, all-purpose language |
+| ruby         |       | Yes                 | A dynamic, all-purpose language |
+| sh           |       | Yes                 | Shell scripts                   |
+| http         |       | No                  | HTTP requests                   |
+| sql          |       | No                  | SQL Queries                     |
+| elixir       |       | Yes                 | Elixir                          |
+
+#+name: babel
+#+BEGIN_SRC emacs-lisp :noweb yes
+  (defvar my/org-babel-evaluated-languages ())
+  (defvar my/org-src-lang-modes ())
+  (defvar my/org-babel-no-confirm-languages ())
+
+  (defun my/org-confirm-babel-evaluate (lang body)
+    (not (member (intern lang) my/org-babel-no-confirm-languages)))
+
+  (let ((language-table (cddr '<<org-babel-languages()>>)))
+    (mapcar (lambda (lang-pair)
+              (let* ((alias (if (not (string= (cadr lang-pair) "")) (cadr lang-pair)))
+                     (lang (intern (car lang-pair)))
+                     (lang-or-alias (if alias (intern alias) lang))
+                     (confirm (not (string= (cl-caddr lang-pair) "No"))))
+                (if alias
+                    (add-to-list 'my/org-src-lang-modes (cons alias lang)))
+                (if (not confirm)
+                    (add-to-list 'my/org-babel-no-confirm-languages lang-or-alias))
+                (add-to-list 'my/org-babel-evaluated-languages lang-or-alias)
+                lang-or-alias))
+            language-table))
+
+  (mapcar (lambda (alias)
+            (add-to-list 'org-src-lang-modes alias))
+          my/org-src-lang-modes)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   (mapcar (lambda (lang)
+             (cons lang t))
+           my/org-babel-evaluated-languages))
+
+  (setq org-confirm-babel-evaluate 'my/org-confirm-babel-evaluate)
+#+END_SRC
 * Editing
 ** Parens
 #+name: behavior
@@ -398,10 +462,22 @@ Strongly typed, pure functional language.
 #+END_SRC
 ** Markdown
 Human-compatible, plain-text markup language.
+#+name: programming
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
     :ensure t
     :mode "\\.md$")
+#+END_SRC
+** Elixir
+#+name: programming
+#+BEGIN_SRC emacs-lisp
+  (use-package elixir-mode
+    :ensure t
+    :mode ("\.exs?$" . elixir-mode))
+  (use-package alchemist
+    :ensure t)
+  (use-package ob-elixir
+    :ensure t)
 #+END_SRC
 * Misc Features
 ** Calendar
@@ -433,7 +509,9 @@ Kill emacs with =kill <pid> -USR1=.
                     (save-buffers-kill-emacs t)))
 #+END_SRC
 * Config Layout
-This imports code from the named blocks above. This is done so that some things happen in a specific order (such as defining hooks before reloading buffers).
+This imports code from the named blocks above. This is done so that
+some things happen in a specific order (such as defining hooks before
+reloading buffers).
 #+BEGIN_SRC emacs-lisp :tangle yes :noweb no-export :exports code
   ;;;; Do not modify this file by hand.  It was automatically generated
   ;;;; from `emacs.org` in the same directory. See that file for more
@@ -445,6 +523,7 @@ This imports code from the named blocks above. This is done so that some things 
   <<interface>>
   <<behavior>>
   <<programming>>
+  <<babel>>
   <<autoload>>
   <<session>>
 #+END_SRC
