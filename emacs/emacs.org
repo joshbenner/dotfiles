@@ -328,8 +328,12 @@ prompt]] for that language.
 #+BEGIN_SRC emacs-lisp
   (show-paren-mode 1)
   (setq show-paren-delay 0)
-  (use-package smartparens
-    :ensure t)
+  ;; (use-package smartparens
+  ;;   :ensure t
+  ;;   :init (require 'smartparents-config))
+  (use-package autopair
+    :ensure t
+    :init (autopair-global-mode))
 #+END_SRC
 ** Replace selected text on typing
 #+name: behavior
