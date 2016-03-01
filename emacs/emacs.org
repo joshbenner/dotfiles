@@ -470,7 +470,9 @@ Human-compatible, plain-text markup language.
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
     :ensure t
-    :mode "\\.md$")
+    :mode "\\.(md|markdown|mdown)$")
+  (setq markdown-command
+        "pandoc -c ~/.emacs.d/gfm-pandoc.css --from markdown_github -t html5 --mathjax --highlight-style pygments --standalone")
 #+END_SRC
 ** Elixir
 #+name: programming
@@ -482,6 +484,12 @@ Human-compatible, plain-text markup language.
     :ensure t)
   (use-package ob-elixir
     :ensure t)
+#+END_SRC
+** Docker
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode
+    :ensure t
+    :mode ("^Dockerfile$" . dockerfile-mode))
 #+END_SRC
 * Misc Features
 ** Calendar
