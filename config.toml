@@ -113,13 +113,19 @@
 
 [tasks.emacs]
 	links = [
-		[".emacs.d", "emacs"]
+		[".emacs.d", "emacs"],
+		["bin/emacs"]
+	]
+
+[tasks.base]
+	links = [
+		[".config/systemd"]
 	]
 
 # Config Profiles
 
 [tasks.common]
-	deps = ["fish", "xmonad", "emacs"]
+	deps = ["base", "fish", "xmonad", "emacs"]
 	links = [
 		[".config/terminator/config"],
 		[".config/synapse/config.json"]
