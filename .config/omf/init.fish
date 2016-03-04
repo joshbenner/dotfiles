@@ -43,6 +43,10 @@ function grp
   grep -sHirn $argv .
 end
 
+function gitlog
+  git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+end
+
 # set fish_function_path $fish_function_path "$HOME/.local/lib/python2.7/site-packages/powerline/bindings/fish"
 # powerline-setup
 
