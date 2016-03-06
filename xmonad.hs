@@ -39,7 +39,7 @@ myModMask = mod4Mask
 
 myLayouts = desktopLayoutModifiers (tiled ||| Mirror tiled ||| full)
     where
-        tiled = spacing 12 $ Tall 1 (3/100) (1/2)
+        tiled = spacing 12 $ Tall 1 (1/100) (1/2)
         full = noBorders Full
 
 workSpaceNames = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
