@@ -128,7 +128,9 @@
 	deps = ["base", "fish", "xmonad", "emacs"]
 	links = [
 		[".config/terminator/config"],
-		[".config/synapse/config.json"]
+		[".config/synapse/config.json"],
+		[".tmux.conf", "tmux.conf"],
+		[".byobu", "byobu"]
 	]
 
 [tasks.corvus]
