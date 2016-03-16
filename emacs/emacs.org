@@ -520,6 +520,12 @@ Kill emacs with =kill <pid> -USR1=.
                     (interactive)
                     (save-buffers-kill-emacs t)))
 #+END_SRC
+** Reveal.js
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (use-package ox-reveal
+    :ensure t)
+#+END_SRC
 * Config Layout
 This imports code from the named blocks above. This is done so that
 some things happen in a specific order (such as defining hooks before
