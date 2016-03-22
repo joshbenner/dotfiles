@@ -286,6 +286,7 @@ prompt]] for that language.
 | http         |       | No                  | HTTP requests                   |
 | sql          |       | No                  | SQL Queries                     |
 | elixir       |       | Yes                 | Elixir                          |
+| clojure      |       | Yes                 | Clojure                         |
 
 #+name: babel
 #+BEGIN_SRC emacs-lisp :noweb yes
@@ -491,6 +492,25 @@ Human-compatible, plain-text markup language.
   (use-package dockerfile-mode
     :ensure t
     :mode ("^Dockerfile$" . dockerfile-mode))
+#+END_SRC
+** Clojure
+#+name: programming
+#+BEGIN_SRC emacs-lisp
+  (use-package clojure-mode
+    :ensure t
+    :mode (("\\.clj[sx]?$" . clojure-mode)
+           ("\\.edn$" . clojure-mode)))
+  (use-package elein
+    :ensure t)
+#+END_SRC
+
+Cider REPL
+#+name: programming
+#+BEGIN_SRC emacs-lisp
+  (use-package cider
+    :ensure t
+    :commands (cider-jack-in cider)
+    :config (setq org-babel-clojure-backend 'cider))
 #+END_SRC
 * Misc Features
 ** Calendar
