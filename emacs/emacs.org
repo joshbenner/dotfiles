@@ -45,6 +45,12 @@ Put autosave files in temporary directory.
 #+BEGIN_SRC emacs-lisp
   (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 #+END_SRC
+
+No lock files.
+#+name: startup
+#+BEGIN_SRC emacs-lisp
+  (setq create-lockfiles nil)
+#+END_SRC
 ** No scrollbar
 #+name: startup
 #+BEGIN_SRC emacs-lisp
