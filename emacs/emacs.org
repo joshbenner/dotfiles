@@ -57,6 +57,7 @@ No lock files.
   (scroll-bar-mode -1)
 #+END_SRC
 ** Powerline
+
 Pretty mode line.
 #+name: look-and-feel
 #+BEGIN_SRC emacs-lisp
@@ -176,7 +177,18 @@ From: http://www.emacswiki.org/emacs/VisualLineMode
 #+BEGIN_SRC emacs-lisp
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 #+END_SRC
-
+** Change active theme
+#+name: look-and-feel
+#+BEGIN_SRC emacs-lisp
+  (defun my/set-theme (theme)
+    (interactive "i")
+    (let ((theme (or theme
+                     (intern
+                      (completing-read "Choose a theme" (custom-available-themes))))))
+      (mapcar #'disable-theme custom-enabled-themes)
+      (load-theme theme t)
+      (powerline-reset)))
+#+END_SRC
 * Org mode config
 ** Enable shift-selection
 Org mode uses S-<arrow> to move things like TODO lines through
