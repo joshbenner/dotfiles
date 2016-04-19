@@ -78,6 +78,24 @@
 		["@install", "gnome-session-xmonad"]
 	]
 
+[tasks.install_powerline]
+	cmds = [
+		["pip", "install", "--user", "powerline-status"],
+		["pip", "install", "--user", "git+git://github.com/powerline/powerline"]
+	]
+
+[tasks.install_powerline__ubuntu]
+	deps = ["install_powerline"]
+	cmds = [
+		["wget", "https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf"],
+		["wget", "https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf"],
+		["mkdir", "-p", "~/.fonts"],
+		["mv", "-f", "PowerlineSymbols.otf", "~/.fonts/"],
+		["fc-cache", "-vf", "~/.fonts/"],
+		["mkdir", "-p", "~/.config/fontconfig/conf.d"],
+		["mv", "-f", "10-powerline-symbols.conf", "~/.config/fontconfig/conf.d/"]
+	]
+
 # Configurations
 
 [tasks.fish]
