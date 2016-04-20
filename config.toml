@@ -162,3 +162,7 @@
 
 [tasks.work]
 	deps = ["common", "git_work"]
+
+[tasks.mimas]
+	deps = ["fish", "git_personal", "git_work", "emacs"]
+
