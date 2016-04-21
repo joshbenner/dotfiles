@@ -1,4 +1,4 @@
-set my_user_paths ~/bin ~/go/bin ~/.composer/vendor/bin /usr/local/sbin ~/.local/bin /usr/local/go/bin ~/bin/google-cloud-sdk/bin
+set my_user_paths ~/bin ~/go/bin ~/.composer/vendor/bin /usr/local/sbin ~/.local/bin /usr/local/go/bin ~/bin/go/bin  ~/bin/google-cloud-sdk/bin
 
 for mypath in $my_user_paths
   if test -d $mypath
@@ -11,7 +11,11 @@ set -e my_user_paths
 set -e mypath
 set -e found_user_paths
 
-set -gx GOPATH ~/go
+if test -d ~/go
+  set -gx GOPATH ~/go
+else if test -d ~/bin/go/bin
+  set -gx GOPATH ~/bin/go/bin
+end
 
 set -gx LSCOLORS dxgxcxdxcxegedabagacad
 
