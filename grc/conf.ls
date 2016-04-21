@@ -22,11 +22,11 @@ regexp=(-|([bcCdDlMnpPs?]))(?=[-r][-w][-xsStT][-r][-w][-xsStT][-r][-w][-xsStT])
 colours=unchanged,unchanged,bold blue
 =======
 # Dir names blue
-regexp=d[-r][-w][-xsStT][-r][-w][-xsStT][-r][-w][-xsStT] +.+? +.+? +.+? +.+? +.+? +.+? +.+? (.+)
+regexp=d[-r][-w][-xsStT][-r][-w][-xsStT][-r][-w][-xsStT][+@]? +.+? +.+? +.+? +.+? +.+? +.+? +.+? (.+)
 colours=unchanged,bold blue
 =======
 # Symlinks
-regexp=(l)[-r][-w][-xsStT][-r][-w][-xsStT][-r][-w][-xsStT] +.+? +.+? +.+? +.+? +.+? +.+? +.+? (.+) (->) (.+)
+regexp=(l)[-r][-w][-xsStT][-r][-w][-xsStT][-r][-w][-xsStT][+@]? +.+? +.+? +.+? +.+? +.+? +.+? +.+? (.+) (->) (.+)
 colours=unchanged,bold cyan,bold cyan,bold yellow,bold magenta
 =======
 # User perms.
