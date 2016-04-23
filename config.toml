@@ -121,6 +121,51 @@
 [tasks.install_powerline__xenial]
 	deps = ["install_powerline__trusty"]
 
+[tasks.install_pycharm__ubuntu]
+	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "pycharm", "2016.1.2"]]
+
+[tasks.install_pycharm__trusty]
+	deps = ["install_pycharm__ubuntu"]
+
+[tasks.install_pycharm__xenial]
+	deps = ["install_pycharm__ubuntu"]
+
+[tasks.install_idea__ubuntu]
+	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "idea", "2016.1.1"]]
+
+[tasks.install_idea__trusty]
+	deps = ["install_idea__ubuntu"]
+
+[tasks.install_idea__xenial]
+	deps = ["install_idea__ubuntu"]
+
+[tasks.install_phpstorm__ubuntu]
+	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "phpstorm", "2016.1"]]
+
+[tasks.install_phpstorm__trusty]
+	deps = ["install_phpstorm__ubuntu"]
+
+[tasks.install_phpstorm__xenial]
+	deps = ["install_phpstorm__ubuntu"]
+
+[tasks.install_datagrip__ubuntu]
+	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "datagrip", "2016.1"]]
+
+[tasks.install_datagrip__trusty]
+	deps = ["install_datagrip__ubuntu"]
+
+[tasks.install_datagrip__xenial]
+	deps = ["install_datagrip__ubuntu"]
+
+[tasks.install_lastpass__ubuntu]
+	cmds = [["${HM_SRC}/scripts/install_lastpass_ubuntu"]]
+
+[tasks.install_lastpass__trusty]
+	deps = ["install_lastpass__ubuntu"]
+
+[tasks.install_lastpass__xenial]
+	deps = ["install_lastpass__ubuntu"]
+
 # Configurations
 
 [tasks.fish]
@@ -163,6 +208,9 @@
 		[".config/systemd"]
 	]
 
+[tasks.devbox]
+	deps = ["install_pycharm", "install_idea"]
+
 # Config Profiles
 
 [tasks.ubuntu]
@@ -175,7 +223,7 @@
 	]
 
 [tasks.corvus]
-	deps = ["ubuntu", "git_personal"]
+	deps = ["ubuntu", "git_personal", "devbox"]
 
 [tasks.miranda]
 	deps = ["ubuntu", "git_personal"]

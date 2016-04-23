@@ -1,0 +1,67 @@
+#!/bin/bash
+
+if [ "$1" == "phpstorm" ]; then
+    download_url="https://download.jetbrains.com/webide/PhpStorm-%s.tar.gz"
+    key="phpstorm"
+    name="PhpStorm"
+    icon="webide.png"
+    bin="phpstorm.sh"
+elif [ "$1" == "idea" ]; then
+    download_url="https://download.jetbrains.com/idea/ideaIU-%s.tar.gz"
+    key="idea"
+    name="IntelliJ IDEA"
+    icon="idea.png"
+    bin="idea.sh"
+elif [ "$1" == "pycharm" ]; then
+    download_url="https://download.jetbrains.com/python/pycharm-professional-%s.tar.gz"
+    key="pycharm"
+    name="PyCharm"
+    icon="pycharm.png"
+    bin="pycharm.sh"
+elif [ "$1" == "datagrip" ]; then
+    download_url="https://download.jetbrains.com/datagrip/datagrip-%s.tar.gz"
+    key="datagrip"
+    name="DataGrip"
+    icon="product.png"
+    bin="datagrip.sh"
+fi
+
+ide_version="$2"
+
+local_archive="/tmp/${key}-${ide_version}.tar.gz"
+remote_archive=$(printf ${download_url} ${ide_version})
+install_path="/opt/${key}"
+symlink_path="${install_path}/${key}-${ide_version}"
+
+if [ -d "${symlink_path}" ]; then
+    echo "${name} ${ide_version} already downloaded."
+else
+    sudo mkdir -p ${install_path}
+    echo "Downloading ${name} ${ide_version}..."
+    wget -O ${local_archive} ${remote_archive}
+    echo "Extracting ${name}..."
+    ide_dirname=$(tar -tzf ${local_archive} | head -1 | cut -f1 -d"/")
+    ide_path="${install_path}/${ide_dirname}"
+    sudo tar -xz -f ${local_archive} -C ${install_path}
+    if [ ! -e "${symlink_path}" ]; then
+        sudo ln -s ${ide_path} ${symlink_path}
+    fi
+    rm ${local_archive}
+fi
+
+echo "Writing desktop file..."
+cat <<EOM > /tmp/${key}-${ide_version}.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=${name} ${ide_version}
+Icon=${symlink_path}/bin/${icon}
+Exec="${symlink_path}/bin/${bin}" %f
+Comment=Develop with pleasure!
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=jetbrains-${key}
+EOM
+desktop-file-install --dir="${HOME}/.local/share/applications" --delete-original /tmp/${key}-${ide_version}.desktop
+
+echo "${name} ${ide_version} installed!"
