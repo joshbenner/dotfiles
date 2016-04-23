@@ -1,90 +1,112 @@
 # Macros
 
-[macros.install__ubuntu]
+[macros.install__trusty]
 	prefix = ["sudo", "apt-get", "install", "-y"]
 
-[macros.install__wily]
+[macros.install__xenial]
 	prefix = ["sudo", "apt-get", "install", "-y"]
 
-[macros.addrepo__ubuntu]
+[macros.addrepo__trusty]
 	prefix = ["sudo", "apt-add-repository", "-y"]
 
-[macros.addrepo__wily]
+[macros.addrepo__xenial]
 	prefix = ["sudo", "apt-add-repository", "-y"]
 
 # Installers
 
-[tasks.install_base__ubuntu]
+[tasks.install_ubuntu]
 	deps = [
-		"install_python", "install_git", "install_fish",
-		"install_sublime3", "install_atom", "install_synapse",
-		"install_chrome"
+		"install_python", "install_git", "install_powerline",
+		"install_fish",	"install_sublime3", "install_atom",
+		"install_synapse", "install_chrome"
 	]
 	cmds = [
 		["@install", "xmonad", "vim", "htop", "httpie", "aptitude", 
 		"gnome-session-flashback", "terminator", "emacs"]
 	]
 
-[tasks.install_python__ubuntu]
-	cmds = [
-		["@install", "python-pip"]
-	]
+[tasks.install_python__trusty]
+	rejects = [["which", "pip"]]
+	cmds = [["@install", "python-pip"]]
 
-[tasks.install_sublime3__ubuntu]
-	cmds = [
-		["sudo", "${HM_SRC}/sublime-installer/st3install"]
-	]
+[tasks.install_python__xenial]
+	deps = ["install_python__trusty"]
 
-[tasks.install_atom__ubuntu]
+[tasks.install_sublime3__trusty]
+	rejects = [["which", "subl"]]
+	cmds = [["sudo", "${HM_SRC}/sublime-installer/st3install"]]
+
+[tasks.install_sublime3__xenial]
+	deps = ["install_sublime3__trusty"]
+
+[tasks.install_atom__trusty]
+	rejects = [["which", "atom"]]
 	cmds = [
 		["@addrepo", "ppa:webupd8team/atom"],
 		["sudo", "apt-get", "update"],
 		["@install", "atom"]
 	]
 
-[tasks.install_fish__ubuntu]
+[tasks.install_atom__xenial]
+	deps = ["install_atom__trusty"]
+
+[tasks.install_fish_shell__trusty]
+	rejects = [["which", "fish"]]
 	deps = ["fish"]
 	cmds = [
 		["sudo", "pip", "install", "virtualfish"],
 		["@addrepo", "ppa:fish-shell/release-2"],
 		["sudo", "apt-get", "update"],
-		["@install", "fish", "grc"],
-		["fish", "-c", "omf install"]
+		["@install", "fish", "grc"]
 	]
 
+[tasks.install_fish_shell__xenial]
+	rejects = [["which", "fish"]]
+	deps = ["fish"]
+	cmds = [["@install", "fish", "grc"]]
+
+[tasks.install_omf]
+	rejects = [["ls", "$HOME/.local/share/omf"]]
+	deps = ["install_fish_shell", "fish"]
+	cmds = [["${HM_SRC}/scripts/install_omf"]]
+
+[tasks.install_fish]
+	deps = ["install_fish_shell", "install_omf"]
+
 [tasks.install_git]
+	rejects = [["which", "git"]]
 	deps = ["git"]
 	cmds = [["@install", "git"]]
 
-[tasks.install_synapse__ubuntu]
+[tasks.install_synapse__trusty]
+	rejects = [["which", "synapse"]]
 	cmds = [
 		["@addrepo", "ppa:synapse-core/ppa"],
 		["sudo", "apt-get", "update"],
 		["@install", "synapse"]
 	]
 
-[tasks.install_chrome__ubuntu]
-	cmds = [
-		["wget", "-q", "-O", "-", "https://dl-ssl.google.com/linux/linux_signing_key.pub", "|", "sudo", "apt-key", "add", "-"],
-		["sudo", "sh", "-c", 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"', ">", "/etc/apt/sources.list.d/google-chrome.list"],
-		["sudo", "apt-get", "update"],
-		["@install", "google-chrome-stable"]
-	]
+[tasks.install_synapse__xenial]
+	rejects = [["which", "synapse"]]
+	cmds = [["@install", "synapse"]]
 
-[tasks.install_xmonad__wily]
-	cmds = [
-		["@addrepo", "ppa:gekkio/xmonad"],
-		["sudo", "apt-get", "update"],
-		["@install", "gnome-session-xmonad"]
-	]
+[tasks.install_chrome__trusty]
+	rejects = [["which", "google-chrome"]]
+	cmds = [["${HM_SRC}/scripts/install_chrome"]]
+
+[tasks.install_chrome__xenial]
+	rejects = [["which", "google-chrome"]]
+	deps = ["install_chrome__trusty"]
 
 [tasks.install_powerline]
+	rejects = [["which", "powerline"]]
 	cmds = [
 		["pip", "install", "--user", "powerline-status"],
 		["pip", "install", "--user", "git+git://github.com/powerline/powerline"]
 	]
 
-[tasks.install_powerline__ubuntu]
+[tasks.install_powerline__trusty]
+	rejects = [["ls", "$HOME/.fonts/PowerlineSymbols.otf"]]
 	deps = ["install_powerline__"]
 	cmds = [
 		["wget", "https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf"],
@@ -96,17 +118,18 @@
 		["mv", "-f", "10-powerline-symbols.conf", "$HOME/.config/fontconfig/conf.d/"]
 	]
 
+[tasks.install_powerline__xenial]
+	deps = ["install_powerline__trusty"]
+
 # Configurations
 
 [tasks.fish]
 	links = [
-		[".config/fish/config.fish"],
 		[".config/omf"],
-		[".oh-my-fish"],
 		[".grc", "grc"]
 	]
 
-[tasks.xmonad__ubuntu]
+[tasks.xmonad]
 	links = [
 		[".xmonad/xmonad.hs", "xmonad.hs"]
 	]
@@ -142,8 +165,8 @@
 
 # Config Profiles
 
-[tasks.common]
-	deps = ["base", "fish", "xmonad", "emacs"]
+[tasks.ubuntu]
+	deps = ["install_ubuntu", "base", "fish", "xmonad", "emacs"]
 	links = [
 		[".config/terminator/config"],
 		[".config/synapse/config.json"],
@@ -152,17 +175,17 @@
 	]
 
 [tasks.corvus]
-	deps = ["common", "git_personal"]
+	deps = ["ubuntu", "git_personal"]
 
 [tasks.miranda]
-	deps = ["common", "git_personal"]
+	deps = ["ubuntu", "git_personal"]
 
 [tasks.luna]
-	deps = ["common", "git_personal", "install_xmonad__wily"]
+	deps = ["ubuntu", "git_personal"]
 
 [tasks.work]
-	deps = ["common", "git_work"]
+	deps = ["ubuntu", "git_work"]
 
 [tasks.mimas]
-	deps = ["fish", "git_personal", "git_work", "emacs"]
+	deps = ["fish", "git_personal", "emacs"]
 
