@@ -3,7 +3,7 @@
 
 import XMonad
 import qualified XMonad.StackSet as W
-import XMonad.Config.Gnome (gnomeConfig)
+import XMonad.Config.Gnome (gnomeConfig, gnomeRun)
 import XMonad.Layout.NoBorders (noBorders)
 import XMonad.Layout.Spacing (spacing)
 import XMonad.Layout.IndependentScreens
@@ -47,6 +47,11 @@ workSpaceNames = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myWorkspaces nScreens = withScreens nScreens workSpaceNames
 
 myKeys =
+        -- use Win-o rather than Win-p for gnomeRun to work around this bug:
+        -- http://ubuntuforums.org/showthread.php?t=2158104&p=12859037#post12859037
+        [ ((mod4Mask, xK_o), gnomeRun)
+        ]
+        ++
         -- screen switch keys assigned based on physical arrangement of screens
         [ ((m .|. myModMask, key), f sc)
              | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
