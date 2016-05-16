@@ -22,8 +22,12 @@
 	]
 	cmds = [
 		["@install", "xmonad", "vim", "htop", "httpie", "aptitude", 
-		"gnome-session-flashback", "terminator", "emacs"]
+		"gnome-session-flashback", "terminator"]
 	]
+
+[tasks.install_ubuntu__xenial]
+	deps = ["install_ubuntu__"]
+	cmds = [["@install", "emacs"]]
 
 [tasks.install_python__trusty]
 	rejects = [["which", "pip"]]
