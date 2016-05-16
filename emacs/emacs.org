@@ -570,6 +570,12 @@ Cider REPL
     :commands (cider-jack-in cider)
     :config (setq org-babel-clojure-backend 'cider))
 #+END_SRC
+** Apache
+#+name: programming
+#+BEGIN_SRC emacs-lisp
+  (use-package apache-mode
+    :ensure t)
+#+END_SRC
 * Misc Features
 ** Calendar
 Basic calendar functionality.
@@ -636,6 +642,41 @@ Git client for Emacs.
     :ensure magit
     :commands magit-blame-mode
     :bind ("C-c m b" . magit-blame))
+#+END_SRC
+** Remote edit as root
+Taken from [[http://www.emacswiki.org/TrampMode#toc32][EmacsWiki]]
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (require 'dired)
+  (defun sudo-edit-current-file ()
+    (interactive)
+    (let ((my-file-name) ; fill this with the file to open
+          (position))    ; if the file is already open save position
+      (if (equal major-mode 'dired-mode) ; test if we are in dired-mode 
+          (progn
+            (setq my-file-name (dired-get-file-for-visit))
+            (find-alternate-file (prepare-tramp-sudo-string my-file-name)))
+        (setq my-file-name (buffer-file-name); hopefully anything else is an already opened file
+              position (point))
+        (find-alternate-file (prepare-tramp-sudo-string my-file-name))
+        (goto-char position))))
+
+
+  (defun prepare-tramp-sudo-string (tempfile)
+    (if (file-remote-p tempfile)
+        (let ((vec (tramp-dissect-file-name tempfile)))
+
+          (tramp-make-tramp-file-name
+           "sudo"
+           (tramp-file-name-user nil)
+           (tramp-file-name-host vec)
+           (tramp-file-name-localname vec)
+           (format "ssh:%s@%s|"
+                   (tramp-file-name-user vec)
+                   (tramp-file-name-host vec))))
+      (concat "/sudo:root@localhost:" tempfile)))
+
+  (define-key dired-mode-map [s-return] 'sudo-edit-current-file)
 #+END_SRC
 * Config Layout
 This imports code from the named blocks above. This is done so that
