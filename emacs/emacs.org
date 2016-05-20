@@ -160,6 +160,9 @@ Any elisp files in =~/.emacs.local.d/= will be auto-loaded.
                 (directory-files (expand-file-name path) t file-pattern)))))
 
   (my/load-elisp-directory "~/.emacs.local.d")
+
+  ;; Also load work files if they are there.
+  (my/load-elisp-directory "~/.emacs.work.d")
 #+END_SRC
 * Display Tweaks
 ** Show curly arrows when wrapping a line
@@ -550,6 +553,16 @@ Human-compatible, plain-text markup language.
               (setq elm-format-on-save t)
               (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
               (add-to-list 'company-backends 'company-elm)))
+#+END_SRC
+** TOML
+TOML (Tom's Obvious, Minimal Language) is a minimal configuration file
+format.
+
+#+name: programming
+#+BEGIN_SRC emacs-lisp
+  (use-package toml-mode
+    :ensure t
+    :mode ("\.toml$" . toml-mode))
 #+END_SRC
 ** Clojure
 #+name: programming
