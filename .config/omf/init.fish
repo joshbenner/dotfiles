@@ -58,7 +58,7 @@ function fish_title
   echo $USER'@'(hostname -s) (prompt_pwd)
 end
 
-eval (python -m virtualfish)
+eval (python -m virtualfish auto_activation)
 
 if test -e "$HOME/.config/fish/local.fish"
   . "$HOME/.config/fish/local.fish"
