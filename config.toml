@@ -126,7 +126,7 @@
 	deps = ["install_powerline__trusty"]
 
 [tasks.install_pycharm__ubuntu]
-	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "pycharm", "2016.1.3"]]
+	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "pycharm", "2016.1.4"]]
 
 [tasks.install_pycharm__trusty]
 	deps = ["install_pycharm__ubuntu"]
@@ -144,7 +144,7 @@
 	deps = ["install_idea__ubuntu"]
 
 [tasks.install_phpstorm__ubuntu]
-	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "phpstorm", "2016.1.1"]]
+	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "phpstorm", "2016.1.2"]]
 
 [tasks.install_phpstorm__trusty]
 	deps = ["install_phpstorm__ubuntu"]
@@ -153,7 +153,7 @@
 	deps = ["install_phpstorm__ubuntu"]
 
 [tasks.install_datagrip__ubuntu]
-	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "datagrip", "2016.1"]]
+	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "datagrip", "2016.1.1"]]
 
 [tasks.install_datagrip__trusty]
 	deps = ["install_datagrip__ubuntu"]
