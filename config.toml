@@ -55,7 +55,6 @@
 	deps = ["install_atom__trusty"]
 
 [tasks.install_fish_shell__trusty]
-	rejects = [["which", "fish"]]
 	deps = ["fish"]
 	cmds = [
 		["sudo", "pip", "install", "virtualfish"],
@@ -65,9 +64,7 @@
 	]
 
 [tasks.install_fish_shell__xenial]
-	rejects = [["which", "fish"]]
-	deps = ["fish"]
-	cmds = [["@install", "fish", "grc"]]
+	deps = ["install_fish_shell__trusty"]
 
 [tasks.install_omf]
 	rejects = [["ls", "$HOME/.local/share/omf"]]
