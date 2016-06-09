@@ -201,6 +201,12 @@ From: http://www.emacswiki.org/emacs/VisualLineMode
       (powerline-reset)))
 #+END_SRC
 * Org mode config
+** Formatting
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  ;; Hide strikethrough, code inline characters.
+  (setq org-hide-emphasis-markers t)
+#+END_SRC
 ** Enable shift-selection
 Org mode uses S-<arrow> to move things like TODO lines through
 states. This conflicts with Emacs' default of letting S-<arrow> start
