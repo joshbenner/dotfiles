@@ -36,6 +36,13 @@
 [tasks.install_python__xenial]
 	deps = ["install_python__trusty"]
 
+[tasks.install_spacemacs]
+	rejects = [["ls", "$HOME/.emacsenv.d/spacemacs"]]
+	deps = ["git", "multiemacs"]
+	cmds = [
+		["git", "clone", "https://github.com/syl20bnr/spacemacs", "$HOME/.emacsenv.d/spacemacs"]
+	]
+
 [tasks.install_sublime3__trusty]
 	rejects = [["which", "subl"]]
 	cmds = [["sudo", "${HM_SRC}/sublime-installer/st3install"]]
@@ -200,8 +207,20 @@
 
 [tasks.emacs]
 	links = [
-		[".emacs.d", "emacs"],
-		["bin/emacs"]
+		[".emacs"],
+		[".emacs.d", "emacs"]
+	]
+
+[tasks.multiemacs]
+	links = [
+		[".emacs", "multi-emacs.el"]
+	]
+	cmds = [["mkdir", "$HOME/.emacsenv.d"]]
+
+[tasks.spacemacs]
+	deps = ["install_spacemacs"]
+	links = [
+		[".spacemacs", "spacemacs.el"]
 	]
 
 [tasks.base]
