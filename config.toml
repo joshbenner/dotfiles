@@ -207,7 +207,6 @@
 
 [tasks.emacs]
 	links = [
-		[".emacs"],
 		[".emacs.d", "emacs"]
 	]
 
