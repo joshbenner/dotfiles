@@ -214,7 +214,7 @@
 	links = [
 		[".emacs", "multi-emacs.el"]
 	]
-	cmds = [["mkdir", "$HOME/.emacsenv.d"]]
+	cmds = [["mkdir", "-p", "$HOME/.emacsenv.d"]]
 
 [tasks.spacemacs]
 	deps = ["install_spacemacs"]
