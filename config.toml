@@ -220,7 +220,8 @@
 [tasks.spacemacs]
 	deps = ["install_spacemacs"]
 	links = [
-		[".spacemacs", "spacemacs.el"]
+		[".spacemacs", "spacemacs.el"],
+		["bin/spacemacs"]
 	]
 
 [tasks.base]
