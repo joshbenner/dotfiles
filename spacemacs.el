@@ -266,7 +266,7 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (global-set-key (kbd "<home>") 'spacemacs/smart-move-beginning-of-line)
-  (setq-default cursor-type 'bar)
+  (setq evil-emacs-state-cursor '("chartreuse3" (bar . 2)))
   (blink-cursor-mode t)
   )
 
