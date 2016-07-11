@@ -268,6 +268,8 @@ you should place your code here."
   (global-set-key (kbd "<home>") 'spacemacs/smart-move-beginning-of-line)
   (setq evil-emacs-state-cursor '("chartreuse3" (bar . 2)))
   (blink-cursor-mode t)
+  (setq org-support-shift-select 'always)
+  (delete-selection-mode 1)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
