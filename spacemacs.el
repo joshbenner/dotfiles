@@ -270,6 +270,8 @@ you should place your code here."
   (blink-cursor-mode t)
   (setq org-support-shift-select 'always)
   (delete-selection-mode 1)
+  (setq create-lockfiles nil)
+  (setq vc-follow-symlinks t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
