@@ -1,0 +1,220 @@
+#+TITLE: Spacemacs Configuration
+
+* General Spacemacs Configuration
+** Follow symlinks
+Emacs will no longer prompt for confirmation when trying to edit a file at a
+symlink.
+#+name: startup
+#+BEGIN_SRC emacs-lisp
+  (setq vc-follow-symlinks t)
+#+END_SRC
+** Avoid backup and lock files
+Emacs will write ".#<filename>" symlinks as lock files to prevent concurrent
+editing of files. That's not usually an issue I worry about
+#+name: startup
+#+BEGIN_SRC emacs-lisp
+  (setq create-lockfiles nil)
+#+END_SRC
+** Auto-load elisp files
+Any elisp files in =~/.emacs.local.d/= will be auto-loaded.
+#+name: autoload
+#+BEGIN_SRC emacs-lisp
+  (defun my/load-elisp-directory (path)
+    (let ((file-pattern "\\.elc?$"))
+      (when (file-directory-p path)
+        (mapcar (lambda (lisp-file)
+                  (load-file lisp-file))
+                (directory-files (expand-file-name path) t file-pattern)))))
+
+  (my/load-elisp-directory "~/.emacs.local.d")
+
+  ;; Also load work files if they are there.
+  (my/load-elisp-directory "~/.emacs.work.d")
+#+END_SRC
+** Enable shift-selection
+Org mode uses S-<arrow> to move things like TODO lines through
+states. This conflicts with Emacs' default of letting S-<arrow> start
+or expand marked regions. Turning on org support of shift select means
+that it will try to compromise and do selection when nothing else
+makes sense, and also allow it when a mark is already set.
+
+Unless we set it to 'always, in which case it doesn't compromise, and
+just gives up on S-<arrow>.
+
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (setq org-support-shift-select 'always)
+#+END_SRC
+* Interface/Visual
+** Configure cursor
+#+name: look-and-feel
+#+BEGIN_SRC emacs-lisp
+  (setq evil-emacs-state-cursor '("chartreuse3" (bar . 2)))
+  (blink-cursor-mode t)
+#+END_SRC
+* Org mode configuration
+** Formatting
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  ;; Hide strikethrough, code inline characters.
+  (setq org-hide-emphasis-markers t)
+#+END_SRC
+** Agenda
+#+name: interface
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-start-on-weekday 0)
+  (setq org-agenda-todo-ignore-scheduled t)
+  (setq org-agenda-todo-ignore-deadlines t)
+#+END_SRC
+** Publish
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  ;; Use HTML5 elements.
+  (setq org-html-html5-fancy t)
+
+  ;; Ignore timestamps and publish when I say!
+  (setq org-publish-use-timestamps-flag nil)
+
+  ;; Default publish style to solarized light.
+  (setq org-html-head "<link rel='stylesheet' type='text/css' href='http://thomasf.github.io/solarized-css/solarized-light.min.css' />")
+#+END_SRC
+** Babel
+*** Support HTTP requests via Babel
+#+name: programming
+#+BEGIN_SRC emacs-lisp
+  ;(add-to-list 'dotspacemacs-additional-packages 'ob-http)
+#+END_SRC
+*** Babel Language Eval
+Org-babel evaluation will be turned on for the following
+languages. Setting ~Confirm Evaluation~ to ~No~ disables the [[http://orgmode.org/manual/Code-evaluation-security.html][security
+prompt]] for that language.
+
+#+name: org-babel-languages
+| Language     | Alias | Confirm Evaluation? | Description                     |
+|--------------+-------+---------------------+---------------------------------|
+| emacs-lisp   |       | Yes                 | Emacs Lisp                      |
+| graphviz-dot | dot   | No                  | Directed and undirected graphs  |
+| gnuplot      |       | No                  | Graphs                          |
+| ditaa        |       | No                  | Ascii diagrams                  |
+| plantuml     |       | No                  | Flow charts                     |
+| mscgen       |       | No                  | Message sequence charts         |
+| haskell      |       | Yes                 | A pure, functional language     |
+| python       |       | Yes                 | A dynamic, all-purpose language |
+| ruby         |       | Yes                 | A dynamic, all-purpose language |
+| sh           |       | Yes                 | Shell scripts                   |
+| sql          |       | No                  | SQL Queries                     |
+| clojure      |       | Yes                 | Clojure                         |
+;| http         |       | No                  | HTTP requests                   |
+;| elixir       |       | Yes                 | Elixir                          |
+
+#+name: babel
+#+BEGIN_SRC emacs-lisp :noweb yes
+  (defvar my/org-babel-evaluated-languages ())
+  (defvar my/org-src-lang-modes ())
+  (defvar my/org-babel-no-confirm-languages ())
+
+  (defun my/org-confirm-babel-evaluate (lang body)
+    (not (member (intern lang) my/org-babel-no-confirm-languages)))
+
+  (let ((language-table (cddr '<<org-babel-languages()>>)))
+    (mapcar (lambda (lang-pair)
+              (let* ((alias (if (not (string= (cadr lang-pair) "")) (cadr lang-pair)))
+                     (lang (intern (car lang-pair)))
+                     (lang-or-alias (if alias (intern alias) lang))
+                     (confirm (not (string= (cl-caddr lang-pair) "No"))))
+                (if alias
+                    (add-to-list 'my/org-src-lang-modes (cons alias lang)))
+                (if (not confirm)
+                    (add-to-list 'my/org-babel-no-confirm-languages lang-or-alias))
+                (add-to-list 'my/org-babel-evaluated-languages lang-or-alias)
+                lang-or-alias))
+            language-table))
+
+  (mapcar (lambda (alias)
+            (add-to-list 'org-src-lang-modes alias))
+          my/org-src-lang-modes)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   (mapcar (lambda (lang)
+             (cons lang t))
+           my/org-babel-evaluated-languages))
+
+  (setq org-confirm-babel-evaluate 'my/org-confirm-babel-evaluate)
+#+END_SRC
+** Enable shift-selection
+Org mode uses S-<arrow> to move things like TODO lines through
+states. This conflicts with Emacs' default of letting S-<arrow> start
+or expand marked regions. Turning on org support of shift select means
+that it will try to compromise and do selection when nothing else
+makes sense, and also allow it when a mark is already set.
+
+Unless we set it to 'always, in which case it doesn't compromise, and
+just gives up on S-<arrow>.
+
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (setq org-support-shift-select 'always)
+#+END_SRC
+** Code edit buffer
+When editing code in org with C-c C-', it opens a new buffer. The default
+configuration is to hide other buffers and show the org file and the code
+editing buffer. Instead, let's configure org to edit in the same window
+space as the org buffer so that we don't see the same code in the only
+two buffers available, and we don't hide all the other buffers that are
+currently visible.
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (setq org-src-window-setup 'current-window)
+#+END_SRC
+* Editing
+** Replace text on typing
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (delete-selection-mode 1)
+#+END_SRC
+** Unfill paragraphs
+For the time when you want that paragraph in one line.
+From: http://www.emacswiki.org/emacs-test/UnfillParagraph
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  ;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph    
+  (defun unfill-paragraph (&optional region)
+    "Takes a multi-line paragraph and makes it into a single line of text."
+    (interactive (progn (barf-if-buffer-read-only) '(t)))
+    (let ((fill-column (point-max)))
+      (fill-paragraph nil region)))
+
+  (define-key global-map "\M-Q" 'unfill-paragraph)
+#+END_SRC
+** Smart home
+When pressing home, place cursor at non-blank character.
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "<home>") 'spacemacs/smart-move-beginning-of-line)
+#+END_SRC
+* Languages
+** Elixir
+#+name: programming
+#+BEGIN_SRC emacs-lisp
+  ;(add-to-list 'dotspacemacs-additional-packages 'ob-elixir)
+#+END_SRC
+* Configuration Layout
+This imports code from the named blocks above. This is done so that
+some things happen in a specific order (such as defining hooks before
+reloading buffers).
+#+BEGIN_SRC emacs-lisp :tangle yes :noweb no-export :exports code
+  ;;;; Do not modify this file by hand.  It was automatically generated
+  ;;;; from `emacs.org` in the same directory. See that file for more
+  ;;;; information.
+  ;;;;
+
+  <<startup>>
+  <<look-and-feel>>
+  <<interface>>
+  <<behavior>>
+  <<programming>>
+  <<babel>>
+  <<autoload>>
+  <<session>>
+#+END_SRC

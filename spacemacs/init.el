@@ -37,7 +37,7 @@ values."
      syntax-checking
      version-control
      erlang
-     elixir
+     (elixir :variables elixir-enable-ob-elixir t)
      html
      colors
      themes-megapack
@@ -265,13 +265,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (global-set-key (kbd "<home>") 'spacemacs/smart-move-beginning-of-line)
-  (setq evil-emacs-state-cursor '("chartreuse3" (bar . 2)))
-  (blink-cursor-mode t)
-  (setq org-support-shift-select 'always)
-  (delete-selection-mode 1)
-  (setq create-lockfiles nil)
-  (setq vc-follow-symlinks t)
+  (org-babel-load-file "~/.spacemacs.d/spacemacs.org")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
