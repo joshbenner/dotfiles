@@ -1,4 +1,6 @@
 package grc
+package pbcopy
 package sublime
+package wttr
 theme bobthefish
 theme scorphish
