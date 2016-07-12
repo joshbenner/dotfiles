@@ -1,6 +1,9 @@
+package config
 package grc
 package pbcopy
+package shark
 package sublime
+package weather
 package wttr
 theme bobthefish
 theme scorphish
