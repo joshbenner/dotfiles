@@ -99,11 +99,36 @@ with parsing output."
   "apib"
   "API Blueprint major mode."
   :group 'apib-mode
+
   (font-lock-add-keywords
    nil
-   '(("\\(?:\\(?:\\+\\|\\-\\) +\\(?:Body\\|Headers?\\|Model\\|Parameters?\\|Re\\(?:quest\\|sponse\\)\\|Schema\\|Values\\)\\)"
+   '(
+     
+     ("\\(?:\\(?:\\+\\|\\-\\) +\\(?:Body\\|Headers?\\|Model\\|Parameters?\\|Re\\(?:quest\\)\\|Schema\\|Values\\)\\)"
       0
-      font-lock-variable-name-face)))
+      font-lock-keyword-face)
+
+     ("\\(\\(?:\\+\\|\\-\\) +Response\\) +\\([0-9]\\{3\\}\\) +(\\(.+\\))"
+      (1 font-lock-keyword-face)
+      (2 font-lock-constant-face)
+      (3 font-lock-variable-name-face))
+
+     ("\\(\\(?:\\+\\|\\-\\) +Attributes\\) +(\\(.+\\))"
+      (1 font-lock-keyword-face)
+      (2 font-lock-variable-name-face))
+
+     ;; Property with example value
+     ("^ *\\(?:\\+\\|\\-\\) +\\(.+?\\)\\(?:: +\\(.+\\)\\) +(\\(.*\\))"
+      (1 font-lock-variable-name-face)
+      (2 font-lock-constant-face)
+      (3 font-lock-keyword-face))
+
+     ;; Property without example value
+     ("^ *\\(?:\\+\\|\\-\\) +\\(.+?\\) +(\\(.*\\))"
+      (1 font-lock-variable-name-face)
+      (2 font-lock-keyword-face))
+
+     ))
 
   (set (make-local-variable 'compile-command)
        (if (null apib-drafter-executable)
