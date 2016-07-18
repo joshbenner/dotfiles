@@ -49,8 +49,8 @@ just gives up on S-<arrow>.
 ** Configure cursor
 #+name: look-and-feel
 #+BEGIN_SRC emacs-lisp
-  (setq evil-emacs-state-cursor '("chartreuse3" (bar . 2)))
-  (setq cursor-type 'bar)
+  ;(setq evil-emacs-state-cursor '("chartreuse3" (bar . 2)))
+  ;(setq cursor-type 'bar)
   (blink-cursor-mode t)
 #+END_SRC
 * Org mode configuration

@@ -260,6 +260,21 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; NJBS suggested setting here instead of user-config. Not sure why.
+  (add-to-list 'default-frame-alist '(cursor-type . bar))
+  (setq spacemacs-evil-cursors '(
+                                 ("normal" "red" bar)
+                                 ("insert" "chartreuse3" (bar . 2))
+                                 ("emacs" "SkyBlue2" bar)
+                                 ("hybrid" "SkyBlue2" (bar . 2))
+                                 ("replace" "chocolate" (hbar . 2))
+                                 ("evilified" "LightGoldenrod3" bar)
+                                 ("visual" "gray" (hbar . 2))
+                                 ("motion" "plum3" bar)
+                                 ("lisp" "HotPink1" bar)
+                                 ("iedit" "firebrick1" bar)
+                                 ("iedit-insert" "firebrick1" (bar . 2))
+                                 ))
   )
 
 (defun dotspacemacs/user-config ()
