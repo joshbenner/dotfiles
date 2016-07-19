@@ -36,11 +36,21 @@
 [tasks.install_python__xenial]
 	deps = ["install_python__trusty"]
 
-[tasks.install_spacemacs]
+[tasks.clone_spacemacs]
 	rejects = [["ls", "$HOME/.emacsenv.d/spacemacs"]]
-	deps = ["git", "multiemacs"]
+	deps = ["git"]
 	cmds = [
 		["git", "clone", "https://github.com/syl20bnr/spacemacs", "$HOME/.emacsenv.d/spacemacs"]
+	]
+
+[tasks.install_spacemacs]
+	deps = ["multiemacs", "clone_spacemacs"]
+	cmds = [
+		["mkdir", "-p", "$HOME/.icons", "$HOME/.local/share/applications"]
+	]
+	links = [
+		[".icons/spacemacs.png", "spacemacs/spacemacs.png"],
+		[".local/share/applications/spacemacs.desktop", "spacemacs/spacemacs.desktop"]
 	]
 
 [tasks.install_sublime3__trusty]
