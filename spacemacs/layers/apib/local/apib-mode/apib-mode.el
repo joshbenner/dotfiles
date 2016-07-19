@@ -103,7 +103,7 @@ with parsing output."
   (font-lock-add-keywords
    nil
    '(
-     
+
      ("\\(?:\\(?:\\+\\|\\-\\) +\\(?:Body\\|Headers?\\|Model\\|Parameters?\\|Re\\(?:quest\\)\\|Schema\\|Values\\)\\)"
       0
       font-lock-keyword-face)
@@ -117,16 +117,11 @@ with parsing output."
       (1 font-lock-keyword-face)
       (2 font-lock-variable-name-face))
 
-     ;; Property with example value
-     ("^ *\\(?:\\+\\|\\-\\) +\\(.+?\\)\\(?:: +\\(.+\\)\\) +(\\(.*\\))"
-      (1 font-lock-variable-name-face)
-      (2 font-lock-constant-face)
-      (3 font-lock-keyword-face))
-
-     ;; Property without example value
-     ("^ *\\(?:\\+\\|\\-\\) +\\(.+?\\) +(\\(.*\\))"
-      (1 font-lock-variable-name-face)
-      (2 font-lock-keyword-face))
+     ;; Property
+     ("^ *\\(?:\\+\\|\\-\\) +\\(.+?\\)\\(?:: +\\([^(\n]+\\)\\)?\\(?: +(\\(.*\\))\\)?\\(?: *- *.*\\)?$"
+       (1 font-lock-variable-name-face)
+       (2 font-lock-constant-face nil t)
+       (3 font-lock-keyword-face nil t))
 
      ))
 
