@@ -181,6 +181,16 @@ currently visible.
 #+BEGIN_SRC emacs-lisp
   (setq org-src-window-setup 'current-window)
 #+END_SRC
+
+Auto-save while editing source in a separate buffer.
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  ;; Saves to separate auto-save file via auto-save-mode.
+  (setq org-edit-src-turn-on-auto-save t)
+
+  ;; Writes to the parent org buffer at an interval.
+  (setq org-edit-src-auto-save-idle-delay 1)
+#+END_SRC
 * Editing
 ** Replace text on typing
 #+name: behavior
