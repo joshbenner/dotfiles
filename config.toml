@@ -149,7 +149,7 @@
 	deps = ["install_pycharm__ubuntu"]
 
 [tasks.install_idea__ubuntu]
-	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "idea", "2016.2.1"]]
+	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "idea", "2016.2.2"]]
 
 [tasks.install_idea__trusty]
 	deps = ["install_idea__ubuntu"]
