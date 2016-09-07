@@ -31,7 +31,9 @@
 
 (defconst apib-packages
   '(
+    flycheck
     (apib-mode :location local)
+    (flycheck-apib :location local)
     )
   "The list of Lisp packages required by the apib layer.
 
@@ -64,4 +66,12 @@ Each entry is either:
   (autoload 'apib-mode "apib-mode" "Major mode for editing API Blueprint files" t)
   (add-to-list 'auto-mode-alist '("\\.apib\\'" . apib-mode))
   )
+
+(defun apib/post-init-flycheck ()
+  (spacemacs/add-flycheck-hook 'apib-mode-hook))
+
+(when (configuration-layer/layer-usedp 'syntax-checking)
+  (defun apib/init-flycheck-apib ()
+    (use-package flycheck-apib
+      :if (configuration-layer/package-usedp 'flycheck))))
 ;;; packages.el ends here
