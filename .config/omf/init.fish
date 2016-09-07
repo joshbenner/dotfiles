@@ -21,6 +21,9 @@ set -gx LSCOLORS dxgxcxdxcxegedabagacad
 
 #set -gx DOCKER_HOST "tcp://localhost:2375"
 
+# Tell theme to always show user/host
+set -g theme_display_user yes
+
 function grep
   command grep --color=auto --exclude-dir=\.svn --exclude-dir=\.git $argv
 end
