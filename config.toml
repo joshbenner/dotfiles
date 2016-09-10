@@ -192,7 +192,13 @@
 		[".grc", "grc"]
 	]
 
+[tasks.compton]
+	links = [
+		[".config/compton.conf"]
+	]
+
 [tasks.xmonad]
+	deps = ["compton"]
 	links = [
 		[".xmonad/xmonad.hs", "xmonad.hs"]
 	]

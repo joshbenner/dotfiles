@@ -33,6 +33,8 @@ main = do
         --    }
         , workspaces = myWorkspaces nScreens
         , terminal = "x-terminal-emulator"
+        , borderWidth = 1
+        --, focusedBorderColor = "#AF0000"
         } `additionalKeys` myKeys
 
 myModMask = mod4Mask
@@ -69,4 +71,5 @@ myManageHook = composeAll
                , className =? "Tilda" --> doFloat
                , className =? "Tomboy"   --> doFloat
                , className =? "Update-manager" --> doFloat
+               , resource =? "synapse" --> doIgnore
                ]

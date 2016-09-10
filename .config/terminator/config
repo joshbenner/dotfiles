@@ -1,5 +1,6 @@
 [global_config]
   enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  title_transmit_bg_color = "#668ad5"
 [keybindings]
 [layouts]
   [[default]]
@@ -13,7 +14,9 @@
 [profiles]
   [[default]]
     audible_bell = True
+    background_darkness = 0.71
     background_image = None
+    background_type = transparent
     custom_command = env TERM=xterm-256color fish
     font = DejaVu Sans Mono 10
     foreground_color = "#ffffff"
