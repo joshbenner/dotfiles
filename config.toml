@@ -116,6 +116,10 @@
 	rejects = [["which", "google-chrome"]]
 	deps = ["install_chrome__trusty"]
 
+[tasks.install_compton]
+	rejects = [["which", "compton"]]
+	cmds = [["@install", "compton"]]
+
 [tasks.install_powerline]
 	rejects = [["which", "powerline"]]
 	cmds = [
@@ -193,6 +197,7 @@
 	]
 
 [tasks.compton]
+	deps = ["install_compton"]
 	links = [
 		[".config/compton.conf"]
 	]
