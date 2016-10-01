@@ -144,7 +144,7 @@
 	deps = ["install_powerline__trusty"]
 
 [tasks.install_pycharm__ubuntu]
-	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "pycharm", "2016.2"]]
+	cmds = [["${HM_SRC}/scripts/install_jetbrains_ide", "pycharm", "2016.2.3"]]
 
 [tasks.install_pycharm__trusty]
 	deps = ["install_pycharm__ubuntu"]
