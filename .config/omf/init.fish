@@ -24,34 +24,38 @@ set -gx LSCOLORS dxgxcxdxcxegedabagacad
 # Tell theme to always show user/host
 set -g theme_display_user yes
 
-function grep
+function grep --wraps grep
   command grep --color=auto --exclude-dir=\.svn --exclude-dir=\.git $argv
 end
 
-function ll
+function ll --wraps ls
   ls -lha $argv
 end
 
-function l
+function l --wraps ls
   ls -lh $argv
 end
 
 if test -e "/usr/local/bin/colordiff"
-  function diff
+  function diff --wraps colordiff
     colordiff $argv
   end
 end
 
-function dc
+function dc --wraps docker-compose
   docker-compose $argv
 end
 
-function grp
+function grp --wraps grep
   grep -sHirn $argv .
 end
 
 function gitlog
   git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+end
+
+function scu --wraps systemctl
+  systemctl --user $argv
 end
 
 # set fish_function_path $fish_function_path "$HOME/.local/lib/python2.7/site-packages/powerline/bindings/fish"
