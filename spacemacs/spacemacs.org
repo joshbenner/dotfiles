@@ -191,6 +191,16 @@ Auto-save while editing source in a separate buffer.
   ;; Writes to the parent org buffer at an interval.
   (setq org-edit-src-auto-save-idle-delay 1)
 #+END_SRC
+** Auto save and revert
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook (lambda ()
+                             (setq-local auto-save-interval 1)
+                             (setq-local auto-save-timeout 5)
+                             (setq-local auto-save-visited-file-name t)
+                             (auto-save-mode 1)
+                             (auto-revert-mode 1)))
+#+END_SRC
 * Editing
 ** Replace text on typing
 #+name: behavior
