@@ -44,7 +44,7 @@ values."
      html
      colors
      themes-megapack
-     dockerfile
+     docker
      restclient
      go
      haskell

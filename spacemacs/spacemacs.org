@@ -54,6 +54,13 @@ just gives up on S-<arrow>.
   (blink-cursor-mode t)
 #+END_SRC
 * Org mode configuration
+** Indent mode
+Load org files with indent mode enabled by default. This causes the content
+within a heading to visually line up under the heading.
+#+name: behavior
+#+BEGIN_SRC emacs-lisp
+  (setq org-startup-indented t)
+#+END_SRC
 ** Formatting
 #+name: behavior
 #+BEGIN_SRC emacs-lisp
@@ -173,13 +180,12 @@ just gives up on S-<arrow>.
 ** Code edit buffer
 When editing code in org with C-c C-', it opens a new buffer. The default
 configuration is to hide other buffers and show the org file and the code
-editing buffer. Instead, let's configure org to edit in the same window
-space as the org buffer so that we don't see the same code in the only
-two buffers available, and we don't hide all the other buffers that are
-currently visible.
+editing buffer. Instead, let's configure org to edit in a new buffer split in
+the current window.
 #+name: behavior
 #+BEGIN_SRC emacs-lisp
-  (setq org-src-window-setup 'current-window)
+  (setq org-src-window-setup 'other-window)
+  (add-to-list 'display-buffer-alist '("\\*Org Src.*" . (display-buffer-below-selected)))
 #+END_SRC
 
 Auto-save while editing source in a separate buffer.
@@ -225,7 +231,7 @@ From: http://www.emacswiki.org/emacs-test/UnfillParagraph
 When pressing home, place cursor at non-blank character.
 #+name: behavior
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "<home>") 'spacemacs/smart-move-beginning-of-line)
+  (global-set-key (kbd "<home>") 'mwim-beginning-of-code-or-line)
 #+END_SRC
 * Languages
 ** Elixir
