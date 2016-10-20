@@ -1,0 +1,14 @@
+[Unit]
+Description=Resilio Sync service
+Documentation=http://help.getsync.com/
+After=network.target
+
+[Service]
+Type=forking
+Restart=on-failure
+PIDFile=%h/.config/resilio-sync/sync.pid
+ExecStart=/usr/bin/rslsync --config %h/.config/resilio-sync/config.json
+ExecStartPre=/etc/resilio-sync/init_user_config.sh
+
+[Install]
+WantedBy=default.target
