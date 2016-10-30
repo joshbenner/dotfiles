@@ -1,0 +1,3 @@
+- name: Install Sublime Text 3 via packer
+  packer: name=sublime-text-dev
+  become: true

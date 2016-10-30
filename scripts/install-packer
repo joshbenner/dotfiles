@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd /tmp
+git clone --depth=1 https://aur.archlinux.org/packer.git
+cd packer
+makepkg -sri --noconfirm

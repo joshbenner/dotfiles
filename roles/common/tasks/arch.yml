@@ -7,3 +7,7 @@
     - python
     - python-pip
   become: true
+
+- name: Install packer
+  script: "{{dotfiles_dir}}/scripts/install-packer creates=/usr/bin/packer"
+  become: true
