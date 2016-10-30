@@ -5,6 +5,9 @@
 - include: arch.yml
   when: ansible_os_family == "Archlinux"
 
+- name: Create personal bin directory
+  file: path={{home_dir}}/bin state=directory
+
 - name: Install common python deps
   pip: name={{item}}
   with_items: "{{common_python_deps}}"
