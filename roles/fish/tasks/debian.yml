@@ -1,0 +1,13 @@
+- name: Add Fish PPA
+  apt_repository: repo='ppa:fish-shell/release-2'
+  become: true
+
+- name: Install Fish Shell
+  apt: name={{item}} state=latest
+  with_items:
+    - fish
+    - grc
+  become: true
+
+- name: Install Oh-My-Fish
+  script: "{{dotfiles_dir}}/scripts/install_omf creates={{home_dir}}/.local/share/omf"
