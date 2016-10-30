@@ -12,6 +12,7 @@
   shell: which packer
   register: packer_found
   changed_when: False
+  failed_when: False
 
 - name: Install packer
   include: packer.yml
