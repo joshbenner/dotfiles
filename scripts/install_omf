@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Must be set so OMF doesn't exec to take over.
-export CI="yes"
+export NONINTERACTIVE="yes"
 
 # OMF install will set the theme to the last-installed theme. Yuck.
-theme=$(cat ${HM_SRC}/.config/omf/theme)
+theme=$(cat ${dotfiles}/.config/omf/theme)
 
 wget -q -O /tmp/omf-install https://github.com/oh-my-fish/oh-my-fish/raw/master/bin/install
 fish -c ". /tmp/omf-install"
 rm /tmp/omf-install
 
-echo $theme > ${HM_SRC}/.config/omf/theme
+echo $theme > ${dotfiles}/.config/omf/theme
 

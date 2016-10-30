@@ -11,6 +11,8 @@
 
 - name: Install Oh-My-Fish
   script: "{{dotfiles_dir}}/scripts/install_omf creates={{home_dir}}/.local/share/omf"
+  environment:
+    dotfiles: "{{dotfiles_dir}}"
 
 - name: Set Fish as preferred shell
   shell: chsh -s `which fish` {{ansible_user_id}}
