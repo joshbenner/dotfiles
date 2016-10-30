@@ -8,6 +8,11 @@
     - python-pip
   become: true
 
+- name: Find packer
+  shell: which packer
+  register: packer_found
+  changed_when: False
+
 - name: Install packer
-  script: "{{dotfiles_dir}}/scripts/install-packer creates=/usr/bin/packer"
-  become: true
+  include: packer.yml
+  when: "packer_found.rc != 0"
