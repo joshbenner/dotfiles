@@ -1,0 +1,3 @@
+dotfiles_dir: "{{ inventory_dir }}"
+home_dir: "{{ansible_env['HOME']}}"
+personal_mode: "{{work_mode == 'personal'}}"
