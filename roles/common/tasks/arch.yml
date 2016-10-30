@@ -3,4 +3,6 @@
   with_items:
     - python2
     - python2-pip
+    - python
+    - python-pip
   become: true
