@@ -5,6 +5,16 @@
 - include: arch.yml
   when: ansible_os_family == "Archlinux"
 
+- name: Link fish configs
+  file:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    state: link
+    force: yes
+  with_items:
+    - {src: "{{dotfiles_dir}}/.config/omf", dest: "{{home_dir}}/.config/omf"}
+    - {src: "{{dotfiles_dir}}/grc", dest: "{{home_dir}}/.grc"}
+
 - name: Install virtualfish
   pip: name=virtualfish
   become: true
