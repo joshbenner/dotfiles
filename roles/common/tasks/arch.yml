@@ -1,5 +1,5 @@
 - name: Install python with pacman
-  apt: name={{item}} state=latest
+  pacman: name={{item}} state=latest
   with_items:
     - python2
     - python2-pip
