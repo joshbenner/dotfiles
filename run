@@ -12,6 +12,7 @@ no_inventory () {
 cd "${0%/*}"
 
 git pull
+git submodule update --init --recursive
 
 if [[ `uname` == 'Linux' ]]; then
     ansible-playbook -i $1 linux.yml --ask-sudo-pass
