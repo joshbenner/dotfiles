@@ -1,7 +1,0 @@
-#!/bin/bash
-
-packer_dir=`mktemp -d`
-git clone --depth=1 https://aur.archlinux.org/packer.git $packer_dir
-cd $packer_dir
-makepkg -sri --noconfir
-rm -rf $packer_dir
