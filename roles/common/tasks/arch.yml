@@ -1,6 +1,7 @@
-- name: Install python with pacman
+- name: Install common deps with pacman
   pacman: name={{item}} state=latest
   with_items:
+    - wget
     - python2
     - python2-pip
     - python

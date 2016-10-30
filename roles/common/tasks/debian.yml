@@ -1,8 +1,9 @@
-- name: Install python with apt
+- name: Install common deps with apt
   apt: name={{item}} state=latest
   with_items:
     - python
     - python-apt
+    - wget
   become: true
 
 - name: Install pip
