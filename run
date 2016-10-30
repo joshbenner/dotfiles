@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+no_inventory () {
+    echo >&2 "You must specify the workstation type (personal or work)"
+    exit 1
+}
+
+[ "$#" -eq 1 ] || no_inventory
+[ -f "$1" ] || no_inventory
+
+# Change to dir of script.
+cd "${0%/*}"
+
+git pull
+
+if [[ `uname` == 'Linux' ]]; then
+    ansible-playbook -i $1 linux.yml --ask-sudo-pass
+else
+    ansible-playbook -i $1 macos.yml
+fi
