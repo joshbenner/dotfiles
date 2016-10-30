@@ -36,7 +36,7 @@ values."
             shell-default-shell 'ansi-term
             shell-default-height 30
             shell-default-position 'bottom)
-     spell-checking
+     (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
      version-control
      erlang
