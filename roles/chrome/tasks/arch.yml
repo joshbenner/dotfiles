@@ -1,0 +1,3 @@
+- name: Install Chrome with packer
+  packer: name=google-chrome
+  become: true
