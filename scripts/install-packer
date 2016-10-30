@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd /tmp
-git clone --depth=1 https://aur.archlinux.org/packer.git
-cd packer
-makepkg -sri --noconfirm
+packer_dir=`maketemp -d`
+git clone --depth=1 https://aur.archlinux.org/packer.git $packer_dir
+cd $packer_dir
+makepkg -sri --noconfir
+rm -rf $packer_dir
