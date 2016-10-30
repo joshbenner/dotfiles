@@ -1,4 +1,4 @@
-- name: Install python
+- name: Install python with apt
   apt: name={{item}} state=latest
   with_items:
     - python

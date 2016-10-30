@@ -8,6 +8,3 @@
     - fish
     - grc
   become: true
-
-- name: Install Oh-My-Fish
-  script: "{{dotfiles_dir}}/scripts/install_omf creates={{home_dir}}/.local/share/omf"

@@ -1,0 +1,2 @@
+- name: Install fish with homebrew
+  homebrew: name=fish state=latest
