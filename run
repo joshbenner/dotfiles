@@ -15,7 +15,11 @@ git pull
 git submodule update --init --recursive
 
 if [[ `uname` == 'Linux' ]]; then
-    ansible-playbook -i $1 linux.yml --ask-sudo-pass
+    if sudo -n true 2>/dev/null; then
+        ansible-playbook -i $1 linux.yml
+    else
+        ansible-playbook -i $1 linux.yml --ask-sudo-pass
+    fi
 else
     ansible-playbook -i $1 macos.yml
 fi
