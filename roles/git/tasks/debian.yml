@@ -3,4 +3,4 @@
   with_items:
     - git
     - tig
-  become_method: sudo
+  become: true
