@@ -1,0 +1,15 @@
+- name: Add Resilio Sync repository
+  apt_repository:
+    repo: deb http://linux-packages.resilio.com/resilio-sync/deb resilio-sync non-free
+    state: present
+  when: ansible_os_family == 'Debian'
+  become: true
+
+- name: Install Resilio Sync via apt
+  apt: name=resilio-sync state=latest
+  when: ansible_os_family == 'Debian'
+  become: true
+
+- name: Install Resilio Sync via homebrew cask
+  homebrew_cask: name=resilio-sync state=present
+  when: ansible_os_family == 'Darwin'

@@ -3,3 +3,11 @@
   with_items:
     - git
     - tig
+    - fonts
+    - powerline
+    - fish
+    - spacemacs
+    - sublime-text-3
+    - chrome
+    - atom
+    - resilio-sync
