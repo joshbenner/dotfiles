@@ -1,0 +1,13 @@
+- name: Check if JetBrains Toolbox is installed
+  stat: path={{home_dir}}/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox
+  register: st
+
+- name: Extract JetBrains Toolbox
+  unarchive:
+    src: https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.0.2095.tar.gz
+    dest: /tmp
+  when: not st.stat.exists
+
+- name: Install JetBrains Toolbox
+  command: /tmp/jetbrains-toolbox-1.0.2095/jetbrains-toolbox
+  when: not st.stat.exists
