@@ -17,4 +17,6 @@
   file:
     src: "{{dotfiles_dir}}/xmonad.hs"
     dest: "{{home_dir}}/.xmonad/xmonad.hs"
+    state: link
+    force: yes
   when: ansible_system == "Linux"

@@ -1,0 +1,11 @@
+- name: Install compton via apt
+  apt: name=compton state=latest
+  when: ansible_os_family == "Debian"
+
+- name: Link compton config
+  file:
+    src: "{{dotfiles_dir}}/.config/compton.conf"
+    dest: "{{home_dir}}/.config/compton.conf"
+    state: link
+    force: yes
+  when: ansible_system == "Linux"
