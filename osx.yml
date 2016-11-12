@@ -1,0 +1,15 @@
+- hosts: local
+  roles:
+    - common
+    - fonts
+    - git
+    - powerline
+    - fish
+    - spacemacs
+    - sublime-text-3
+    - chrome
+    - atom
+    - resilio-sync
+    - spotify
+    - telegram
+    - jetbrains-toolbox
