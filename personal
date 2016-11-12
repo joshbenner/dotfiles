@@ -4,4 +4,3 @@ localhost
 [local:vars]
 ansible_connection=local
 work_mode=personal
-ansible_python_interpreter=/usr/bin/python2
