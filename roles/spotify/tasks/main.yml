@@ -1,0 +1,22 @@
+- name: Add Spotify signing key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: BBEBDCB318AD50EC6865090613B00F1FD2C19886
+  when: ansible_os_family == 'Debian'
+  become: true
+
+- name: Add Spotify apt repository
+  apt_repository:
+    repo: deb http://repository.spotify.com stable non-free
+    state: present
+  when: ansible_os_family == 'Debian'
+  become: true
+
+- name: Install Spotify with apt
+  apt: name=spotify-client state=latest
+  when: ansible_os_family == 'Debian'
+  become: true
+
+- name: Install Spotify with homebrew cask
+  homebrew_cask: name=spotify state=present
+  when: ansible_os_family == 'Darwin'
