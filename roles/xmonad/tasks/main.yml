@@ -1,0 +1,20 @@
+- name: Add Xmonad backports PPA
+  apt_repository: repo='ppa:gekkio/xmonad'
+  when: ansible_os_family == "Debian"
+
+- name: Install xmonad via apt
+  apt: name={{item}} state=latest
+  with_items:
+    - xmonad
+    - gnome-session-xmonad
+  when: ansible_os_family == "Debian"
+
+- name: Create xmonad config directory
+  file: path="{{home_dir}}/.xmonad" state=directory
+  when: ansible_system == "Linux"
+
+- name: Link xmonad config
+  file:
+    src: "{{dotfiles_dir}}/xmonad.hs"
+    dest: "{{home_dir}}/.xmonad/xmonad.hs"
+  when: ansible_system == "Linux"
