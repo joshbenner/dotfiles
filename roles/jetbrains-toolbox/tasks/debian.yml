@@ -6,6 +6,7 @@
   unarchive:
     src: https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.0.2095.tar.gz
     dest: /tmp
+    copy: false
   when: not st.stat.exists
 
 - name: Install JetBrains Toolbox
