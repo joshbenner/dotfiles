@@ -1,0 +1,13 @@
+- name: Add Telegram PPA
+  apt_repository: repo='ppa:atareao/telegram' state=present
+  when: ansible_os_family == 'Debian'
+  become: true
+
+- name: Install Telegram with apt
+  apt: name=telegram state=latest
+  when: ansible_os_family == 'Debian'
+  become: true
+
+- name: Install Telegram with homebrew cask
+  homebrew_cask: name=telegram state=present
+  when: ansible_os_family == 'Darwin'
