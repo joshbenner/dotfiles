@@ -1,4 +1,5 @@
 package config
+package direnv
 package grc
 package pbcopy
 package shark
