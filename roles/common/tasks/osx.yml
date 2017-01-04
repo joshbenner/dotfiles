@@ -1,2 +1,5 @@
 - name: Install python via Homebrew
   homebrew: name=python state=latest
+
+- name: Install wget via Homebrew
+  homebrew: name=wget state=latest
