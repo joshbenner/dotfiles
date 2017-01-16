@@ -1,2 +1,8 @@
-- name: Install emacs with homebrew
-  homebrew: name=emacs state=latest
+- name: Install emacs with homebrew cask
+  homebrew_cask: name=emacs state=present
+
+- name: Clone Spacemacs
+  git:
+    repo: https://github.com/syl20bnr/spacemacs
+    dest: "{{home_dir}}/.emacs.d"
+    update: no

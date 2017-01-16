@@ -1,0 +1,42 @@
+- name: Create emacsenvs directory
+  file:
+    path: "{{home_dir}}/.emacsenv.d"
+    state: directory
+
+- name: Install support for multiple emacs envs
+  file:
+    src: "{{dotfiles_dir}}/multi-emacs.el"
+    dest: "{{home_dir}}/.emacs"
+    state: link
+    force: yes
+
+- name: Clone Spacemacs
+  git:
+    repo: https://github.com/syl20bnr/spacemacs
+    dest: "{{home_dir}}/.emacsenv.d/spacemacs"
+    update: no
+
+- name: Create directories for Linux install of Spacemacs
+  file: path={{item}} state=directory
+  with_items:
+    - "{{home_dir}}/.icons"
+    - "{{home_dir}}/.local/share/applications"
+
+- name: Link Spacemacs icon and desktop file
+  file:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    state: link
+    force: yes
+  with_items:
+    - src: "{{dotfiles_dir}}/spacemacs/spacemacs.png"
+      dest: "{{home_dir}}/.icons/spacemacs.png"
+    - src: "{{dotfiles_dir}}/spacemacs/spacemacs.desktop"
+      dest: "{{home_dir}}/.local/share/applications/spacemacs.desktop"
+
+- name: Link spacemacs commandline
+  file:
+    src: "{{dotfiles_dir}}/bin/spacemacs"
+    dest: "{{home_dir}}/bin/spacemacs"
+    state: link
+    force: yes

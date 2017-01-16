@@ -2,7 +2,6 @@ package config
 package direnv
 package grc
 package pbcopy
-package shark
 package spark
 package sublime
 package weather

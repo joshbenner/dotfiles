@@ -18,7 +18,6 @@
 - name: Install virtualfish
   pip: name=virtualfish
   become: true
-  when: ansible_os_family != 'Darwin'
 
 - name: Install Oh-My-Fish
   script: "{{dotfiles_dir}}/scripts/install_omf creates={{home_dir}}/.local/share/omf"
