@@ -1,0 +1,2 @@
+- name: Install spectacle via homebrew cask
+  homebrew_cask: name=spectacle state=present
