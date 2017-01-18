@@ -70,3 +70,7 @@ eval (python -m virtualfish auto_activation)
 if test -e "$HOME/.config/fish/local.fish"
   . "$HOME/.config/fish/local.fish"
 end
+
+if which rbenv > /dev/null
+  status --is-interactive; and source (rbenv init -|psub)
+end
