@@ -14,3 +14,5 @@
     - jetbrains-toolbox
     - spectacle
     - bartender
+    - virtualbox
+    - vagrant
