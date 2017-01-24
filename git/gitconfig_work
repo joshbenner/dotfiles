@@ -1,5 +1,5 @@
 [user]
-	email = joshb@aweber.net
+	email = joshb@aweber.com
 	name = Josh Benner
 [include]
 	path = .gitconfig.common
