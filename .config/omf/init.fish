@@ -1,4 +1,4 @@
-set my_user_paths ~/bin ~/golang/go/bin ~/go/bin ~/.composer/vendor/bin /usr/local/sbin ~/.local/bin /usr/local/go/bin ~/bin/go/bin  ~/bin/google-cloud-sdk/bin
+set my_user_paths ~/bin ~/golang/go/bin ~/go/bin ~/.composer/vendor/bin /usr/local/sbin ~/.local/bin /usr/local/go/bin ~/bin/go/bin  ~/bin/google-cloud-sdk/bin ~/my-scripts
 
 for mypath in $my_user_paths
   if test -d $mypath
