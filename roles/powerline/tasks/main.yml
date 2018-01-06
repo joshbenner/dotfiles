@@ -1,6 +1,7 @@
 - name: Install powerline
-  pip: name=powerline-status
-  become: "{{ansible_os_family != 'Darwin'}}"
+  pip:
+    name: powerline-status
+    extra_args: --user
 
 - name: Install pre-patched powerline fonts
   script: "{{dotfiles_dir}}/scripts/powerline-fonts-prepatched creates={{home_dir}}/Library/Fonts/Hack-Bold.ttf"
