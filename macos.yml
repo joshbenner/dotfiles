@@ -10,7 +10,6 @@
     - atom
     - resilio-sync
     - spotify
-    - telegram
     - jetbrains-toolbox
     - spectacle
     - bartender
@@ -32,3 +31,5 @@
         - direnv
         - rsync
         - ccat
+        - macvim
+        - pyenv
