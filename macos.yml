@@ -5,16 +5,15 @@
     - git
     - powerline
     - fish
-    - spacemacs
+    # - spacemacs
     - sublime-text-3
     - atom
     - resilio-sync
     - spotify
     - jetbrains-toolbox
-    - spectacle
-    - bartender
     - virtualbox
     - vagrant
+    - vim
   post_tasks:
     - name: Install applications via Homebrew Cask
       homebrew_cask: name={{ item }} state=present
@@ -23,6 +22,8 @@
         - istat-menus
         - docker
         - iterm2
+        - bartender
+        - spectacle
 
     - name: Install applications via Homebrew
       homebrew: name={{ item }} state=present
@@ -31,5 +32,4 @@
         - direnv
         - rsync
         - ccat
-        - macvim
         - pyenv

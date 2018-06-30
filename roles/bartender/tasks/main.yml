@@ -1,2 +1,0 @@
-- name: Install bartender via homebrew cask
-  homebrew_cask: name=bartender state=present

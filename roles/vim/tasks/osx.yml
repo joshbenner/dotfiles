@@ -1,0 +1,14 @@
+---
+- name: Install MacVim
+  homebrew:
+    name: macvim
+    state: present
+
+- name: Use MacVIM
+  file:
+    state: link
+    src: /usr/local/bin/mvim
+    dest: "{{ item }}"
+  loop:
+    - "{{ home_dir }}/bin/vim"
+    - "{{ home_dir }}/bin/vi"
