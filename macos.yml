@@ -4,7 +4,7 @@
     - fonts
     - git
     - powerline
-    - fish
+    # - fish
     # - spacemacs
     - sublime-text-3
     - atom
@@ -16,6 +16,7 @@
     - vim
   post_tasks:
     - name: Install applications via Homebrew Cask
+      tags: [apps, cask]
       homebrew_cask: name={{ item }} state=present
       with_items:
         - alfred
@@ -24,6 +25,9 @@
         - iterm2
         - bartender
         - spectacle
+        - dash
+        - 1password
+        - notion
 
     - name: Install applications via Homebrew
       homebrew: name={{ item }} state=present
