@@ -4,7 +4,7 @@
     - fonts
     - git
     - powerline
-    # - fish
+    - fish
     # - spacemacs
     - sublime-text-3
     - atom
