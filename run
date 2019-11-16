@@ -22,5 +22,5 @@ fi
 if sudo -n true 2>/dev/null; then
     ansible-playbook -i $1 $playbook
 else
-    ansible-playbook -i $1 $playbook --ask-sudo-pass
+    ansible-playbook -i $1 $playbook -K
 fi
