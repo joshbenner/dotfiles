@@ -28,6 +28,7 @@
         - dash
         - 1password
         - notion
+        - discord
 
     - name: Install applications via Homebrew
       homebrew: name={{ item }} state=present
