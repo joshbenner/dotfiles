@@ -6,3 +6,12 @@
   template:
     src: vimrc.j2
     dest: "{{ home_dir }}/.vimrc"
+
+- name: Create vim dirs
+  file:
+    path: "{{ home_dir }}/{{ item }}"
+    state: directory
+  loop:
+    - .vim
+    - .vim/.undo
+    - .vim/.swp
