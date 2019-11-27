@@ -28,12 +28,12 @@ function grep --wraps grep
   command grep --color=auto --exclude-dir=\.svn --exclude-dir=\.git $argv
 end
 
-function ll --wraps ls
-  ls -lha $argv
+function l --wraps exa
+  exa -Flgh --git --group-directories-first $argv
 end
 
-function l --wraps ls
-  ls -lh $argv
+function ll --wraps exa
+  exa -Falgh --git --group-directories-first $argv
 end
 
 if test -e "/usr/local/bin/colordiff"

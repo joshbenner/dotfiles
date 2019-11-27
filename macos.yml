@@ -38,3 +38,11 @@
         - rsync
         - ccat
         - pyenv
+        - bat
+        - prettyping
+        - fd
+        - ncdu
+        - ack
+        - ag
+        - jq
+        - exa
