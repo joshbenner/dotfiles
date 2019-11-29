@@ -29,6 +29,7 @@
         - 1password
         - notion
         - discord
+      ignore_errors: true
 
     - name: Install applications via Homebrew
       homebrew: name={{ item }} state=present
@@ -46,3 +47,4 @@
         - ag
         - jq
         - exa
+        - tldr
