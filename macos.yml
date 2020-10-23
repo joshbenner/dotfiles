@@ -5,35 +5,43 @@
     - git
     - powerline
     - fish
-    # - spacemacs
-    - sublime-text-3
-    - atom
-    - resilio-sync
-    - spotify
-    - jetbrains-toolbox
-    - virtualbox
-    - vagrant
     - vim
   post_tasks:
     - name: Install applications via Homebrew Cask
       tags: [apps, cask]
       homebrew_cask: name={{ item }} state=present
-      with_items:
+      loop:
         - alfred
         - istat-menus
         - docker
         - iterm2
         - bartender
-        - spectacle
         - dash
         - 1password
         - notion
         - discord
+        - slack
+        - atom
+        - visual-studio-code
+        - sublime-text
+        - vnc-viewer
+        - coderunner
+        - drawio
+        - launchcontrol
+        - muzzle
+        - paw
+        - postman
+        - snagit
+        - spotify
+        - virtualbox
+        - vagrant
+        - jetbrains-toolbox
+        - resilio-sync
       ignore_errors: true
 
     - name: Install applications via Homebrew
       homebrew: name={{ item }} state=present
-      with_items:
+      loop:
         - rbenv
         - direnv
         - rsync
