@@ -13,6 +13,8 @@
       dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
     - repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
       dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    - repo: https://github.com/aperezdc/virtualz.git
+      dest: ~/.oh-my-zsh/custom/plugins/virtualz
 
 - name: Link files
   file:
