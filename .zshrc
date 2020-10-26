@@ -16,6 +16,12 @@ export ZSH=$HOME/.oh-my-zsh
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
+# Configure history beyond what oh-my-zsh will do.
+# See: https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/history.zsh
+export SAVEHIST=2000000    # Save lots to the file
+export HISTSIZE=200000     # Keep some in memory
+setopt inc_append_history  # Write history immediately
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
