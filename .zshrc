@@ -6,6 +6,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 path+=$HOME/bin
+for gemdir in $HOME/.gem/ruby/*; do
+    if [ -d $gemdir/bin ]; then
+        path+=$gemdir/bin
+    fi
+done
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -77,3 +82,6 @@ if [ -d $HOME/.config/zsh/conf.d ]; then
         source $file
     done
 fi
+
+# Make all path entries unique
+typeset -aU path
