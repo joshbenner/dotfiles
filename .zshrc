@@ -27,7 +27,7 @@ setopt inc_append_history  # Write history immediately
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git direnv docker fd fzf kubectl pip pyenv ssh-agent zsh_reload
+plugins=(fzf-tab git direnv docker fd fzf kubectl pip pyenv ssh-agent zsh_reload
          zsh-autosuggestions zsh-syntax-highlighting colored-man-pages virtualz)
 
 source $ZSH/oh-my-zsh.sh
@@ -69,3 +69,10 @@ alias dc=docker-compose
 
 # Alias vf=vz because muscle memory keeps using vf.
 alias vf=vz
+
+# Local overrides
+if [ -d $HOME/.config/zsh/conf.d ]; then
+    for file in $HOME/.config/zsh/conf.d/*.zsh; do
+        source $file
+    done
+fi
