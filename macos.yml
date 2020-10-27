@@ -1,6 +1,7 @@
 - hosts: local
   roles:
-    - common
+    - role: common
+      tags: [common]
     - fonts
     - git
     - powerline

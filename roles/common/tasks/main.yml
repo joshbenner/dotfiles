@@ -8,6 +8,14 @@
 - name: Create personal bin directory
   file: path={{home_dir}}/bin state=directory
 
+- name: Link custom scripts
+  file:
+    src: "{{ dotfiles_dir }}/bin/{{ item }}"
+    dest: "{{ home_dir }}/bin/{{ item }}"
+    state: link
+  loop:
+    - showcert
+
 - name: Install common python deps
   pip: name={{item}}
   with_items: "{{common_python_deps}}"
