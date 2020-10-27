@@ -2,3 +2,5 @@
 	excludesfile = ~/.global_gitignore
 [push]
 	default = simple
+[pull]
+	ff = only

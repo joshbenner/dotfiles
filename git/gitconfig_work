@@ -3,5 +3,3 @@
 	name = Josh Benner
 [include]
 	path = .gitconfig.common
-[pull]
-	ff = only
