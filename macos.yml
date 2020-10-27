@@ -42,10 +42,10 @@
       ignore_errors: true
 
     - name: Install applications via Homebrew
+      tags: [brew]
       homebrew: name={{ item }} state=present
       loop:
         - kubectx
-        - autoenv
         - rbenv
         - direnv
         - rsync
@@ -62,3 +62,4 @@
         - tldr
         - fzf
         - colordiff
+        - rs/tap/curlie
