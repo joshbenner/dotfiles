@@ -63,3 +63,10 @@
         - fzf
         - colordiff
         - rs/tap/curlie
+
+    - name: Install i2cssh
+      tags: [cssh, i2cssh]
+      gem:
+        name: i2cssh
+        state: present
+        user_install: yes

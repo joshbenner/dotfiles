@@ -72,6 +72,7 @@ grp() {
 alias gitlog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias dc=docker-compose
 alias yat="bat -l yaml --pager=never"
+alias cssh=i2cssh
 
 # Alias vf=vz because muscle memory keeps using vf.
 alias vf=vz
