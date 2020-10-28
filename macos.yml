@@ -64,6 +64,7 @@
         - fzf
         - colordiff
         - rs/tap/curlie
+        - telnet
 
     - name: Install i2cssh
       tags: [cssh, i2cssh]
