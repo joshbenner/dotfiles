@@ -59,6 +59,9 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 # linux
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
+# Tell less to only paginage if output exceeds one screen.
+export LESS="-F -X $LESS"
+
 # Aliases
 if type exa > /dev/null; then
     alias l='exa -Flgh --git --group-directories-first'
