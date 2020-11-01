@@ -2,9 +2,9 @@
   roles:
     - role: common
       tags: [common]
-    - fonts
     - git
-    - powerline
+    - role: powerline
+      tags: [fonts]
     - fish
     - vim
     - role: zsh
@@ -73,3 +73,11 @@
         name: i2cssh
         state: present
         user_install: yes
+
+    - name: Install fonts
+      tags: [fonts]
+      copy:
+        src: "{{ item }}"
+        dest: "{{ home_dir }}/Library/Fonts"
+      with_fileglob: fonts/*.ttf
+
