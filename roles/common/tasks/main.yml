@@ -21,5 +21,11 @@
   with_items: "{{common_python_deps}}"
   become: "{{ansible_os_family != 'Darwin'}}"
 
-- name: Make sure .config exists
-  file: path={{home_dir}}/.config state=directory
+- name: Make sure common dirs exist
+  file:
+    path: "{{ home_dir }}/{{ item }}"
+    state: directory
+  loop:
+    - .config
+    - devel
+    - devel/contrib
