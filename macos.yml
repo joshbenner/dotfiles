@@ -40,6 +40,7 @@
         - vagrant
         - jetbrains-toolbox
         - resilio-sync
+        - rectangle
       ignore_errors: true
 
     - name: Install applications via Homebrew
