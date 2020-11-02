@@ -66,6 +66,9 @@
         - colordiff
         - rs/tap/curlie
         - telnet
+        - htop
+        - tree
+        - pstree
 
     - name: Install i2cssh
       tags: [cssh, i2cssh]

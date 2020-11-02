@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-path+=$HOME/bin
+path=($HOME/bin $path)
 for gemdir in $HOME/.gem/ruby/*; do
     if [ -d $gemdir/bin ]; then
         path+=$gemdir/bin
