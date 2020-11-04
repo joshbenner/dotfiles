@@ -41,6 +41,7 @@
         - jetbrains-toolbox
         - resilio-sync
         - rectangle
+        - monitorcontrol
       ignore_errors: true
 
     - name: Install applications via Homebrew
