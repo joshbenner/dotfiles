@@ -42,12 +42,14 @@
         - resilio-sync
         - rectangle
         - monitorcontrol
+        - apache-directory-studio
       ignore_errors: true
 
     - name: Install applications via Homebrew
       tags: [brew]
       homebrew: name={{ item }} state=present
       loop:
+        - adoptopenjdk
         - kubectx
         - rbenv
         - direnv
