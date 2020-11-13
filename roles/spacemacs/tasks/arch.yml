@@ -1,3 +1,0 @@
-- name: Install emacs with pacman
-  pacman: name=emacs state=latest
-  become: true

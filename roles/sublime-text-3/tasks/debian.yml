@@ -1,7 +1,0 @@
-- name: Add Sublime Text 3 PPA
-  apt_repository: repo=ppa:webupd8team/sublime-text-3
-  become: true
-
-- name: Install Sublime Text 3 with apt
-  apt: name=sublime-text-installer state=latest
-  become: true

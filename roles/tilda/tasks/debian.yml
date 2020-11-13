@@ -1,3 +1,0 @@
-- name: Install tilda with apt
-  apt: name=tilda state=latest
-  become: true

@@ -1,2 +1,0 @@
-- name: Install wget via Homebrew
-  homebrew: name=wget state=latest

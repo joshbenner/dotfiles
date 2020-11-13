@@ -1,5 +1,0 @@
-- name: Install fish with homebrew
-  homebrew: name=fish state=latest
-
-- name: Install grc with homebrew
-  homebrew: name=grc state=latest

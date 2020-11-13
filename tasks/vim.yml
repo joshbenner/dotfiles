@@ -1,0 +1,32 @@
+---
+- name: Install full vim via APT
+  apt: name=vim state=present
+  when: ansible_os_family == 'Debian'
+
+- name: Install MacVim
+  homebrew: name=macvim state=present
+  when: ansible_os_family == 'Darwin'
+
+- name: Use MacVIM
+  when: ansible_os_family == 'Darwin'
+  file:
+    state: link
+    src: /usr/local/bin/mvim
+    dest: "{{ item }}"
+  loop:
+    - "{{ home_dir }}/bin/vim"
+    - "{{ home_dir }}/bin/vi"
+
+- name: Configure vim
+  template:
+    src: "{{ dotfiles_dir }}/vimrc.j2"
+    dest: "{{ home_dir }}/.vimrc"
+
+- name: Create vim dirs
+  file:
+    path: "{{ home_dir }}/{{ item }}"
+    state: directory
+  loop:
+    - .vim
+    - .vim/.undo
+    - .vim/.swp

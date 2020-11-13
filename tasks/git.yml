@@ -1,0 +1,38 @@
+---
+- name: Install homebrew's git on macOS
+  homebrew: name=git state=present
+  when: ansible_os_family == 'Darwin'
+
+- name: Install git via APT
+  apt: name=git state=present
+  when: ansible_os_family == 'Debian'
+
+- name: Link global gitignore
+  file:
+    src: "{{dotfiles_dir}}/git/global_gitignore"
+    dest: "{{home_dir}}/.global_gitignore"
+    state: link
+    force: yes
+
+- name: Common Git config
+  file:
+    src: "{{dotfiles_dir}}/git/gitconfig_common"
+    dest: "{{home_dir}}/.gitconfig.common"
+    state: link
+    force: yes
+
+- name: Personal Git config
+  file:
+    src: "{{dotfiles_dir}}/git/gitconfig_personal"
+    dest: "{{home_dir}}/.gitconfig"
+    state: link
+    force: yes
+  when: personal_mode
+
+- name: Work Git config
+  file:
+    src: "{{dotfiles_dir}}/git/gitconfig_work"
+    dest: "{{home_dir}}/.gitconfig"
+    state: link
+    force: yes
+  when: not personal_mode

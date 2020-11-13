@@ -1,3 +1,0 @@
-- name: Install Synapse with pacman
-  pacman: name=synapse state=latest
-  become: true

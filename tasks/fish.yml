@@ -1,0 +1,27 @@
+---
+- name: Install fish on macOS
+  homebrew: name=fish state=present
+  when: ansible_os_family == 'Darwin'
+
+- name: Install fish on Debian family
+  apt: name=fish state=present
+  when: ansible_os_family == 'Debian'
+
+- name: Link fish configs
+  file:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    state: link
+    force: yes
+  loop:
+    - {src: "{{dotfiles_dir}}/.config/omf", dest: "{{home_dir}}/.config/omf"}
+    - {src: "{{dotfiles_dir}}/grc", dest: "{{home_dir}}/.grc"}
+
+- name: Install virtualfish
+  pip: name=virtualfish
+  become: true
+
+- name: Install Oh-My-Fish
+  script: "{{dotfiles_dir}}/scripts/install_omf creates={{home_dir}}/.local/share/omf"
+  environment:
+    dotfiles: "{{dotfiles_dir}}"

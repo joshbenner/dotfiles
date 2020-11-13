@@ -1,6 +1,0 @@
-- name: Install fish with pacman
-  pacman: name={{item}} state=latest
-  with_items:
-    - fish
-    - grc
-  become: true

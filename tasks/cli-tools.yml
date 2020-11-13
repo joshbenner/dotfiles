@@ -1,0 +1,39 @@
+---
+- name: Install macOS CLI tools
+  when: ansible_os_family == 'Darwin'
+  tags: [brew]
+  homebrew:
+    state: present
+    name:
+      - tig
+      - rbenv
+      - pyenv
+      - ccat
+      - kubectx
+      - rsync
+      - prettyping
+      - ncdu
+      - ack
+      - jq
+      - tldr
+      - rs/tap/curlie
+      - telnet
+      - htop
+      - tree
+      - pstree
+
+- name: Install Linux CLI tools via APT
+  when: ansible_os_family == 'Debian'
+  apt:
+    state: present
+    name:
+      # TODO: curlie
+      - tig
+      - rsync
+      - ncdu
+      - ack
+      - jq
+      - tldr
+      - telnet
+      - htop
+      - tree

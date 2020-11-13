@@ -1,7 +1,0 @@
-- name: Install Vagrant via homebrew cask
-  homebrew_cask: name=vagrant state=present
-  when: ansible_os_family == "Darwin"
-
-- name: Install Vagrant Manager via homebrew cask
-  homebrew_cask: name=vagrant-manager state=present
-  when: ansible_os_family == "Darwin"

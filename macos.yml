@@ -1,77 +1,50 @@
-- hosts: local
-  roles:
-    - role: common
-      tags: [common]
-    - git
-    - role: powerline
-      tags: [fonts]
-    - fish
-    - vim
-    - role: zsh
-      tags: [zsh]
-  post_tasks:
+- name: Playbook deps
+  hosts: local
+  tasks:
+    - name: Install Homebrew deps for rest of playbook
+      homebrew: name=wget state=latest
+
+- import_playbook: common.yml
+
+- name: macOS-specific stuff
+  hosts: local
+  tasks:
     - name: Install applications via Homebrew Cask
       tags: [apps, cask]
-      homebrew_cask: name={{ item }} state=present
-      loop:
-        - alfred
-        - istat-menus
-        - docker
-        - iterm2
-        - bartender
-        - dash
-        - 1password
-        - notion
-        - discord
-        - slack
-        - atom
-        - visual-studio-code
-        - sublime-text
-        - vnc-viewer
-        - coderunner
-        - drawio
-        - launchcontrol
-        - muzzle
-        - paw
-        - postman
-        - snagit
-        - spotify
-        - virtualbox
-        - vagrant
-        - jetbrains-toolbox
-        - resilio-sync
-        - rectangle
-        - monitorcontrol
-        - apache-directory-studio
+      homebrew_cask:
+        state: present
+        name:
+          - adoptopenjdk
+          - alfred
+          - istat-menus
+          - docker
+          - iterm2
+          - bartender
+          - dash
+          - 1password
+          - notion
+          - discord
+          - slack
+          - atom
+          - visual-studio-code
+          - sublime-text
+          - vnc-viewer
+          - coderunner
+          - drawio
+          - launchcontrol
+          - muzzle
+          - paw
+          - postman
+          - snagit
+          - spotify
+          - virtualbox
+          - vagrant
+          - jetbrains-toolbox
+          - resilio-sync
+          - rectangle
+          - monitorcontrol
+          - apache-directory-studio
       ignore_errors: true
-
-    - name: Install applications via Homebrew
-      tags: [brew]
-      homebrew: name={{ item }} state=present
-      loop:
-        - adoptopenjdk
-        - kubectx
-        - rbenv
-        - direnv
-        - rsync
-        - ccat
-        - pyenv
-        - bat
-        - prettyping
-        - fd
-        - ncdu
-        - ack
-        - ag
-        - jq
-        - exa
-        - tldr
-        - fzf
-        - colordiff
-        - rs/tap/curlie
-        - telnet
-        - htop
-        - tree
-        - pstree
 
     - name: Install i2cssh
       tags: [cssh, i2cssh]

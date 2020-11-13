@@ -1,0 +1,38 @@
+---
+- name: Do cross-platform things
+  hosts: local
+  tasks:
+    - name: Make sure common dirs exist
+      file:
+        path: "{{ home_dir }}/{{ item }}"
+        state: directory
+      loop:
+        - .config
+        - devel
+        - devel/contrib
+        - bin
+
+    - name: Link custom scripts
+      file:
+        src: "{{ dotfiles_dir }}/bin/{{ item }}"
+        dest: "{{ home_dir }}/bin/{{ item }}"
+        state: link
+      loop:
+        - showcert
+
+    - include_tasks:
+        file: tasks/{{ taskfile }}.yml
+        apply:
+          tags:
+            - "{{ taskfile }}"
+      tags: [always]
+      loop_control:
+        loop_var: taskfile
+      loop:
+        - git
+        - shell-deps
+        - powerline
+        - fish
+        - zsh
+        - cli-tools
+        - vim

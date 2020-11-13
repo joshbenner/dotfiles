@@ -1,3 +1,0 @@
-[submodule "sublime-installer"]
-	path = sublime-installer
-	url = git@github.com:joshbenner/sublime-text-linux-installer.git

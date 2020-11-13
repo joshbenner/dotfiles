@@ -1,6 +1,0 @@
-- include: debian.yml
-  when: ansible_os_family == "Debian"
-
-- name: Install JetBrains Toolbox with homebrew cask
-  homebrew_cask: name=jetbrains-toolbox state=present
-  when: ansible_os_family == "Darwin"

@@ -1,19 +1,15 @@
-- hosts: local
-  roles:
-    - common
-    - fonts
-    - git
-    - powerline
-    - fish
-    - spacemacs
-    - sublime-text-3
-    - synapse
-    - chrome
-    - tilda
-    - xmonad
-    - compton
-    - atom
-    - resilio-sync
-    - spotify
-    - telegram
-    - jetbrains-toolbox
+- name: Playbook deps
+  hosts: local
+  tasks:
+    - name: Install playbook deps via APT
+      when: ansible_os_family == 'Debian'
+      become: true
+      apt:
+        name: [python-pip, python-apt, wget]
+        state: present
+
+- import_playbook: common.yml
+
+- name: Linux-specific stuff
+  hosts: local
+  tasks: []

@@ -1,2 +1,0 @@
-- name: Install Sublime Text 3 via homebrew
-  homebrew_cask: name=sublime-text state=present

@@ -1,8 +1,0 @@
-- name: Add Synapse PPA for Trusty
-  apt_repository: repo='ppa:synapse-core/ppa'
-  when: "{{ansible_distribution_release == 'trusty'}}"
-  become: true
-
-- name: Install Synapse
-  apt: name=synapse state=latest
-  become: true

@@ -1,5 +1,0 @@
-- name: Install git with Homebrew
-  homebrew: name={{item}} state=latest
-  with_items:
-    - git
-    - tig

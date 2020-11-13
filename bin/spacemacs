@@ -1,3 +1,0 @@
-#!/bin/bash
-export EMACS_USER_DIRECTORY=~/.emacsenv.d/spacemacs
-exec emacs

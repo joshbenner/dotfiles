@@ -1,3 +1,0 @@
-- name: Install Virtualbox via homebrew cask
-  homebrew_cask: name=virtualbox state=present
-  when: ansible_os_family == "Darwin"

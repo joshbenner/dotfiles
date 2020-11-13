@@ -1,0 +1,30 @@
+---
+# Install things that shells are configured to need for aliases, etc.
+
+- name: Install various CLI/shell deps on macOS
+  when: ansible_os_family == 'Darwin'
+  homebrew:
+    state: present
+    name:
+      - grc
+      - direnv
+      - bat
+      - fd
+      - ag
+      - exa
+      - fzf
+      - colordiff
+
+- name: Install various CLI/shell deps on Debian-family
+  when: ansible_os_family == 'Debian'
+  apt:
+    state: present
+    name:
+      # TODO: bat
+      - grc
+      - direnv
+      - fd-find
+      - silversearcher-ag
+      - exa
+      - fzf
+      - colordiff

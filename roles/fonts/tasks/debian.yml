@@ -1,2 +1,0 @@
-- name: Install Source Code Pro from Release File
-  script: "{{dotfiles_dir}}/scripts/source-code-pro creates={{home_dir}}/.fonts/SourceCodePro-Regular.otf"

@@ -1,9 +1,0 @@
-- name: Install Sublime Text 3 via packer
-  packer: name=sublime-text-dev
-  become: true
-
-- name: Link subl to subl3 on Arch
-  file:
-    src: "/usr/bin/subl3"
-    dest: "{{home_dir}}/bin/subl"
-    state: link

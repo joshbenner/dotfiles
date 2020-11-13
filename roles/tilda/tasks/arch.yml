@@ -1,3 +1,0 @@
-- name: Install tilda with pacman
-  pacman: name=tilda state=latest
-  become: true

@@ -1,3 +1,0 @@
-- name: Install Source Code Pro fonts with pacman
-  pacman: name=adobe-source-code-pro-fonts state=latest
-  become: true
