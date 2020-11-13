@@ -20,6 +20,7 @@ elif [[ `uname` == 'Linux' ]]; then
 else
     playbook="macos.yml"
 fi
+echo "Using playbook: $playbook"
 if sudo -n true 2>/dev/null; then
     ansible-playbook -i $1 $playbook
 else
