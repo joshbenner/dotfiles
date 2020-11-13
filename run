@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 no_inventory () {
     echo >&2 "You must specify the workstation type (personal or work)"
@@ -11,18 +11,27 @@ no_inventory () {
 # Change to dir of script.
 cd "${0%/*}"
 
-git pull
-
-if [[ $(command -v python) && $(python -c 'import platform;print("raspberrypi" in platform.uname())') == "True" ]]; then
-    playbook="pi.yml"
-elif [[ `uname` == 'Linux' ]]; then
-    playbook="linux.yml"
+if [ $(uname) = "Linux" ]; then
+    platform="linux"
+    sudo apt install -y python-pip python-virtualenv libffi-dev build-essential
 else
-    playbook="macos.yml"
+    platform="macos"
 fi
-echo "Using playbook: $playbook"
+
+if [ ! $(command -v virtualenv) ]; then
+    echo "Virtualenv not found! Install virtualenv first."
+    exit 1
+fi
+
+if [ ! -e ./env/bin/python ]; then
+    echo "Initializing virtualenv..."
+    virtualenv ./env
+fi
+
+./env/bin/pip install -r ./requirements.txt
+
 if sudo -n true 2>/dev/null; then
-    ansible-playbook -i $1 $playbook
+    ./env/bin/ansible-playbook -i $1 $platform.yml
 else
-    ansible-playbook -i $1 $playbook -K
+    ./env/bin/ansible-playbook -i $1 $platform.yml -K
 fi

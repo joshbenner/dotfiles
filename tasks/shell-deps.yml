@@ -16,6 +16,7 @@
       - colordiff
 
 - name: Install various CLI/shell deps on Debian-family
+  become: true
   when: ansible_os_family == 'Debian'
   apt:
     state: present

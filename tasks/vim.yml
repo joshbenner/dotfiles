@@ -1,5 +1,6 @@
 ---
 - name: Install full vim via APT
+  become: true
   apt: name=vim state=present
   when: ansible_os_family == 'Debian'
 

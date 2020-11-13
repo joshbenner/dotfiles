@@ -6,11 +6,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 path=($HOME/bin $path)
-for gemdir in $HOME/.gem/ruby/*; do
-    if [ -d $gemdir/bin ]; then
-        path+=$gemdir/bin
-    fi
-done
+if [ -e $HOME/.gem/ruby ]; then
+    for gemdir in $HOME/.gem/ruby/*; do
+        if [ -d $gemdir/bin ]; then
+            path+=$gemdir/bin
+        fi
+    done
+fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh

@@ -12,4 +12,22 @@
 
 - name: Linux-specific stuff
   hosts: local
-  tasks: []
+  handlers:
+    - name: refresh font cache
+      command: fc-cache -f -v
+  tasks:
+    - name: Create fonts dir
+      tags: [fonts]
+      file: path={{ item }} state=directory
+      loop:
+        - "{{ home_dir }}/.local"
+        - "{{ home_dir }}/.local/share"
+        - "{{ home_dir }}/.local/share/fonts"
+
+    - name: Install fonts
+      tags: [fonts]
+      copy:
+        src: "{{ item }}"
+        dest: "{{ home_dir }}/.local/share/fonts"
+      with_fileglob: fonts/*.ttf
+      notify: refresh font cache

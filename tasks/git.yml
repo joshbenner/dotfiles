@@ -4,6 +4,7 @@
   when: ansible_os_family == 'Darwin'
 
 - name: Install git via APT
+  become: true
   apt: name=git state=present
   when: ansible_os_family == 'Debian'
 

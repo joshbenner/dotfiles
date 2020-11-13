@@ -4,6 +4,7 @@
   when: ansible_os_family == 'Darwin'
 
 - name: Install fish on Debian family
+  become: true
   apt: name=fish state=present
   when: ansible_os_family == 'Debian'
 

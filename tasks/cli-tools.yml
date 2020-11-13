@@ -23,6 +23,7 @@
       - pstree
 
 - name: Install Linux CLI tools via APT
+  become: true
   when: ansible_os_family == 'Debian'
   apt:
     state: present
