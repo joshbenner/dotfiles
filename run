@@ -13,7 +13,7 @@ cd "${0%/*}"
 
 if [ $(uname) = "Linux" ]; then
     platform="linux"
-    sudo apt install -y python-pip python-virtualenv libffi-dev build-essential
+    sudo apt install -y python-pip python-virtualenv libffi-dev libssl-dev build-essential
 else
     platform="macos"
 fi
