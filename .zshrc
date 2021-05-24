@@ -34,7 +34,7 @@ setopt inc_append_history  # Write history immediately
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(fzf-tab git direnv docker fd fzf kubectl pip pyenv ssh-agent zsh_reload
+plugins=(asdf fzf-tab git direnv docker fd fzf kubectl pip ssh-agent zsh_reload
          zsh-autosuggestions zsh-syntax-highlighting colored-man-pages virtualz)
 
 source $ZSH/oh-my-zsh.sh
