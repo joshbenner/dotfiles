@@ -36,3 +36,10 @@
         - zsh
         - cli-tools
         - vim
+
+    - name: Install virtualenvwrapper
+      become: true
+      pip:
+        name: virtualenvwrapper
+        state: present
+        executable: "{{ system_pip }}"

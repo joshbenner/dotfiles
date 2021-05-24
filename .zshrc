@@ -14,6 +14,10 @@ if [ -e $HOME/.gem/ruby ]; then
     done
 fi
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python"
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -35,7 +39,8 @@ setopt inc_append_history  # Write history immediately
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(asdf fzf-tab git direnv docker fd fzf kubectl pip ssh-agent zsh_reload
-         zsh-autosuggestions zsh-syntax-highlighting colored-man-pages virtualz)
+         zsh-autosuggestions zsh-syntax-highlighting colored-man-pages virtualz
+         virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
 
