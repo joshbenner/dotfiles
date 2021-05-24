@@ -1,7 +1,10 @@
 ---
+# Needed for things like vim or some shell prompts that use powerline scripts.
+# ... not sure if anything in dotfiles actually needs this anymore?
 - name: Install powerline
   pip:
     name: powerline-status
+    executable: "{{ system_pip }}"
     extra_args: --user
 
 - name: Install pre-patched powerline fonts

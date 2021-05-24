@@ -1,6 +1,10 @@
 - name: Playbook deps
   hosts: local
   tasks:
+    - name: Set system python
+      set_fact:
+        system_python: /bin/python
+        system_pip: /bin/pip
     - name: Install playbook deps via APT
       when: ansible_os_family == 'Debian'
       become: true

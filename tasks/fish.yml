@@ -19,7 +19,9 @@
     - {src: "{{dotfiles_dir}}/grc", dest: "{{home_dir}}/.grc"}
 
 - name: Install virtualfish
-  pip: name=virtualfish
+  pip:
+    name: virtualfish
+    executable: "{{ system_pip }}"
   become: true
 
 - name: Install Oh-My-Fish
