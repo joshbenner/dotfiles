@@ -1,0 +1,56 @@
+---
+- name: Tap emacs-mac
+  tags: [emacs]
+  homebrew_tap:
+    name: railwaycat/emacsmacport
+  when: ansible_os_family == 'Darwin'
+
+- name: Install homebrew prerequisites
+  tags: [emacs]
+  homebrew:
+    name:
+      - git
+      - ripgrep
+      - coreutils
+      - fd
+      - emacs-mac
+  when: ansible_os_family == 'Darwin'
+
+- name: Install chemacs2
+  tags: [emacs]
+  git:
+    repo: https://github.com/plexus/chemacs2.git
+    dest: "{{ home_dir }}/.emacs.d"
+
+- name: Link profile list
+  tags: [emacs]
+  file:
+    src: "{{ dotfiles_dir }}/emacs/emacs-profiles.el"
+    dest: "{{ home_dir }}/.emacs-profiles.el"
+    state: link
+
+- name: Set default emacs profile
+  tags: [emacs]
+  copy:
+    dest: "{{ home_dir }}/.emacs-profile"
+    content: doom
+
+- name: Link configs
+  tags: [emacs]
+  file:
+    src: "{{ dotfiles_dir }}/emacs/doom.d"
+    dest: "{{ home_dir }}/.doom.d"
+    state: link
+
+- name: Install Doom Emacs
+  tags: [emacs]
+  git:
+    repo: https://github.com/hlissner/doom-emacs
+    dest: "{{ home_dir }}/.emacs.doom"
+    update: false
+
+- name: Run doom install
+  tags: [emacs]
+  shell: "{{ home_dir }}/.emacs.doom/bin/doom -y install"
+  args:
+    creates: "{{ home_dir}}/.emacs.doom/.local/env"

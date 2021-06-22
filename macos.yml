@@ -67,3 +67,7 @@
         dest: "{{ home_dir }}/Library/Fonts"
       with_fileglob: fonts/*.ttf
 
+    # Move this to common once linux install steps added in emacs.yml
+    - name: Install emacs
+      tags: [emacs]
+      include_tasks: tasks/emacs.yml
