@@ -49,4 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-(package! evil-tutor)
+;(package! evil-tutor)
+
+(package! bats-mode)
+(package! k8s-mode)

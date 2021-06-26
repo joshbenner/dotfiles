@@ -61,8 +61,14 @@
 (map! :niv "C-n" #'evil-next-line)
 (map! :niv "C-p" #'evil-previous-line)
 (map! :niv "C-a" #'evil-beginning-of-visual-line)
-(map! :niv "C-e" #'evil-end-of-line-or-visual-line)
+(map! :niv "C-e" #'evil-end-of-visual-line)
 (map! :g "s-P" #'counsel-M-x)
 
 (after! company
   (setq company-idle-delay nil))
+
+(add-hook 'vterm-mode-hook
+          (lambda ()
+            (set (make-local-variable 'buffer-face-mode-face)
+                 '(:family "SourceCodePro+Powerline+Awesome Regular" :size 12))
+            (buffer-face-mode t)))
