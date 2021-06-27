@@ -56,6 +56,7 @@
       file:
         path: "{{ home_dir }}/.cache/exa-{{ _exa_version }}"
         state: directory
+        mode: u+r
 
     - name: Extract exa archive
       unarchive:
@@ -69,3 +70,4 @@
         remote_src: true
         src: "{{ home_dir }}/.cache/exa-{{ _exa_version }}/bin/exa"
         dest: "{{ home_dir }}/bin/exa"
+        mode: u=rwx

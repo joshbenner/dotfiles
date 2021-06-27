@@ -8,7 +8,7 @@
         system_pip: "/usr/local/bin/pip"
 
     - name: Install Homebrew deps for rest of playbook
-      homebrew: name=wget state=latest
+      homebrew: name=wget state=present
 
 - import_playbook: common.yml
 
@@ -51,7 +51,7 @@
         - rectangle
         - monitorcontrol
         - apache-directory-studio
-      ignore_errors: true
+      ignore_errors: true  # noqa: ignore-errors
 
     - name: Install i2cssh
       tags: [cssh, i2cssh]
@@ -65,6 +65,7 @@
       copy:
         src: "{{ item }}"
         dest: "{{ home_dir }}/Library/Fonts"
+        mode: u+rw
       with_fileglob: fonts/*.ttf
 
     # Move this to common once linux install steps added in emacs.yml
