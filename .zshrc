@@ -1,3 +1,9 @@
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    session_type=remote
+else
+    session_type=local
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -38,9 +44,12 @@ setopt inc_append_history  # Write history immediately
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(asdf fzf-tab git direnv docker fd fzf kubectl pip ssh-agent zsh_reload
+plugins=(asdf fzf-tab git direnv docker fd fzf kubectl pip zsh_reload
          zsh-autosuggestions zsh-syntax-highlighting colored-man-pages virtualz
          virtualenvwrapper)
+if [ "$session_type" = "local" ]; then
+    plugins+=(ssh-agent)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
