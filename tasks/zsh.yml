@@ -35,3 +35,18 @@
     - src: "{{ dotfiles_dir }}/.p10k.zsh"
       dest: "{{ home_dir }}/.p10k.zsh"
 
+- name: Create zsh directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ home_dir }}/.config"
+    - "{{ home_dir }}/.config/zsh"
+    - "{{ home_dir }}/.config/zsh/conf.d"
+
+- name: Link zsh conf.d files
+  file:
+    src: "{{ item }}"
+    dest: "{{ home_dir }}/.config/zsh/conf.d/{{ item | basename }}"
+    state: link
+  loop: "{{ query('fileglob', 'zsh/conf.d/*.zsh') }}"
