@@ -62,7 +62,7 @@
         src: "{{ home_dir }}/.cache/exa-{{ _exa_version }}.zip"
         dest: "{{ home_dir }}/.cache/exa-{{ _exa_version }}"
         remote_src: true
-      when: _exa_dl is changed
+        creates: "{{ home_dir }}/.cache/exa-{{ _exa_version }}/bin/exa"
 
     - name: Copy exa binary
       copy:
