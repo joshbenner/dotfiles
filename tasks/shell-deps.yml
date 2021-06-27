@@ -36,38 +36,44 @@
     state: present
     name: exa
 
-- name: Install exa by downloading binary on older Ubuntu
+- name: Check for exa to short-circuit build on older Ubuntu
+  stat:
+    path: /usr/local/bin/exa
   when:
     - ansible_distribution == 'Ubuntu'
     - ansible_distribution_version is version('20.10', '<')
+  register: _exa_stat
+
+- name: Install exa by compiling on older Ubuntu
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version is version('20.10', '<')
+    - not _exa_stat.stat.exists
   vars:
-    _exa_archmap:
-      aarch64: armv7
-      x86_64: x86_64
     _exa_version: 0.10.1
   block:
-    - name: Download exa archive
-      get_url:
-        url: https://github.com/ogham/exa/releases/download/v{{ _exa_version }}/exa-linux-{{ _exa_archmap[ansible_architecture] }}-v{{ _exa_version }}.zip
-        dest: "{{ home_dir }}/.cache/exa-{{ _exa_version }}.zip"
-      register: _exa_dl
+    - name: Install build deps
+      become: true
+      apt:
+        name: [libgit2-dev, rustc]
+        state: present
 
-    - name: Create exa archive dir
-      file:
-        path: "{{ home_dir }}/.cache/exa-{{ _exa_version }}"
-        state: directory
-        mode: u+r
+    - name: Clone exa
+      git:
+        repo: https://github.com/ogham/exa
+        dest: "{{ home_dir }}/devel/contrib/exa"
+        depth: 1
+        version: v{{ _exa_version }}
 
-    - name: Extract exa archive
-      unarchive:
-        src: "{{ home_dir }}/.cache/exa-{{ _exa_version }}.zip"
-        dest: "{{ home_dir }}/.cache/exa-{{ _exa_version }}"
-        remote_src: true
-        creates: "{{ home_dir }}/.cache/exa-{{ _exa_version }}/bin/exa"
+    - name: Build exa
+      command: cargo build --release
+      args:
+        chdir: "{{ home_dir }}/devel/contrib/exa"
+        creates: "{{ home_dir }}/devel/contrib/exa/target/release/exa"
 
-    - name: Copy exa binary
-      copy:
-        remote_src: true
-        src: "{{ home_dir }}/.cache/exa-{{ _exa_version }}/bin/exa"
-        dest: "{{ home_dir }}/bin/exa"
-        mode: u=rwx
+    - name: Install exa
+      become: true
+      command: install target/release/exa /usr/local/bin/exa
+      args:
+        chdir: "{{ home_dir }}/devel/contrib/exa"
+        creates: "/usr/local/bin/exa"
