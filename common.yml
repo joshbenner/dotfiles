@@ -6,6 +6,7 @@
       file:
         path: "{{ home_dir }}/{{ item }}"
         state: directory
+        mode: u=rwx
       loop:
         - .config
         - devel
