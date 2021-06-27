@@ -20,7 +20,7 @@
       when: ansible_os_family == 'Debian'
       become: true
       apt:
-        name: "{{ _python_pkgs + ['wget'] }}"
+        name: "{{ _python_pkgs + ['wget', 'unzip'] }}"
         state: present
 
 - import_playbook: common.yml

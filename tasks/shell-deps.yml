@@ -26,6 +26,41 @@
       - direnv
       - fd-find
       - silversearcher-ag
-      - exa
       - fzf
       - colordiff
+
+- name: Install exa on Debian or Ubuntu >= 20.10
+  become: true
+  when: ansible_os_family == 'Debian' and (ansible_distribution != 'Ubuntu' or ansible_distribution_version is version('20.10', '>='))
+  apt:
+    state: present
+    name: exa
+
+- name: Install exa by downloading binary on older Ubuntu
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version is version('20.10', '<')
+  vars:
+    _exa_archmap:
+      aarch64: armv7
+      x86_64: x86_64
+    _exa_version: 0.10.1
+  block:
+    - name: Download exa archive
+      get_url:
+        url: https://github.com/ogham/exa/releases/download/v{{ _exa_version }}/exa-linux-{{ _exa_archmap[ansible_architecture] }}-v{{ _exa_version }}.zip
+        dest: "{{ home_dir }}/.cache/exa-{{ _exa_version }}.zip"
+      register: _exa_dl
+
+    - name: Extract exa archive
+      unarchive:
+        src: "{{ home_dir }}/.cache/exa-{{ _exa_version }}.zip"
+        dest: "{{ home_dir }}/.cache/exa-{{ _exa_version }}"
+        remote_src: true
+      when: _exa_dl is changed
+
+    - name: Copy exa binary
+      copy:
+        remote_src: true
+        src: "{{ home_dir }}/.cache/exa-{{ _exa_version }}/bin/exa"
+        dest: "{{ home_dir }}/bin/exa"
