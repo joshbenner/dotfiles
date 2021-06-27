@@ -52,6 +52,11 @@
         dest: "{{ home_dir }}/.cache/exa-{{ _exa_version }}.zip"
       register: _exa_dl
 
+    - name: Create exa archive dir
+      file:
+        path: "{{ home_dir }}/.cache/exa-{{ _exa_version }}"
+        state: directory
+
     - name: Extract exa archive
       unarchive:
         src: "{{ home_dir }}/.cache/exa-{{ _exa_version }}.zip"
