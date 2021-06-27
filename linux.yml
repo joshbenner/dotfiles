@@ -5,6 +5,15 @@
       set_fact:
         system_python: /bin/python
         system_pip: /bin/pip
+
+    - name: Set system python for newer Ubuntu
+      set_fact:
+        system_python: /usr/bin/python3
+        system_pip: /usr/bin/pip3
+      when:
+        - ansible_distribution == 'Ubuntu'
+        - ansible_distribution_version is version('20.04', '>=')
+
     - name: Install playbook deps via APT
       when: ansible_os_family == 'Debian'
       become: true
