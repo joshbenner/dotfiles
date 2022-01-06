@@ -1,11 +1,22 @@
 - name: Playbook deps
   hosts: local
   tasks:
-    - name: Set system python
+    - name: Set system python (<Monterey)
       set_fact:
         system_python: "/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python"
         # Do I need to use easy_install on fresh macOS to get this? Probably...
         system_pip: "/usr/local/bin/pip"
+      when: ansible_distribution_version is version('12', '<')
+
+    - name: Set system python (>Monterey)
+      set_fact:
+        system_python: /usr/bin/python3
+        system_pip: /usr/bin/pip3
+      when: ansible_distribution_version is version('12', '>=')
+
+    - name: Find homebrew prefix
+      set_fact:
+        homebrew_prefix: "{{- lookup('pipe', 'brew --prefix') -}}"
 
     - name: Install Homebrew deps for rest of playbook
       homebrew: name=wget state=present
@@ -23,6 +34,7 @@
       loop:  # Loop so one fail doesn't stop entire task.
         - adoptopenjdk
         - alfred
+        - raycast
         - istat-menus
         - docker
         - iterm2
@@ -69,6 +81,6 @@
       with_fileglob: fonts/*.ttf
 
     # Move this to common once linux install steps added in emacs.yml
-    - name: Install emacs
-      tags: [emacs]
-      include_tasks: tasks/emacs.yml
+    #- name: Install emacs
+    #  tags: [emacs]
+    #  include_tasks: tasks/emacs.yml

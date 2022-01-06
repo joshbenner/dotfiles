@@ -33,7 +33,7 @@
         - git
         - shell-deps
         - powerline
-        - fish
+        #- fish
         - zsh
         - cli-tools
         - vim

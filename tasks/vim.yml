@@ -12,7 +12,7 @@
   when: ansible_os_family == 'Darwin'
   file:
     state: link
-    src: /usr/local/bin/mvim
+    src: "{{ homebrew_prefix }}/bin/mvim"
     dest: "{{ item }}"
   loop:
     - "{{ home_dir }}/bin/vim"
