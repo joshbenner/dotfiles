@@ -24,6 +24,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python"
 fi
 
+if grep WSL /proc/version > /dev/null; then
+    bindkey '^H' backward-kill-word
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
