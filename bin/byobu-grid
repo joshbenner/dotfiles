@@ -1,0 +1,27 @@
+#!/bin/sh
+
+i=0
+for cmd in "$@"; do
+    if [ -z "$sess" ]; then
+        pid=$(cut -d' ' -f4 < /proc/self/stat)
+        sess="byobu-grid-$pid"
+        # sess='byobu-grid-test'
+        byobu-tmux kill-session -t $sess >/dev/null 2>&1
+        echo "Starting session $sess"
+        byobu-tmux new -s $sess -d
+        byobu-tmux send-keys -t $sess:.0 -- "$cmd" Enter
+    else
+        byobu-tmux split-window -t $sess
+        byobu-tmux send-keys -t $sess:.$i -- "$cmd" Enter
+    fi
+    byobu-tmux select-layout -t $sess tiled
+    i=$((i+1))
+done
+
+if [ -z "$sess" ]; then
+    echo "No session?"
+    exit 1
+fi
+
+byobu-tmux attach -t $sess
+byobu-tmux kill-session -t $sess >/dev/null 2>&1

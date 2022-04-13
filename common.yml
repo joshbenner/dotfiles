@@ -20,6 +20,9 @@
         state: link
       loop:
         - showcert
+        - awssm
+        - awssm-multi
+        - byobu-grid
 
     - include_tasks:
         file: tasks/{{ taskfile }}.yml

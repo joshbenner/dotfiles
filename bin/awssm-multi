@@ -1,0 +1,91 @@
+#!/bin/bash
+
+usage() {
+    echo "Usage: $0 [options] pattern" >&2
+    echo "" >&2
+    echo "Spawns multiple SSM sessions in byobu." >&2
+    echo "" >&2
+    echo "Options:" >&2
+    echo "  -h                  Show help" >&2
+    echo "  -p <profile>        AWS profile" >&2
+}
+
+while [ $# -ne 0 ]; do
+    case $1 in
+        -p)
+            shift;
+            if [ $# -eq 0 ]; then
+                usage
+                exit 2
+            fi
+            export AWS_PROFILE="$1"; shift
+            ;;
+        -h)
+            usage
+            exit 0
+            ;;
+        -*)
+            usage
+            exit 2
+            ;;
+        *)
+            patterns="${patterns}${patterns:+ }$1"; shift
+            ;;
+    esac
+done
+
+if [ -z "$patterns" ]; then
+    echo "You must specify a search pattern"
+    exit 4
+fi
+
+if ! (which jq > /dev/null); then
+    echo "Requires jq"
+    exit 3
+fi
+
+if ! (which fzf > /dev/null); then
+    echo "Requires fzf"
+    exit 3
+fi
+
+if ! (which aws > /dev/null); then
+    echo "Requires aws"
+    exit 3
+fi
+
+if ! (aws sts get-caller-identity > /dev/null); then
+    echo "You must configure AWS credentials or login via SSO."
+    echo "Profile: $AWS_PROFILE"
+    exit 2
+fi
+
+cachefile="$HOME/.cache/awssm/$AWS_PROFILE.instances.json"
+mkdir -p $(dirname "$cachefile")
+
+if [ -z "$(find "$cachefile" -mmin -240 2>/dev/null)" ]; then
+    # Cache file not found, or has not been udpated recently.
+    echo "Refreshing instance cache at $cachefile ..."
+    aws ec2 describe-instances > "$cachefile"
+fi
+
+instance_ids=$(cat "$cachefile" | jq -r '
+        .Reservations[].Instances[]
+        | select(.State.Name == "running")
+        | ((.Tags // empty) | from_entries) as $tags
+        | ($tags.Name) + " [" + .PrivateIpAddress +"] (" + .InstanceId + ") " + .InstanceId' \
+    | fzf -q "$patterns" -m --select-1 --nth=1 --with-nth=..-2 \
+    | rev | cut -d' ' -f1 | rev)
+
+declare -a cmds
+for id in ${instance_ids}; do
+    cmds+=("aws ssm start-session --target $id --profile $AWS_PROFILE")
+done
+
+# Open in new Windows Terminal if on WSL
+if grep WSL /proc/version > /dev/null; then
+    grid="$(which byobu-grid)"
+    cmd.exe /c wt.exe -M wsl $grid "${cmds[@]}"
+else
+    byobu-grid "${cmds[@]}"
+fi
