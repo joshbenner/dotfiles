@@ -37,6 +37,7 @@
         - zsh
         - cli-tools
         - vim
+        - byobu
 
     - name: Install virtualenvwrapper
       become: true

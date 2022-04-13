@@ -1,0 +1,13 @@
+---
+- name: Create .byobu dir
+  file:
+    path: "{{ home_dir }}/.byobu"
+    state: directory
+    mode: u=rwx
+
+- name: Symlink byobu config
+  file:
+    src: "{{ dotfiles_dir }}/byobu/.tmux.conf"
+    dest: "{{ home_dir }}/.byobu/.tmux.conf"
+    state: link
+    force: true
