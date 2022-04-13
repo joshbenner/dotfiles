@@ -168,3 +168,6 @@ fi
 
 # Make all path entries unique
 typeset -aU path
+
+# Disable autocomplete beeps.
+unsetopt LIST_BEEP
