@@ -1,0 +1,15 @@
+#!/bin/sh
+
+status="$(byobu show -qv synchronize-panes)"
+
+if [ -z "$status" ]; then
+    status="off"
+fi
+
+if [ "$status" = "on" ]; then
+    color="red"
+else
+    color="default"
+fi
+
+echo "#[bg=$color]SYNC:$status#[bg=default]"

@@ -1,9 +1,12 @@
 ---
-- name: Create .byobu dir
+- name: Create .byobu dirs
   file:
-    path: "{{ home_dir }}/.byobu"
+    path: "{{ item }}"
     state: directory
     mode: u=rwx
+  loop:
+    - "{{ home_dir }}/.byobu"
+    - "{{ home_dir }}/.byobu/bin"
 
 - name: Symlink byobu config
   file:
@@ -11,3 +14,13 @@
     dest: "{{ home_dir }}/.byobu/.tmux.conf"
     state: link
     force: true
+
+- name: Symlink byobu status scripts
+  file:
+    src: "{{ dotfiles_dir }}/byobu/bin/{{ item.script }}"
+    dest: "{{ home_dir }}/.byobu/bin/{{ item.freq }}_{{ item.script }}"
+    state: link
+    force: true
+  loop:
+    - script: status-sync-panes
+      freq: '00'
