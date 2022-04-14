@@ -48,7 +48,7 @@ instance_id=$(cat "$cachefile" | jq -r '
         | select(.State.Name == "running")
         | ((.Tags // empty) | from_entries) as $tags
         | ($tags.Name) + " [" + .PrivateIpAddress +"] (" + .InstanceId + ") " + .InstanceId' \
-    | fzf -q "$instance_search" --exit-0 --select-1 --nth=1 --with-nth=..-2 \
+    | fzf -q "$instance_search" --select-1 --with-nth=..-2 \
     | rev | cut -d' ' -f1 | rev)
 
 if [ -z "$instance_id" ]; then
