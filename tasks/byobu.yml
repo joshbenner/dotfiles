@@ -23,4 +23,4 @@
     force: true
   loop:
     - script: status-sync-panes
-      freq: '00'
+      freq: '300'

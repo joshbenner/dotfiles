@@ -1,15 +1,20 @@
 #!/bin/sh
 
-status="$(byobu show -qv synchronize-panes)"
+if [ ! -z "$1" ]; then
+    status="$(byobu show -qv synchronize-panes)"
 
-if [ -z "$status" ]; then
-    status="off"
-fi
+    if [ -z "$status" ]; then
+        status="off"
+    fi
 
-if [ "$status" = "on" ]; then
-    color="red"
+    if [ "$status" = "on" ]; then
+        color="red"
+    else
+        color="default"
+    fi
+
+    echo "#[bg=$color]SYNC:$status#[bg=default]"
 else
-    color="default"
+    SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+    echo "#($SCRIPTPATH/$(basename $0) render)"
 fi
-
-echo "#[bg=$color]SYNC:$status#[bg=default]"
