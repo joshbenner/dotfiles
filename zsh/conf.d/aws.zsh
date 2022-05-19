@@ -12,3 +12,4 @@ aws-instances() {
                 Placement.AvailabilityZone \
             ]" --output table
 }
+
