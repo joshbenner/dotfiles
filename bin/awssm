@@ -34,14 +34,15 @@ if ! (aws sts get-caller-identity > /dev/null); then
     exit 2
 fi
 
-cachefile="$HOME/.cache/awssm/$AWS_PROFILE.instances.json"
-mkdir -p $(dirname "$cachefile")
+# cachefile="$HOME/.cache/awssm/$AWS_PROFILE.instances.json"
+# mkdir -p $(dirname "$cachefile")
 
-if [ -z "$(find "$cachefile" -mmin -240 2>/dev/null)" ]; then
-    # Cache file not found, or has not been udpated recently.
-    echo "Refreshing instance cache at $cachefile ..."
-    aws ec2 describe-instances > "$cachefile"
-fi
+# if [ -z "$(find "$cachefile" -mmin -240 2>/dev/null)" ]; then
+#     # Cache file not found, or has not been udpated recently.
+#     echo "Refreshing instance cache at $cachefile ..."
+#     aws ec2 describe-instances > "$cachefile"
+# fi
+cachefile=$(ec2-cache-instances)
 
 instance_id=$(cat "$cachefile" | jq -r '
         .Reservations[].Instances[]
