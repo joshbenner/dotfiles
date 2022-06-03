@@ -41,6 +41,7 @@
         - cli-tools
         - vim
         - byobu
+        - asdf
 
     - name: Install virtualenvwrapper
       become: true
