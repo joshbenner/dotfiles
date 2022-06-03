@@ -29,51 +29,89 @@
       - fzf
       - colordiff
 
-- name: Install exa on Debian or Ubuntu >= 20.10
+- name: Do not install exa from apt, as it has git support disabled
   become: true
-  when: ansible_os_family == 'Debian' and (ansible_distribution != 'Ubuntu' or ansible_distribution_version is version('20.10', '>='))
+  when: ansible_os_family == 'Debian'
   apt:
-    state: present
+    state: absent
     name: exa
 
-- name: Check for exa to short-circuit build on older Ubuntu
+- name: Check for exa to short-circuit build
   stat:
     path: /usr/local/bin/exa
-  when:
-    - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_version is version('20.10', '<')
+  when: ansible_os_family == 'Debian'
   register: _exa_stat
 
-- name: Install exa by compiling on older Ubuntu
+- name: Install exa from archive
+  become: true
   when:
-    - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_version is version('20.10', '<')
+    - ansible_os_family == 'Debian'
     - not _exa_stat.stat.exists
   vars:
     _exa_version: 0.10.1
+    _exa_path: /opt/exa-{{ _exa_version }}
+    _exa_arch: "{{ 'armv7' if ansible_architecture == 'aarch64' else ansible_architecture }}"
   block:
-    - name: Install build deps
-      become: true
-      apt:
-        name: [libgit2-dev, rustc]
-        state: present
+    - name: Create archive directory
+      file:
+        path: "{{ _exa_path }}"
+        state: directory
+        owner: root
+        group: root
+        mode: u=rwx,g=rx,o=rx
 
-    - name: Clone exa
-      git:
-        repo: https://github.com/ogham/exa
-        dest: "{{ home_dir }}/devel/contrib/exa"
-        depth: 1
-        version: v{{ _exa_version }}
+    - name: Download exa archive
+      unarchive:
+        src: https://github.com/ogham/exa/releases/download/v{{ _exa_version }}/exa-linux-{{ _exa_arch  }}-v{{ _exa_version }}.zip
+        dest: "{{ _exa_path }}"
+        remote_src: true
 
-    - name: Build exa
-      command: cargo build --release
-      args:
-        chdir: "{{ home_dir }}/devel/contrib/exa"
-        creates: "{{ home_dir }}/devel/contrib/exa/target/release/exa"
+    - name: Install exa files
+      copy:
+        src: "{{ _exa_path }}/{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: "{{ item.mode | default('0664') }}"
+        owner: root
+        group: root
+      loop:
+        - src: bin/exa
+          dest: /usr/local/bin/exa
+          mode: u=rwx,g=rx,o=rx
+        - src: man/exa.1
+          dest: /usr/share/man/man1/exa.1
+        - src: man/exa_colors.5
+          dest: /usr/share/man/man5/exa_colors.5
 
-    - name: Install exa
-      become: true
-      command: install target/release/exa /usr/local/bin/exa
-      args:
-        chdir: "{{ home_dir }}/devel/contrib/exa"
-        creates: "/usr/local/bin/exa"
+
+# - name: Install exa by compiling on older Ubuntu
+#   when:
+#     - ansible_os_family == 'Debian'
+#     - not _exa_stat.stat.exists
+#   vars:
+#     _exa_version: 0.10.1
+#   block:
+#     - name: Install build deps
+#       become: true
+#       apt:
+#         name: [libgit2-dev, rustc]
+#         state: present
+
+#     - name: Clone exa
+#       git:
+#         repo: https://github.com/ogham/exa
+#         dest: "{{ home_dir }}/devel/contrib/exa"
+#         depth: 1
+#         version: v{{ _exa_version }}
+
+#     - name: Build exa
+#       command: cargo build --release
+#       args:
+#         chdir: "{{ home_dir }}/devel/contrib/exa"
+#         creates: "{{ home_dir }}/devel/contrib/exa/target/release/exa"
+
+#     - name: Install exa
+#       become: true
+#       command: install target/release/exa /usr/local/bin/exa
+#       args:
+#         chdir: "{{ home_dir }}/devel/contrib/exa"
+#         creates: "/usr/local/bin/exa"
