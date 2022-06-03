@@ -13,7 +13,7 @@
         system_pip: /usr/bin/pip3
         _python_pkgs: [python3-pip, python3-apt]
       when:
-        - ansible_distribution == 'Ubuntu'
+        - ansible_distribution in ('Ubuntu', 'Pop!_OS')
         - ansible_distribution_version is version('20.04', '>=')
 
     - name: Install playbook deps via APT
