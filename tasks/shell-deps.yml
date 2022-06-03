@@ -73,6 +73,7 @@
         mode: "{{ item.mode | default('0664') }}"
         owner: root
         group: root
+        remote_src: true
       loop:
         - src: bin/exa
           dest: /usr/local/bin/exa
@@ -82,6 +83,14 @@
         - src: man/exa_colors.5
           dest: /usr/share/man/man5/exa_colors.5
 
+    - name: Copy custom-build exa on aarch64
+      copy:
+        src: bin/exa-arm
+        dest: /usr/local/bin/exa
+        owner: root
+        group: root
+        mode: u=rwx,g=rx,o=rx
+      when: ansible_architecture == 'aarch64'
 
 # - name: Install exa by compiling on older Ubuntu
 #   when:
