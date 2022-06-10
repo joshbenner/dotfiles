@@ -15,14 +15,21 @@
 
     - name: Link custom scripts
       file:
-        src: "{{ dotfiles_dir }}/bin/{{ item }}"
-        dest: "{{ home_dir }}/bin/{{ item }}"
+        src: "{{ dotfiles_dir }}/bin/{{ item.name }}"
+        dest: "{{ home_dir }}/bin/{{ item.rename | d(item.name) }}"
         state: link
       loop:
-        - showcert
-        - awssm
-        - awssm-multi
-        - byobu-grid
+        - name: showcert
+        - name: awssm
+        - name: awssm-multi
+        - name: byobu-grid
+        - name: wsl-pbcopy
+          rename: pbcopy
+          when: "{{ is_wsl }}"
+        - name: wsl-pbpaste
+          rename: pbpaste
+          when: "{{ is_wsl }}"
+      when: item.when | default(true)
 
     - include_tasks:
         file: tasks/{{ taskfile }}.yml

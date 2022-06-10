@@ -9,6 +9,7 @@
 
     - name: Set system python for newer Ubuntu
       set_fact:
+        ansible_python_interpreter: /usr/bin/python3
         system_python: /usr/bin/python3
         system_pip: /usr/bin/pip3
         _python_pkgs: [python3-pip, python3-apt]
