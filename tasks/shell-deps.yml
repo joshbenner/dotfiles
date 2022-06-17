@@ -29,6 +29,16 @@
       - fzf
       - colordiff
 
+- name: Setup any custom symlinks
+  when: ansible_os_family == 'Debian'
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ home_dir }}/bin/{{ item.bin }}"
+    state: link
+  loop:
+    - src: /usr/bin/fdfind
+      bin: fd
+
 - name: Do not install exa from apt, as it has git support disabled
   become: true
   when: ansible_os_family == 'Debian'
