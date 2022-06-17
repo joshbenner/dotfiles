@@ -21,7 +21,7 @@
   apt:
     state: present
     name:
-      # TODO: bat
+      - bat
       - grc
       - direnv
       - fd-find
@@ -38,6 +38,8 @@
   loop:
     - src: /usr/bin/fdfind
       bin: fd
+    - src: /usr/bin/batcat
+      bin: bat
 
 - name: Do not install exa from apt, as it has git support disabled
   become: true
