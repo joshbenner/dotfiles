@@ -134,9 +134,9 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # macOS/homebrew
-[[ -s "/usr/local/etc/grc.zsh" ]] && source /usr/local/etc/grc.zsh
+[[ -s "/usr/local/etc/grc.zsh" ]] && source /usr/local/etc/grc.zsh < $TTY
 # linux
-[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh < $TTY
 
 # Tell less to only paginage if output exceeds one screen.
 export LESS="-F -X $LESS"
