@@ -159,6 +159,12 @@ alias cssh=i2cssh
 # Alias vf=vz because muscle memory keeps using vf.
 alias vf=vz
 
+# Alias pbcopy/pbpaste for Debian-family OS.
+if [ -f /etc/debian_version ]; then
+    alias pbcopy='xclip -selection clipboard'
+    alias pbpaste='xclip -selection clipboard -o'
+fi
+
 # Local overrides
 if [ -d $HOME/.config/zsh/conf.d ]; then
     for file in $HOME/.config/zsh/conf.d/*.zsh; do

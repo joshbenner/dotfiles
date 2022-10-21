@@ -47,3 +47,9 @@
         dest: "{{ home_dir }}/.local/share/fonts"
       with_fileglob: fonts/*.ttf
       notify: refresh font cache
+
+    - name: Install packages to support pbcopy/pbpaste
+      package:
+        name: [xclip, xsel]
+        state: present
+      when: ansible_os_family == 'Debian'
