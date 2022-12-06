@@ -23,7 +23,7 @@ $ns = $outlook.GetNamespace("MAPI")
 $olFolders = "Microsoft.Office.Interop.Outlook.OlDefaultFolders" -as [type]
 $calendar = $ns.GetDefaultFolder($olFolders::olFolderCalendar)
 
-$start = [DateTime]::Now
+$start = [DateTime]::Now.AddDays(-1)
 $startStr = $start.ToString("g")
 $end = $start.AddDays(14)
 $endStr = $end.ToString("g")
