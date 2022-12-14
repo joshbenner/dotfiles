@@ -61,6 +61,7 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
 typeset -g POWERLEVEL9K_STATUS_ERROR=true
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
   # The list of segments shown on the left. Fill it with the most important segments.
 typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
