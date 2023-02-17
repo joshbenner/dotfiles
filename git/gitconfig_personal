@@ -3,3 +3,5 @@
 	email = josh@bennerweb.com
 [include]
 	path = .gitconfig.common
+[init]
+	defaultBranch = main
