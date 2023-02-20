@@ -173,6 +173,9 @@ if [ -d $HOME/.config/zsh/conf.d ]; then
     done
 fi
 
+# Support krew
+path=($HOME/.config/krew/bin $path)
+
 # Make all path entries unique
 typeset -aU path
 
