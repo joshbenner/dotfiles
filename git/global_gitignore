@@ -4,5 +4,6 @@
 .venv
 .envrc
 .vscode
+*.code-workspace
 .tool-versions
 .gitexclude
