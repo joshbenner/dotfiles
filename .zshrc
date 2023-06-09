@@ -12,6 +12,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 path=($HOME/bin $path)
+path=($HOME/.local/bin $path)
 if [ -e $HOME/.gem/ruby ]; then
     for gemdir in $HOME/.gem/ruby/*; do
         if [ -d $gemdir/bin ]; then
