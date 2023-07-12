@@ -26,6 +26,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 if grep WSL /proc/version > /dev/null; then
+    export IS_WSL=1
     bindkey '^H' backward-kill-word
 fi
 
@@ -162,7 +163,7 @@ alias cssh=i2cssh
 alias vf=vz
 
 # Alias pbcopy/pbpaste for Debian-family OS.
-if [ -f /etc/debian_version ]; then
+if [ -f /etc/debian_version ] && [ -z "$IS_WSL" ]; then
     alias pbcopy='xclip -selection clipboard'
     alias pbpaste='xclip -selection clipboard -o'
 fi
