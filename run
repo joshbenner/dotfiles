@@ -29,6 +29,7 @@ if [ ! -e ./env/bin/python ]; then
 fi
 
 ./env/bin/pip install -r ./requirements.txt
+./env/bin/ansible-galaxy install -r ./requirements.yml
 
 if sudo -n true 2>/dev/null; then
     ./env/bin/ansible-playbook -i $1 $platform.yml
