@@ -32,9 +32,7 @@
         state: present
         name: "{{ item }}"
       loop:  # Loop so one fail doesn't stop entire task.
-        - adoptopenjdk
         - alfred
-        - raycast
         - istat-menus
         - docker
         - iterm2
@@ -44,7 +42,6 @@
         - notion
         - discord
         - slack
-        - atom
         - visual-studio-code
         - sublime-text
         - vnc-viewer
