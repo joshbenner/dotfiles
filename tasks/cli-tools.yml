@@ -21,6 +21,7 @@
       - htop
       - tree
       - pstree
+      - unar
 
 - name: Install Linux CLI tools via APT
   become: true

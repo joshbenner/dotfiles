@@ -1,0 +1,30 @@
+#!/bin/sh
+set -eo pipefail
+
+# Converts all CBR files in dir to CBZ
+# Source:
+# https://ubuntuforums.org/showthread.php?t=1273762&s=a388d691ed1d259329dc26304528a056&p=8676006#post8676006
+
+convert() {
+    dir=$(pwd)
+    cbr="$1"
+    name=$(basename "$cbr" .cbr)
+
+    tmpdir=$(mktemp -d)
+    cd "$tmpdir"
+    unrar e -inul "$dir/$cbr"
+    zip -q "$dir/$name.cbz" ./*
+
+    cd "$dir"
+    rm -rf "$tmpdir"
+}
+
+basedir="${1:-$(pwd)}"
+echo "$1"
+echo "Converting CBR -> CBZ in $basedir"
+cd $basedir
+
+for f in *.cbr; do
+    echo "converting $f"
+    convert "$f"
+done

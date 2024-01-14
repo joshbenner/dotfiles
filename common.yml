@@ -29,6 +29,8 @@
         - name: wsl-pbpaste
           rename: pbpaste
           when: "{{ is_wsl }}"
+        - name: cbr2cbz
+          when: work_mode == 'personal'
       when: item.when | default(true)
 
     - include_tasks:
