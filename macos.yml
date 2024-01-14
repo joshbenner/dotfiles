@@ -59,6 +59,7 @@
         - rectangle
         - monitorcontrol
         - apache-directory-studio
+        - utm
       ignore_errors: true  # noqa: ignore-errors
 
     - name: Install i2cssh
