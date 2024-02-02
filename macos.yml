@@ -31,6 +31,7 @@
       homebrew_cask:
         state: present
         name: "{{ item }}"
+        accept_external_apps: true
       loop:  # Loop so one fail doesn't stop entire task.
         - alfred
         - istat-menus
@@ -61,6 +62,9 @@
         - apache-directory-studio
         - utm
         - rar
+        - cyberduck
+        - mountain-duck
+        - microsoft-remote-desktop
       ignore_errors: true  # noqa: ignore-errors
 
     - name: Install i2cssh
