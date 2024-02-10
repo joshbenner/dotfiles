@@ -49,6 +49,7 @@
       notify: refresh font cache
 
     - name: Install packages to support pbcopy/pbpaste
+      become: true
       package:
         name: [xclip, xsel]
         state: present
