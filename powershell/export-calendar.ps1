@@ -44,6 +44,7 @@ METHOD:PUBLISH
 "@
 
 foreach ($item in $itemsInDateRange) {
+    if ($item.Subject -in ("Reserved", "Stop")) { continue }
     $subject = wrapText "$($item.Subject)"
     $location = wrapText "$($item.Location)"
     $ics += @"
