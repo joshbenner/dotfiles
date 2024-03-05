@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Set origin's head automatically.
+git remote set-head origin -a >/dev/null
+remote_head=$(git rev-parse --abbrev-ref origin/HEAD | sed 's|^origin/||')
+
+current_branch=$(git symbolic-ref --short -q HEAD)
+base_branch=$(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
+
+if [ "$current_branch" = "$remote_head" ]; then
+    echo "Current branch is remote's HEAD (main branch)"
+    exit 1
+fi
+
+if [ -z "$base_branch" ]; then
+    echo "Unable to determine base of $current_branch"
+    exit 2
+fi
+
+git checkout "$base_branch"
+upstream=$(git rev-parse --abbrev-ref $base_branch@{upstream} 2>/dev/null)
+if [ "$?" = "0" ]; then
+    echo $base_branch tracks $upstream
+    git pull
+else
+    echo $base_branch has no upstream configured
+fi
+
+git branch -D $current_branch
