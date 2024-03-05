@@ -22,6 +22,8 @@
         - name: showcert
         - name: awssm
         - name: awssm-multi
+        - name: ec2-cache-instances
+        - name: ec2-cache-clear
         - name: byobu-grid
         - name: wsl-pbcopy
           rename: pbcopy
