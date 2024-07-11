@@ -28,6 +28,8 @@
       - silversearcher-ag
       - fzf
       - colordiff
+      # Required by zsh vz
+      - python3-venv
 
 - name: Setup any custom symlinks
   when: ansible_os_family == 'Debian'

@@ -47,7 +47,7 @@
       loop:
         - git
         - shell-deps
-        - powerline
+        # - powerline
         #- fish
         - zsh
         - cli-tools
@@ -55,9 +55,11 @@
         - byobu
         - asdf
 
-    - name: Install virtualenvwrapper
-      become: true
-      pip:
-        name: virtualenvwrapper
-        state: present
-        executable: "{{ system_pip }}"
+    # Recent pip does not like to let you modify system Python packages, which
+    # seems pretty sensible. Not sure I need this anyway...
+    # - name: Install virtualenvwrapper
+    #   become: true
+    #   pip:
+    #     name: virtualenvwrapper
+    #     state: present
+    #     executable: "{{ system_pip }}"
