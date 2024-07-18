@@ -1,6 +1,9 @@
 [local]
 localhost
 
+[personal]
+localhost
+
 [local:vars]
 ansible_connection=local
 work_mode=personal

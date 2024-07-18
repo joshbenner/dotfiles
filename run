@@ -18,14 +18,15 @@ else
     platform="macos"
 fi
 
-if [ ! $(command -v virtualenv) ]; then
-    echo "Virtualenv not found! Install virtualenv first."
-    exit 1
-fi
+# if [ ! $(command -v virtualenv) ]; then
+#     echo "Virtualenv not found! Install virtualenv first."
+#     exit 1
+# fi
 
 if [ ! -e ./env/bin/python ]; then
     echo "Initializing virtualenv..."
-    virtualenv ./env
+    # virtualenv ./env
+    python3 -m venv ./env
 fi
 
 ./env/bin/pip install -U pip

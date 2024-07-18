@@ -2,6 +2,5 @@
 - name: Clone asdf-vm on Linux & macOS
   git:
     repo: https://github.com/asdf-vm/asdf.git
-    version: v0.10.1
     dest: "{{ home_dir }}/.asdf"
   when: ansible_os_family in ('Debian', 'Darwin')

@@ -32,39 +32,7 @@
         state: present
         name: "{{ item }}"
         accept_external_apps: true
-      loop:  # Loop so one fail doesn't stop entire task.
-        - alfred
-        - istat-menus
-        - docker
-        - iterm2
-        - bartender
-        - dash
-        - 1password
-        - notion
-        - discord
-        - slack
-        - visual-studio-code
-        - sublime-text
-        - vnc-viewer
-        - coderunner
-        - drawio
-        - launchcontrol
-        - muzzle
-        - paw
-        - postman
-        - snagit
-        - spotify
-        - vagrant
-        - jetbrains-toolbox
-        - resilio-sync
-        - rectangle
-        - monitorcontrol
-        - apache-directory-studio
-        - utm
-        - rar
-        - cyberduck
-        - mountain-duck
-        - microsoft-remote-desktop
+      loop: "{{ macos_cask_apps }}"  # Loop so one fail doesn't stop entire task.
       ignore_errors: true  # noqa: ignore-errors
 
     - name: Install i2cssh
