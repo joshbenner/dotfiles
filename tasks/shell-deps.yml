@@ -11,9 +11,16 @@
       - bat
       - fd
       - ag
-      - exa
+      - eza
       - fzf
       - colordiff
+
+- name: Link eza->exa on macOS
+  when: ansible_os_family == 'Darwin'
+  ansible.builtin.file:
+    src: "{{ homebrew_prefix }}/bin/eza"
+    dest: "{{ home_dir }}/bin/exa"
+    state: link
 
 - name: Install various CLI/shell deps on Debian-family
   become: true
