@@ -145,7 +145,10 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 export LESS="-F -X $LESS"
 
 # Aliases
-if type exa > /dev/null; then
+if type eza > /dev/null; then
+    alias l='exa -lgh --git --group-directories-first --classify=always'
+    alias ll='eza -algh --git --group-directories-first --classify=always'
+elif type exa > /dev/null; then
     alias l='exa -Flgh --git --group-directories-first'
     alias ll='exa -Falgh --git --group-directories-first'
 fi
