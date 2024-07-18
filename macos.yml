@@ -37,10 +37,9 @@
 
     - name: Install i2cssh
       tags: [cssh, i2cssh]
-      gem:
-        name: i2cssh
+      homebrew:
         state: present
-        user_install: yes
+        name: wouterdebie/repo/i2cssh
 
     - name: Install fonts
       tags: [fonts]
