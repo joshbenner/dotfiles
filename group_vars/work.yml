@@ -17,7 +17,6 @@ macos_cask_apps:
   - drawio
   # - launchcontrol
   - muzzle
-  - paw
   - postman
   - snagit
   # - spotify

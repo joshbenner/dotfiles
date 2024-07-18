@@ -17,7 +17,6 @@ macos_cask_apps:
   - drawio
   - launchcontrol
   - muzzle
-  - paw
   - postman
   - snagit
   - spotify
@@ -26,7 +25,7 @@ macos_cask_apps:
   - resilio-sync
   - rectangle
   - monitorcontrol
-  - apache-directory-studio
+  # - apache-directory-studio
   - utm
   - rar
   - cyberduck
