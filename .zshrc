@@ -146,7 +146,7 @@ export LESS="-F -X $LESS"
 
 # Aliases
 if type eza > /dev/null; then
-    alias l='exa -lgh --git --group-directories-first --classify=always'
+    alias l='eza -lgh --git --group-directories-first --classify=always'
     alias ll='eza -algh --git --group-directories-first --classify=always'
 elif type exa > /dev/null; then
     alias l='exa -Flgh --git --group-directories-first'
