@@ -25,7 +25,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python"
 fi
 
-if grep WSL /proc/version > /dev/null; then
+if grep WSL /proc/version -s > /dev/null; then
     export IS_WSL=1
     bindkey '^H' backward-kill-word
 fi
