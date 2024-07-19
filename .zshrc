@@ -51,8 +51,7 @@ setopt inc_append_history  # Write history immediately
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(asdf fzf-tab git direnv docker fd fzf kubectl pip
-         zsh-autosuggestions zsh-syntax-highlighting colored-man-pages virtualz
-         virtualenvwrapper)
+         zsh-autosuggestions zsh-syntax-highlighting colored-man-pages virtualz)
 if [ "$session_type" = "local" ]; then
     plugins+=(ssh-agent)
 fi
