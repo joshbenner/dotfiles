@@ -43,8 +43,19 @@ METHOD:PUBLISH
 
 "@
 
+$csvEvents = New-Object System.Collections.Generic.List[System.Object]
 foreach ($item in $itemsInDateRange) {
     if ($item.Subject -in ("Reserved", "Stop")) { continue }
+    $csvEvents.Add(
+        [PSCustomObject]@{
+            created = $item.CreationTime.ToUniversalTime().ToString($icsDateFormat)
+            modified = $item.LastModificationTime.ToUniversalTime().ToString($icsDateFormat)
+            start = $item.Start.ToUniversalTime().ToString($icsDateFormat)
+            end = $item.End.ToUniversalTime().ToString($icsDateFormat)
+            summary = $item.Subject
+            location = $item.Location
+        }
+    )
     $subject = wrapText "$($item.Subject)"
     $location = wrapText "$($item.Location)"
     $ics += @"
@@ -70,3 +81,5 @@ END:VCALENDAR
 "@
 
 [System.IO.File]::WriteAllLines("$HOME\outlook-min-export.ics", $ics)
+$csvEvents | Export-Csv -Path "$HOME\outlook-min-export.csv" -NoTypeInformation
+$csvEvents | ConvertTo-Json -depth 100 | Out-File "$HOME\outlook-min-export.json"
