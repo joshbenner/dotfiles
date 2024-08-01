@@ -50,7 +50,7 @@ setopt inc_append_history  # Write history immediately
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(asdf fzf-tab git direnv docker fd fzf kubectl pip
+plugins=(asdf fzf-tab git direnv docker fzf kubectl pip
          zsh-autosuggestions zsh-syntax-highlighting colored-man-pages virtualz)
 if [ "$session_type" = "local" ]; then
     plugins+=(ssh-agent)
@@ -121,6 +121,10 @@ typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #2 ]=========================
     newline
 )
+
+# Support stacked options in docker autocomplete.
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
 # From: https://github.com/zsh-users/zsh-autosuggestions/issues/238#issuecomment-389324292
 # This speeds up pasting w/ autosuggest
