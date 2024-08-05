@@ -140,7 +140,7 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # macOS/homebrew
-[[ -s "/usr/local/etc/grc.zsh" ]] && source /usr/local/etc/grc.zsh < $TTY
+[[ -s "/opt/homebrew/etc/grc.zsh" ]] && source /opt/homebrew/etc/grc.zsh < $TTY
 # linux
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh < $TTY
 
@@ -154,6 +154,9 @@ if type eza > /dev/null; then
 elif type exa > /dev/null; then
     alias l='exa -Flgh --git --group-directories-first'
     alias ll='exa -Falgh --git --group-directories-first'
+else
+    alias l='ls -lh'
+    alias ll='ls -lha'
 fi
 
 grp() {
