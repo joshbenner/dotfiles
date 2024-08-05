@@ -57,4 +57,10 @@ if [ -z "$instance_id" ]; then
     exit 4
 fi
 
+instance_name=$(cat "$cachefile" | jq --arg id $instance_id -r '
+	.Reservations[].Instances[]
+	| select(.InstanceId == $id)
+	| ((.Tags // empty) | from_entries) as $tags
+	| $tags.Name')
+echo "Connecting to $instance_name ($instance_id)"
 aws ssm start-session --target $instance_id
