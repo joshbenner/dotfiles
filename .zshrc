@@ -52,7 +52,7 @@ setopt inc_append_history  # Write history immediately
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(asdf fzf-tab git direnv docker fzf kubectl pip
          zsh-autosuggestions zsh-syntax-highlighting colored-man-pages virtualz)
-if [ "$session_type" = "local" ]; then
+if [[ "$session_type" == "local" && "$OSTYPE" != "darwin"* ]]; then
     plugins+=(ssh-agent)
 fi
 
