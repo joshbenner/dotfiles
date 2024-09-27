@@ -1,2 +1,3 @@
 # Requires Python 3.9 -- can bump Ansible higher once macOS has later Python.
 ansible-core==2.15.*
+python-debian

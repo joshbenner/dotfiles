@@ -1,3 +1,4 @@
 *.retry
 env
 *.local.yml
+/fetch/*
