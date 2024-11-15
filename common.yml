@@ -22,6 +22,8 @@
         - name: showcert
         - name: awssm
         - name: awssm-multi
+        - name: aws-eks-kubeconfig
+          condition: "{{ work_mode == 'work' }}"
         - name: ec2-cache-instances
         - name: ec2-cache-clear
         - name: byobu-grid
@@ -30,9 +32,9 @@
           condition: "{{ is_wsl }}"
         - name: wsl-pbpaste
           rename: pbpaste
-          wheconditionn: "{{ is_wsl }}"
+          condition: "{{ is_wsl }}"
         - name: cbr2cbz
-          wheconditionn: "{{ work_mode == 'personal' }}"
+          condition: "{{ work_mode == 'personal' }}"
         - name: git-done
       when: item.condition | default(true)
 
