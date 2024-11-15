@@ -3,7 +3,7 @@
   hosts: local
   tasks:
     - name: Make sure common dirs exist
-      file:
+      ansible.builtin.file:
         path: "{{ home_dir }}/{{ item }}"
         state: directory
         mode: u=rwx
@@ -14,7 +14,7 @@
         - bin
 
     - name: Link custom scripts
-      file:
+      ansible.builtin.file:
         src: "{{ dotfiles_dir }}/bin/{{ item.name }}"
         dest: "{{ home_dir }}/bin/{{ item.rename | d(item.name) }}"
         state: link
@@ -27,16 +27,17 @@
         - name: byobu-grid
         - name: wsl-pbcopy
           rename: pbcopy
-          when: "{{ is_wsl }}"
+          condition: "{{ is_wsl }}"
         - name: wsl-pbpaste
           rename: pbpaste
-          when: "{{ is_wsl }}"
+          wheconditionn: "{{ is_wsl }}"
         - name: cbr2cbz
-          when: "{{ work_mode == 'personal' }}"
+          wheconditionn: "{{ work_mode == 'personal' }}"
         - name: git-done
-      when: item.when | default(true)
+      when: item.condition | default(true)
 
-    - include_tasks:
+    - name: Include other tasks
+      ansible.builtin.include_tasks:
         file: tasks/{{ taskfile }}.yml
         apply:
           tags:
@@ -48,7 +49,7 @@
         - git
         - shell-deps
         # - powerline
-        #- fish
+        # - fish
         - zsh
         - cli-tools
         - vim
