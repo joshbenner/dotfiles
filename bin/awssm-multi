@@ -82,8 +82,10 @@ for id in ${instance_ids}; do
     cmds+=("aws ssm start-session --target $id --profile $AWS_PROFILE")
 done
 
-# Open in new Windows Terminal if on WSL
-if grep WSL /proc/version > /dev/null; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    i2cssh -S "$SHELL" -x '{host}' "${cmds[@]}"
+elif grep WSL /proc/version > /dev/null; then
+    # Open in new Windows Terminal if on WSL
     grid="$(which byobu-grid)"
     cmd.exe /c wt.exe -M wsl $grid "${cmds[@]}"
 else
