@@ -1,10 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 i=0
 for cmd in "$@"; do
     if [ -z "$sess" ]; then
-        pid=$(cut -d' ' -f4 < /proc/self/stat)
-        sess="byobu-grid-$pid"
+        sess="byobu-grid-$$"
         # sess='byobu-grid-test'
         byobu-tmux kill-session -t $sess >/dev/null 2>&1
         echo "Starting session $sess"
