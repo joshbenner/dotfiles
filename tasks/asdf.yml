@@ -1,6 +1,43 @@
 ---
-- name: Clone asdf-vm on Linux & macOS
-  git:
-    repo: https://github.com/asdf-vm/asdf.git
-    dest: "{{ home_dir }}/.asdf"
+- name: Check for old asdf
+  ansible.builtin.stat:
+    path: "{{ home_dir }}/.asdf/.git"
+  register: _asdf_check
   when: ansible_os_family in ('Debian', 'Darwin')
+
+- name: Migrate to asdf 0.16+
+  when: _asdf_check.stat.exists
+  block:
+    - name: Juggle legacy asdf files
+      ansible.builtin.shell: |
+        set -e
+        [ -d /tmp/asdf-migrate ] && rm -rf /tmp/asdf-migrate
+        mkdir /tmp/asdf-migrate
+        mv {{ home_dir }}/.asdf/installs /tmp/asdf-migrate/installs
+        mv {{ home_dir }}/.asdf/downloads /tmp/asdf-migrate/downloads
+        mv {{ home_dir }}/.asdf/shims /tmp/asdf-migrate/shims
+        mv {{ home_dir }}/.asdf/plugins /tmp/asdf-migrate/plugins
+        rm -rf {{ home_dir }}/.asdf
+        mkdir {{ home_dir }}/.asdf
+        mv /tmp/asdf-migrate/* {{ home_dir }}/.asdf
+
+- name: Find latest asdf release
+  community.general.github_release:
+    user: asdf-vm
+    repo: asdf
+    action: latest_release
+  register: _asdf_release
+
+- name: Download latest asdf release
+  vars:
+    _arch:
+      aarch64: arm64
+      arm64: arm64
+      x86_64: amd64
+    tag: "{{ _asdf_release.tag }}"
+    sys: "{{ ansible_system | lower }}"
+    arch: "{{ _arch[ansible_architecture] }}"
+  ansible.builtin.unarchive:
+    src: https://github.com/asdf-vm/asdf/releases/download/{{ tag }}/asdf-{{ tag }}-{{ sys }}-{{ arch }}.tar.gz
+    dest: "{{ home_dir }}/bin"
+    remote_src: true
