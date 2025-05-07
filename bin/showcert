@@ -31,3 +31,7 @@ echo "$cert" | openssl x509 -noout -text -certopt no_sigdump,no_pubkey,no_serial
   | sed "s/CN=\([^,]\{1,\}\)/${e}[0;36mCN=${e}[1;32m\1${e}[0m/g"
 echo "$cert" | openssl x509 -noout -text | grep -A1 'X509v3 Subject Alternative Name' \
   | sed "s/DNS:\([^,]\{1,\}\)/${e}[0;36mDNS:${e}[1;32m\1${e}[0m/g"
+printf "        ${e}[0;36mSerial: "
+echo "$cert" | openssl x509 -noout -text | grep -A1 'Serial Number:' | tail -n1 \
+  | tr -d ' ' \
+  | sed "s/\([0-9a-f]\{2\}\)/${e}[0;32m\1${e}[0m/g"
