@@ -1,27 +1,82 @@
 #!/usr/bin/env sh
 
-# showcert <domain> [<server> [<port>]]
-# Optionally specify server (hostname or IP) to connect to for testing SNI.
+# showcert [-n servername] <file|hostname[:port]>
+# If the argument is a file, show its certificate details.
+# If the argument is a hostname, connect to it and show its certificate.
+# Use -n to override the SNI servername.
+
+usage() {
+  echo "Usage: $(basename $0) [-n servername] <file|hostname[:port]>"
+}
 
 e="$(printf '\033')"
-domain="$1"
-connect="${2:-${domain}}"
-if [ $(echo "$connect" | egrep '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$') ]; then
-  ip="$connect"
-else
-  ip="$(host -t A $connect | awk '/has.*address/{print $NF; exit}')"
+
+if [ "$(uname)" = "Darwin" ] && command -v brew >/dev/null; then
+  # Give homebrew binaries priority when finding getopt on macOS.
+  export PATH="$(brew --prefix)/opt/gnu-getopt/bin:$PATH"
 fi
-port="${3:-443}"
 
-echo "\033[0;36m   name:\033[0m $domain"
-echo "\033[0;36mconnect:\033[0m $ip:$port"
+getopt --test 2>&1 > /dev/null
+if [ ! $? -eq 4 ]; then
+  echo "Error: GNU getopt not found. Please install it (e.g., 'brew install gnu-getopt' on macOS)." >&2
+  exit 2
+fi
 
-echo "\033[0;35m"
-cert="$(echo QUIT | openssl s_client -connect $ip:$port -servername $domain | openssl x509 -outform pem)"
-echo "\033[0m"
+# Use GNU getopt for parsing
+parsed=$(getopt -o n:h --long name:,help -- "$@")
+# Read getopt output to handle quoting quirks.
+eval set -- "$parsed"
 
-# I don't know why, but this prevents the command from hanging at this point sometimes.
-echo ""
+servername=""
+
+while true; do
+  case "$1" in
+    -n|--name)
+      servername="$2"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+certloc="$1"
+
+if [ -z "$certloc" ]; then
+  usage
+  exit 1
+fi
+
+if [ -f "$certloc" ]; then
+  # Local file mode
+  echo "\033[0;36mfile:\033[0m $certloc"
+  echo "\033[0;35m"
+  cert="$(cat "$certloc")"
+else
+  # Remote connect mode
+  host="${certloc%%:*}"
+  port="${certloc##*:}"
+  if [ "$host" = "$port" ]; then
+    port="443"
+  fi
+  ip="$(host -t A $host | awk '/has.*address/{print $NF; exit}')"
+  echo "\033[0;36mconnect:\033[0m $ip:$port"
+  echo "\033[0;35m"
+  sni="${servername:-$host}"
+  cert="$(echo QUIT | openssl s_client -connect $ip:$port -servername $sni | openssl x509 -outform pem)"
+  echo "\033[0m"
+  # I don't know why, but this prevents the command from hanging at this point sometimes.
+  echo ""
+fi
 
 echo "$cert" | openssl x509 -noout -text -certopt no_sigdump,no_pubkey,no_serial,no_version,no_extensions \
   | sed "s/Issuer:\(.*\)$/${e}[0;36mIssuer:${e}[1;33m\1${e}[0m/g" \
