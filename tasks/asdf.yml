@@ -22,6 +22,8 @@
         mv /tmp/asdf-migrate/* {{ home_dir }}/.asdf
 
 - name: Find latest asdf release
+  vars:
+    ansible_python_interpreter: "{{ playbook_dir }}/env/bin/python"
   community.general.github_release:
     user: asdf-vm
     repo: asdf
