@@ -1,27 +1,16 @@
 - name: Playbook deps
   hosts: local
   tasks:
-    - name: Set system python
-      set_fact:
-        system_python: /bin/python
-        system_pip: /bin/pip
-        _python_pkgs: [python-pip, python-apt]
-
-    - name: Set system python for newer Ubuntu
-      set_fact:
-        ansible_python_interpreter: /usr/bin/python3
-        system_python: /usr/bin/python3
-        system_pip: /usr/bin/pip3
-        _python_pkgs: [python3-pip, python3-apt]
-      when:
-        - ansible_distribution in ('Ubuntu', 'Pop!_OS')
-        - ansible_distribution_version is version('20.04', '>=')
-
     - name: Install playbook deps via APT
       when: ansible_os_family == 'Debian'
       become: true
       apt:
-        name: "{{ _python_pkgs + ['wget', 'unzip', 'fontconfig'] }}"
+        name:
+          - python3-pip
+          - python3-apt
+          - wget
+          - unzip
+          - fontconfig
         state: present
 
 - import_playbook: common.yml
