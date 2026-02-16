@@ -31,6 +31,20 @@
       # Required by zsh vz
       - python3-venv
 
+- name: Install various CLI/shell deps on RedHat-family
+  become: true
+  when: ansible_os_family == 'RedHat'
+  dnf:
+    state: present
+    name:
+      - bat
+      - grc
+      - direnv
+      - fd-find
+      - the_silver_searcher
+      - fzf
+      - colordiff
+
 - name: Setup any custom symlinks
   when: ansible_os_family == 'Debian'
   file:
@@ -43,98 +57,24 @@
     - src: /usr/bin/batcat
       bin: bat
 
-- name: Do not install exa from apt, as it has git support disabled
-  become: true
-  when: ansible_os_family == 'Debian'
-  apt:
-    state: absent
-    name: exa
+- name: Get latest eza release info from GitHub
+  when: ansible_os_family == 'RedHat'
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/eza-community/eza/releases/latest
+    return_content: yes
+    headers:
+      Accept: application/vnd.github.v3+json
+  register: eza_github_release
 
-- name: Check for exa to short-circuit build
-  stat:
-    path: /usr/local/bin/exa
-  when: ansible_os_family == 'Debian'
-  register: _exa_stat
-
-- name: Install exa from archive
+- name: Download latest eza binary for RedHat
+  when: ansible_os_family == 'RedHat'
   become: true
-  when:
-    - ansible_os_family == 'Debian'
-    - not _exa_stat.stat.exists
   vars:
-    _exa_version: 0.10.1
-    _exa_path: /opt/exa-{{ _exa_version }}
-    _exa_arch: "{{ 'armv7' if ansible_architecture == 'aarch64' else ansible_architecture }}"
-  block:
-    - name: Create archive directory
-      file:
-        path: "{{ _exa_path }}"
-        state: directory
-        owner: root
-        group: root
-        mode: u=rwx,g=rx,o=rx
-
-    - name: Download exa archive
-      unarchive:
-        src: https://github.com/ogham/exa/releases/download/v{{ _exa_version }}/exa-linux-{{ _exa_arch  }}-v{{ _exa_version }}.zip
-        dest: "{{ _exa_path }}"
-        remote_src: true
-
-    - name: Install exa files
-      copy:
-        src: "{{ _exa_path }}/{{ item.src }}"
-        dest: "{{ item.dest }}"
-        mode: "{{ item.mode | default('0664') }}"
-        owner: root
-        group: root
-        remote_src: true
-      loop:
-        - src: bin/exa
-          dest: /usr/local/bin/exa
-          mode: u=rwx,g=rx,o=rx
-        - src: man/exa.1
-          dest: /usr/share/man/man1/exa.1
-        - src: man/exa_colors.5
-          dest: /usr/share/man/man5/exa_colors.5
-
-    - name: Copy custom-build exa on aarch64
-      copy:
-        src: bin/exa-arm
-        dest: /usr/local/bin/exa
-        owner: root
-        group: root
-        mode: u=rwx,g=rx,o=rx
-      when: ansible_architecture == 'aarch64'
-
-# - name: Install exa by compiling on older Ubuntu
-#   when:
-#     - ansible_os_family == 'Debian'
-#     - not _exa_stat.stat.exists
-#   vars:
-#     _exa_version: 0.10.1
-#   block:
-#     - name: Install build deps
-#       become: true
-#       apt:
-#         name: [libgit2-dev, rustc]
-#         state: present
-
-#     - name: Clone exa
-#       git:
-#         repo: https://github.com/ogham/exa
-#         dest: "{{ home_dir }}/devel/contrib/exa"
-#         depth: 1
-#         version: v{{ _exa_version }}
-
-#     - name: Build exa
-#       command: cargo build --release
-#       args:
-#         chdir: "{{ home_dir }}/devel/contrib/exa"
-#         creates: "{{ home_dir }}/devel/contrib/exa/target/release/exa"
-
-#     - name: Install exa
-#       become: true
-#       command: install target/release/exa /usr/local/bin/exa
-#       args:
-#         chdir: "{{ home_dir }}/devel/contrib/exa"
-#         creates: "/usr/local/bin/exa"
+    eza_download_url: "{{ (eza_github_release.json.assets | selectattr('name', 'eq', 'eza_x86_64-unknown-linux-gnu.tar.gz') | list)[0].browser_download_url }}"
+  ansible.builtin.unarchive:
+    src: "{{ eza_download_url }}"
+    dest: /usr/local/bin
+    remote_src: true
+    mode: '0755'
+    owner: root
+    group: root

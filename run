@@ -1,5 +1,12 @@
 #!/usr/bin/env sh
 
+# Fail if python3 version is less than 3.10
+PYTHON_VERSION=$(python3 -c 'import sys; print("{}.{}".format(sys.version_info[0], sys.version_info[1]))')
+if [ "$(printf '%s\n' "3.10" "$PYTHON_VERSION" | sort -V | head -n1)" != "3.10" ]; then
+    echo "Python 3.10+ is required. Found $PYTHON_VERSION. Exiting."
+    exit 1
+fi
+
 no_inventory () {
     echo >&2 "You must specify the workstation type (personal or work)"
     exit 1
@@ -13,7 +20,9 @@ cd "${0%/*}"
 
 if [ $(uname) = "Linux" ]; then
     platform="linux"
-    sudo apt install -y python3-pip python3-venv libffi-dev libssl-dev build-essential
+    if command -v apt > /dev/null; then
+        sudo apt install -y python3-pip python3-venv libffi-dev libssl-dev build-essential
+    fi
 else
     platform="macos"
 fi

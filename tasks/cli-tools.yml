@@ -41,11 +41,27 @@
       - htop
       - tree
 
+- name: Install Linux CLI tools via DNF
+  become: true
+  when: ansible_os_family == 'RedHat'
+  dnf:
+    state: present
+    name:
+      - tig
+      - rsync
+      - ncdu
+      - ack
+      - jq
+      - tealdeer
+      - telnet
+      - htop
+      - tree
+
 - name: Install curlie on Linux
   when: ansible_os_family == 'Debian'
   become: true
   vars:
-    _version: 1.6.9
+    _version: 1.8.2
     _architectures:
       aarch64: arm64
       x86_64: amd64
@@ -54,3 +70,18 @@
   apt:
     deb: "{{ _url }}"
     state: present
+
+- name: Install curlie on RedHat
+  when: ansible_os_family == 'RedHat'
+  become: true
+  vars:
+    _version: 1.8.2
+    _architectures:
+      aarch64: arm64
+      x86_64: amd64
+    _arch: "{{ _architectures[ansible_architecture] }}"
+    _url: https://github.com/rs/curlie/releases/download/v{{ _version }}/curlie_{{ _version }}_linux_{{ _arch }}.rpm
+  dnf:
+    name: "{{ _url }}"
+    state: present
+    disable_gpg_check: true

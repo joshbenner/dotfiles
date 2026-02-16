@@ -2,7 +2,16 @@
 - name: Install zsh via APT
   become: true
   when: ansible_os_family == 'Debian'
-  apt: name=zsh state=present
+  apt:
+    name: zsh
+    state: present
+
+- name: Install zsh via DNF
+  become: true
+  when: ansible_os_family == 'RedHat'
+  dnf:
+    name: zsh
+    state: present
 
 - name: Clone repos
   git:
@@ -11,17 +20,17 @@
     update: no
   loop:
     - repo: https://github.com/robbyrussell/oh-my-zsh
-      dest: ~/.oh-my-zsh
+      dest: "{{ home_dir }}/.oh-my-zsh"
     - repo: https://github.com/zsh-users/zsh-autosuggestions
-      dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+      dest: "{{ home_dir }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
     - repo: https://github.com/romkatv/powerlevel10k.git
-      dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
+      dest: "{{ home_dir }}/.oh-my-zsh/custom/themes/powerlevel10k"
     - repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
-      dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+      dest: "{{ home_dir }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
     - repo: https://github.com/aperezdc/virtualz.git
-      dest: ~/.oh-my-zsh/custom/plugins/virtualz
+      dest: "{{ home_dir }}/.oh-my-zsh/custom/plugins/virtualz"
     - repo: https://github.com/Aloxaf/fzf-tab
-      dest: ~/.oh-my-zsh/custom/plugins/fzf-tab
+      dest: "{{ home_dir }}/.oh-my-zsh/custom/plugins/fzf-tab"
 
 - name: Link files
   file:

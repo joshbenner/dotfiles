@@ -55,7 +55,7 @@
         - zsh
         - cli-tools
         - vim
-        - byobu
+        # - byobu
         - asdf
 
     # Recent pip does not like to let you modify system Python packages, which
