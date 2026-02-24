@@ -47,8 +47,8 @@
 - name: Pop!_OS-specific stuff
   hosts: local
   vars:
-    remote_debs:
-      input-remapper: https://github.com/sezanzeb/input-remapper/releases/download/2.0.1/input-remapper-2.0.1.deb
+    # remote_debs:
+    #   input-remapper: https://github.com/sezanzeb/input-remapper/releases/download/2.0.1/input-remapper-2.0.1.deb
     extra_repos:
       - name: brave-browser
         key: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
@@ -119,17 +119,17 @@
       loop_control:
         loop_var: pak
 
-    - name: Download remote deb packages
-      ansible.builtin.get_url:
-        url: "{{ item.value }}"
-        dest: fetch/{{ item.key }}.deb
-        owner: "{{ ansible_real_user_id }}"
-        group: "{{ ansible_real_group_id }}"
-        mode: u=rw,g=r,o=r
-      loop: "{{ remote_debs | dict2items }}"
+    # - name: Download remote deb packages
+    #   ansible.builtin.get_url:
+    #     url: "{{ item.value }}"
+    #     dest: fetch/{{ item.key }}.deb
+    #     owner: "{{ ansible_real_user_id }}"
+    #     group: "{{ ansible_real_group_id }}"
+    #     mode: u=rw,g=r,o=r
+    #   loop: "{{ remote_debs | dict2items }}"
 
-    - name: Install downloaded deb files
-      become: true
-      ansible.builtin.apt:
-        deb: fetch/{{ item }}.deb
-      loop: "{{ remote_debs.keys() }}"
+    # - name: Install downloaded deb files
+    #   become: true
+    #   ansible.builtin.apt:
+    #     deb: fetch/{{ item }}.deb
+    #   loop: "{{ remote_debs.keys() }}"
