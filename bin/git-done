@@ -5,7 +5,8 @@ git remote set-head origin -a >/dev/null
 remote_head=$(git rev-parse --abbrev-ref origin/HEAD | sed 's|^origin/||')
 
 current_branch=$(git symbolic-ref --short -q HEAD)
-base_branch=$(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
+# base_branch=$(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
+base_branch=$(git log --graph --decorate --oneline | head -n 2 | tail -n 1 | sed -E 's/^\* +[a-f0-9]+ \(([^)]*)\).*/\1/' | tr ',' '\n' | tr -d ' ' | grep -v '^origin/' | head -n1)
 
 if [ "$current_branch" = "$remote_head" ]; then
     echo "Current branch is remote's HEAD (main branch)"
