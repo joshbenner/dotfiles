@@ -192,3 +192,6 @@ typeset -aU path
 
 # Disable autocomplete beeps.
 unsetopt LIST_BEEP
+
+# Exclude space-prefixed line from history
+setopt HIST_IGNORE_SPACE
